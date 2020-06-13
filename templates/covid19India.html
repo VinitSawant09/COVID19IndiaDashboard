@@ -1,0 +1,49 @@
+<html>
+<head>
+    <title>
+        COVID-19 India Dahsboard
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/style.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename='/js/onLoad.js') }}"></script>
+</head>
+<body onload="myFunction()">
+<center><h1>COVID-19 India Live Dashboard</h1></center>
+<div>
+<div class="row">
+  <div class="column">
+    <div class="card">
+      <h3>Total Tests Done</h3>
+      <span id="totalTestsDone"> </span>
+    </div>
+  </div>
+
+  <div class="column">
+    <div class="card">
+      <h3>Card 2</h3>
+      <p>Some text</p>
+      <p>Some text</p>
+    </div>
+  </div>
+
+  <div class="column">
+    <div class="card">
+      <h3>Card 3</h3>
+      <p>Some text</p>
+      <p>Some text</p>
+    </div>
+  </div>
+
+  <div class="column">
+    <div class="card">
+      <h3>Card 4</h3>
+      <p>Some text</p>
+      <p>Some text</p>
+    </div>
+  </div>
+</div>
+
+</div>
+</body>
+</html>
