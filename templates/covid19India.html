@@ -11,41 +11,53 @@
 
 </head>
 <body onload="myFunction()">
-<center><h1>COVID-19 India Live Dashboard</h1></center>
+<center><h1><span id="websiteHeader">COVID-19 India Live Dashboard</span></h1></center>
 <div>
 <div class="row">
 
   <div class="column">
     <div class="card">
-     <h2>Confirmed Cases </h2>
+        <h2>Confirmed Cases </h2>
         <span id="totalConfirmedCases"> </span>
-      <p>Some text</p>
-      <p>Some text</p>
+        <h2>Confirmed Today </h2>
+        <span id="confirmedToday"> </span>
+        <h2>Active Cases </h2>
+        <span id="activeCases"> </span>
+        <h5> <span id="lastUpdatedLive1"></span> </h5>
+
     </div>
   </div>
 
   <div class="column">
     <div class="card">
-       <h2>Deaths </h2>
-        <span id="totalDeaths"> </span>
-      <p>Some text</p>
-      <p>Some text</p>
-    </div>
-  </div>
-
-  <div class="column">
-    <div class="card">
-     <h2>Recovered </h2>
+        <h2>Recovered </h2>
         <span id="totalRecovered"> </span>
+        <h2>Recovered Today </h2>
+        <span id="recoveredToday"> </span>
         <h2>Recovery Rate</h2>
         <span id="recoveryRate"> </span>
+        <h5> <span id="lastUpdatedLive3"></span> </h5>
     </div>
-  </div>
 
+  </div>
+    <div class="column">
+    <div class="card">
+        <h2>Deaths </h2>
+        <span id="totalDeaths"> </span>
+        <h2>Deaths Today </h2>
+        <span id="deathsToday"> </span>
+        <h2>Mortality Rate</h2>
+        <span id="mortalityRate"> </span>
+        <h5> <span id="lastUpdatedLive2"></span> </h5>
+    </div>
+
+  </div>
     <div class="column">
     <div class="card">
         <h2>Total Tests</h2>
         <span id="totalTestsDone"> </span>
+        <h2>Tests Done Today</h2>
+        <span id="testDoneToday"> </span>
         <h2>Tests / 1M pop</h2>
         <span id="testspermillion"> </span>
        <h5> <span id="lastUpdated"></span> </h5>

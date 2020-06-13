@@ -4,7 +4,8 @@
 
 body {
   font-family: Arial, Helvetica, sans-serif;
-  background-color: #d6d4e0;
+  //background-color: #d6d4e0;
+  background-color: black;
 
 }
 
@@ -42,23 +43,29 @@ body {
   background-color: #f1f1f1;
 }
 
-#totalTestsDone,#testspermillion,#totalRecovered,#recoveryRate
+#totalTestsDone,#testspermillion,#totalRecovered,#recoveryRate,#recoveredToday,#testDoneToday
 {
 font-family: serif;
 color:#8ACA2B;
 font-size: 3em;
 }
 
-#totalConfirmedCases
+#totalConfirmedCases,#confirmedToday,#activeCases
 {
 font-family: serif;
 color:red;
 font-size: 3em;
 }
 
-#totalDeaths
+#totalDeaths,#mortalityRate,#deathsToday
 {
 font-family: serif;
 color:#696969;
 font-size: 3em;
+}
+
+#websiteHeader
+{
+font-family: Courier New, Courier, monospace;
+color:white;
 }
