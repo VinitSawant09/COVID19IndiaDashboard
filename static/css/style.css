@@ -4,6 +4,8 @@
 
 body {
   font-family: Arial, Helvetica, sans-serif;
+  background-color: #d6d4e0;
+
 }
 
 /* Float four columns side by side */
@@ -38,4 +40,25 @@ body {
   padding: 16px;
   text-align: center;
   background-color: #f1f1f1;
+}
+
+#totalTestsDone,#testspermillion,#totalRecovered,#recoveryRate
+{
+font-family: serif;
+color:#8ACA2B;
+font-size: 3em;
+}
+
+#totalConfirmedCases
+{
+font-family: serif;
+color:red;
+font-size: 3em;
+}
+
+#totalDeaths
+{
+font-family: serif;
+color:#696969;
+font-size: 3em;
 }
