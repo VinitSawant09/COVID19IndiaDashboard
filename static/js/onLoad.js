@@ -18,7 +18,7 @@ function myFunction()
         if (response!=null)
         {
           var entireData = response.data;
-          console.log(response);
+          //console.log(response);
 
           var lastRefreshed =response.lastRefreshed;
           var date = moment(lastRefreshed);
