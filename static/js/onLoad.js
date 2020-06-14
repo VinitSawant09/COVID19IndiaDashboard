@@ -99,6 +99,94 @@ function myFunction()
               $('.dataTables_length').addClass('bs-select');
 
             });
+
+
+             var data = [
+    ['madhya pradesh', regionalStats[18].totalConfirmed],
+    ['uttar pradesh', regionalStats[33].totalConfirmed],
+    ['karnataka', regionalStats[15].totalConfirmed],
+    ['nagaland', regionalStats[23].totalConfirmed],
+    ['bihar', regionalStats[4].totalConfirmed],
+    ['lakshadweep', 0],
+    ['andaman and nicobar', regionalStats[0].totalConfirmed],
+    ['assam',regionalStats[3].totalConfirmed],
+    ['west bengal', regionalStats[34].totalConfirmed],
+    ['puducherry', regionalStats[25].totalConfirmed],
+    ['daman and diu',  regionalStats[7].totalConfirmed],
+    ['gujarat',  regionalStats[10].totalConfirmed],
+    ['rajasthan',  regionalStats[27].totalConfirmed],
+    ['dadara and nagar havelli',  regionalStats[7].totalConfirmed],
+    ['chhattisgarh',  regionalStats[6].totalConfirmed],
+    ['tamil nadu',  regionalStats[29].totalConfirmed],
+    ['chandigarh',  regionalStats[5].totalConfirmed],
+    ['punjab',  regionalStats[26].totalConfirmed],
+    ['haryana',  regionalStats[11].totalConfirmed],
+    ['andhra pradesh',  regionalStats[1].totalConfirmed],
+    ['maharashtra', regionalStats[19].totalConfirmed],
+    ['himachal pradesh', regionalStats[12].totalConfirmed],
+    ['meghalaya',  regionalStats[21].totalConfirmed],
+    ['kerala',  regionalStats[16].totalConfirmed],
+    ['telangana',  regionalStats[30].totalConfirmed],
+    ['mizoram',  regionalStats[22].totalConfirmed],
+    ['tripura',  regionalStats[31].totalConfirmed],
+    ['manipur',  regionalStats[20].totalConfirmed],
+    ['arunanchal pradesh',  regionalStats[2].totalConfirmed],
+    ['jharkhand',  regionalStats[14].totalConfirmed],
+    ['goa',  regionalStats[9].totalConfirmed],
+    ['nct of delhi', regionalStats[8].totalConfirmed],
+    ['odisha',  regionalStats[24].totalConfirmed],
+    ['jammu and kashmir',  regionalStats[13].totalConfirmed +  regionalStats[17].totalConfirmed],
+    ['sikkim', regionalStats[28].totalConfirmed],
+    ['uttarakhand', regionalStats[32].totalConfirmed]
+];
+
+// Create the chart
+Highcharts.mapChart('container', {
+    chart: {
+        map: 'countries/in/custom/in-all-disputed'
+    },
+
+    title: {
+        text: 'COVID-19 Outbreak in India'
+    },
+
+    subtitle: {
+        text: 'Source map: <a href="http://code.highcharts.com/mapdata/countries/in/custom/in-all-disputed.js">India </a>'
+    },
+
+    mapNavigation: {
+        enabled: true,
+        buttonOptions: {
+            verticalAlign: 'bottom'
+        }
+    },
+
+    colorAxis: {
+        min: 0
+    },
+
+    series: [{
+        data: data,
+        name: 'Confirmed Cases',
+        states: {
+            hover: {
+                color: '#BADA55'
+            }
+        },
+        dataLabels: {
+            enabled: false,
+            format: '{point.name}'
+        }
+    }]
+});
+
+
+
+
+
+
+
+
         }
        });
 
@@ -186,6 +274,9 @@ function myFunction()
 
         }
        });
+
+
+
 
 }
 
