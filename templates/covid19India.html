@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{{ url_for('static', filename='/css/style.css') }}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
 
 
@@ -128,9 +129,28 @@
 
      <div class="statescolumn" >
         <h1><span class="subTitles">State-wise COVID-19 distribution</span></h1>
+         <button class="button" id="buttonRecovered" onClick="showRecoveriesOnMap()">Recovered</button>
+         <button class="button button3" id="buttonConfirmed"  onClick="showConfirmedOnMap()">Confirmed</button>
+          <button class="button button4" id="buttonDeaths" onClick="showDeathsOnMap()">Deaths</button>
+         <button class="button button2" id="buttonActive" onClick="showActiveOnMap()">Active</button>
          <div id="container"></div>
      </div>
 </div>
+
+</div>
+<br>
+<div class="graphrow">
+    <div class="graphcolumn" >
+    <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+        <button class="button" onClick="splineRecovered()">Recovered</button>
+
+         <button class="button button3"  onClick="splineConfirmed()">Confirmed</button>
+
+          <button class="button button4" onClick="splineDeaths()">Deaths</button>
+
+         <button class="button button2" onClick="splineActive()">Active</button>
+        </div>
+
 
 </div>
 <div class="footer">
