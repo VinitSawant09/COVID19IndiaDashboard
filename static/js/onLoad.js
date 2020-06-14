@@ -3,8 +3,8 @@ function myFunction()
  var confirmedCasesCountTill2Day = null;
  var deathCountTill2Day = null;
  var recoveryCountTill2Day = null;
-
-
+ var regionalStats = null;
+ var $tableId = $("#dtBasicExample")
   $.ajax(
        {
         url  : "https://api.rootnet.in/covid19-in/stats/latest",
@@ -19,7 +19,8 @@ function myFunction()
         {
           var entireData = response.data;
           //console.log(response);
-
+          regionalStats = entireData.regional;
+          console.log(regionalStats);
           var lastRefreshed =response.lastRefreshed;
           var date = moment(lastRefreshed);
           document.getElementById("lastUpdatedLive1").innerHTML="Last Updated : "+date.format('llll');
@@ -47,12 +48,57 @@ function myFunction()
 
           var activeCases = liveStats[0].active;
           document.getElementById("activeCases").innerHTML=activeCases;
+
+          for (var i=0;i < regionalStats.length; i++)
+         {
+          $tableId.append(
+          $("<tr>").append($("<td>").html(regionalStats[i].loc))
+          .append($("<td>").html(regionalStats[i].totalConfirmed))
+          .append($("<td>").html(regionalStats[i].deaths))
+          .append($("<td>").html(regionalStats[i].discharged))
+          .append($("<td>").html(regionalStats[i].totalConfirmed-regionalStats[i].discharged-regionalStats[i].deaths))
+         );
+         }
+
+
         }
          else
         {
             console.log("Error while fetching testing api..!!!");
         }
+           $(document).ready(function () {
+              $('#dtBasicExample').DataTable({
+                  "order": [[ 1, "desc" ]],
+                  "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull)
+                            {
 
+                                     $('td', nRow).css('background-color', 'Black').css('color','White');
+                             },
+                   'columnDefs': [
+                                {
+                              "targets": 1,
+                              "className": 'dt-body-right',
+                                    },
+                                 {
+                              "targets": 2,
+                              "className": 'dt-body-right',
+                                     },
+                                     {
+                              "targets": 3,
+                              "className": 'dt-body-right',
+                                    },
+                                    {
+                              "targets": 4,
+                              "className": 'dt-body-right',
+                                    }
+
+
+                                     ]
+
+                   });
+              $('.dataTables_length').addClass('bs-select');
+
+            });
         }
        });
 
@@ -73,13 +119,28 @@ function myFunction()
           var numberOfDays= data.length;
 
           var deathsToday= deathCountTill2Day - data[numberOfDays-1].summary.deaths;
+          if(deathsToday<0)
+          {
+          deathsToday = 0;
+          }
           document.getElementById("deathsToday").innerHTML="+"+deathsToday;
 
 
           var recoveredToday= recoveryCountTill2Day - data[numberOfDays-1].summary.discharged;
+          if(recoveredToday<0)
+          {
+          recoveredToday = 0;
+          alert("zero");
+          }
           document.getElementById("recoveredToday").innerHTML="+"+recoveredToday;
 
+
+
           var confirmedToday= confirmedCasesCountTill2Day - data[numberOfDays-1].summary.total;
+          if(confirmedToday<0)
+          {
+          confirmedToday = 0;
+          }
           document.getElementById("confirmedToday").innerHTML="+"+confirmedToday;
 
          }
@@ -116,6 +177,7 @@ function myFunction()
           var testspermillion = Math.round(totalSamplesTestedTillToday/totalMillions);
           document.getElementById("testspermillion").innerHTML=testspermillion;
           document.getElementById("lastUpdated").innerHTML="Last Updated : "+date.format('llll');
+
         }
         else
         {
