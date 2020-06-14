@@ -34,6 +34,12 @@ body {
     margin-bottom: 20px;
   }
 
+  .statescolumn {
+    width: 100%;
+    display: block;
+    margin-bottom: 20px;
+  }
+
 }
 
 /* Style the counter cards */
