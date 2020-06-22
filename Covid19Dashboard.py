@@ -8,9 +8,15 @@ from werkzeug.utils import secure_filename
 app = Flask(__name__)
 
 @app.route('/')
+@app.route('/landing')
 def landing():
      session["username"] = ''
      return render_template('covid19India.html')
+
+@app.route('/analysisLanding')
+def analysisLanding():
+     session["username"] = ''
+     return render_template('analysis.html')
 
 #Error Handling
 @app.errorhandler(404)

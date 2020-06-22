@@ -27,6 +27,10 @@
 <body onload="myFunction()">
 <center><h1><span id="websiteHeader">COVID-19 India Live Dashboard</span></h1></center>
 <marquee><span id="slidingMarquee">Stay Home.!  Stay Safe..! Wash your hands.! Wear mask outdoors.!</span></marquee>
+<div id="mySidenav" class="sidenav">
+  <a href="#" id="dashboard" onclick="window.location.href='{{ url_for( 'landing') }}';">Live</a>
+  <a href="#" id="analysis" onclick="window.location.href='{{ url_for( 'analysisLanding') }}';">Analysis</a>
+</div>
 <div>
 <div class="row">
 

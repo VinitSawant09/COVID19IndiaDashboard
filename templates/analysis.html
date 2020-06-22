@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>COVID-19 India Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+     <script src="{{ url_for('static', filename='/js/analysis.js') }}"></script>
+
+</head>
+<body onload="myFunction()">
+<center><h1><span id="websiteHeader">COVID-19 India Analysis</span></h1></center>
+<marquee><span id="slidingMarquee">Stay Home.!  Stay Safe..! Wash your hands.! Wear mask outdoors.!</span></marquee>
+<div id="mySidenav" class="sidenav">
+  <a href="#" id="dashboard" onclick="window.location.href='{{ url_for( 'landing') }}';">Live</a>
+  <a href="#" id="analysis" onclick="window.location.href='{{ url_for( 'analysisLanding') }}';">Analysis</a>
+</div>
+
+      <div id="overlay">
+        <div id="progstat"></div>
+          <img src="{{ url_for('static', filename='/img/load.gif') }}" id="imgLoad" >
+        <div id="progress"></div>
+      </div>
+<div>
+        <div class="statesrow">
+            <div class="statescolumn" >
+                        <figure class="highcharts-figure">
+                                <div id="container"></div>
+                                <p class="highcharts-description">
+                                </p>
+                        </figure>
+
+            </div>
+             <div class="statescolumn" >
+                                    <div class="card">
+                            <h2>Total Individuals Analysed </h2>
+                            <span id="ageSampleSize"> </span>
+                            <h2>Average Age for Confirmed cases </h2>
+                            <span id="ageAverage"> </span>
+                             <h2>Total Deaths Analysed </h2>
+                            <span id="deathsSampleSize"> </span>
+                               <h2>Average Age of Deceased</h2>
+                            <span id="deceasedAgeAverage"> </span>
+                                    </div>
+             </div>
+        </div>
+</div>
+
+<div>
+        <div class="statesrow">
+            <div class="statescolumn" >
+                        <figure class="highcharts-figure">
+                                <div id="container2"></div>
+                                <p class="highcharts-description">
+                                </p>
+                        </figure>
+
+            </div>
+            <div class="statescolumn" >
+                        <figure class="highcharts-figure">
+                                <div id="container3"></div>
+                                <p class="highcharts-description">
+                                </p>
+                        </figure>
+
+            </div>
+        </div>
+
+
+
+
+</div>
+</body>
+</html>
