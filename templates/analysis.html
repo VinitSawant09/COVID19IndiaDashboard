@@ -18,7 +18,7 @@
 <center><h1><span id="websiteHeader">COVID-19 India Analysis</span></h1></center>
 <marquee><span id="slidingMarquee">Stay Home.!  Stay Safe..! Wash your hands.! Wear mask outdoors.!</span></marquee>
 <div id="mySidenav" class="sidenav">
-  <a href="#" id="dashboard" onclick="window.location.href='{{ url_for( 'landing') }}';">Live</a>
+  <a href="#" id="dashboard" onclick="window.location.href='{{ url_for( 'landing') }}';">Dashboard</a>
   <a href="#" id="analysis" onclick="window.location.href='{{ url_for( 'analysisLanding') }}';">Analysis</a>
 </div>
 
@@ -74,6 +74,57 @@
 
 
 
+
+</div>
+
+
+<div>
+        <div class="row">
+            <div class="column" >
+                        <figure class="highcharts-figure">
+                                <div id="container4"></div>
+                                <p class="highcharts-description">
+                                </p>
+                        </figure>
+
+            </div>
+            <div class="column" >
+                        <figure class="highcharts-figure">
+                                <div id="container5"></div>
+                                <p class="highcharts-description">
+                                </p>
+                        </figure>
+
+            </div>
+            <div class="column" >
+                        <figure class="highcharts-figure">
+                                <div id="container6"></div>
+                                <p class="highcharts-description">
+                                </p>
+                        </figure>
+
+            </div>
+
+            <div class="column" >
+                <br>
+                                    <div class="card">
+                            <h2>Total Individuals Considered for Analysis </h2>
+                            <span id="deathsGenderSampleSize"> </span>
+
+                                    </div>
+             </div>
+        </div>
+
+
+
+
+</div>
+
+<div>
+        <div class="statesrow">
+
+
+        </div>
 
 </div>
 </body>

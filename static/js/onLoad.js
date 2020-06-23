@@ -1,5 +1,6 @@
 var regionalStats = null;
 var totalDailyCount = null;
+var testHistory= null;
 function myFunction()
 {
  var confirmedCasesCountTill2Day = null;
@@ -194,6 +195,78 @@ function myFunction()
         }
        });
 
+    $.ajax(
+       {
+        url  : "https://api.covid19india.org/state_test_data.json",
+        contentType: "application/json",
+        type : 'GET',
+        contentType: false,
+        cache: false,
+        processData: false,
+        success: function(response){
+
+        if (response!=null)
+        {
+                   // console.log(response);
+                   testHistory=response;
+                   // var selectState = document.getElementById("selectState");
+                   // var  stateName = selectState.options[selectState.selectedIndex].value;
+                    var stateName = 'Andaman and Nicobar Islands'
+                    var data=[];
+                    /*
+                    if(stateName == 'Andaman and Nicobar Islands')
+                    {*/
+                   // var selectBox = document.getElementById("selectDays");
+                 //   var days = selectBox.options[selectBox.selectedIndex].value;
+                    /*
+                    var startDay = 0
+                    if(days!=0)
+                    {
+                       startDay= totalDailyCount.length- days;
+                    }*/
+                  //  for (var i=startDay; i<totalDailyCount.length ;i++)
+                   for (var i=0; i<response.states_tested_data.length ;i++)
+                    {
+                     if(stateName == response.states_tested_data[i].state)
+                     {
+                        var dateParts = response.states_tested_data[i].updatedon.split("/");
+                        var x = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
+                        var y = parseInt(response.states_tested_data[i].totaltested);
+                        var objA= {x,y}
+                        data.push(objA);
+
+                      }
+                    }
+                    console.log(data);
+                  //  }
+
+                                var chart = new CanvasJS.Chart("chartContainer1", {
+                                    animationEnabled: true,
+                                    title:{
+                                        text: "Testing by Date"
+                                    },
+                                    axisY: {
+                                        title: "Count",
+                                        valueFormatString: "#"
+
+                                    },
+                                    data: [{
+                                        yValueFormatString: "#,### tests",
+                                        xValueFormatString: "DD-MM",
+                                        type: "spline",
+                                        dataPoints: data
+                                    }]
+                                });
+                                chart.render();
+
+        }
+        else
+        {
+            console.log("Error while fetching testing api..!!!");
+        }
+
+        }
+       });
 
 
 
@@ -848,5 +921,50 @@ var chart = new CanvasJS.Chart("chartContainer", {
 	}]
 });
 chart.render();
+
+}
+
+   function selectStateTesting()
+  {
+        alert("helllo");
+
+                      var stateName = "";
+                      var selectBox = document.getElementById("selectStateTest");
+                      stateName = selectBox.options[selectBox.selectedIndex].value;
+                    var data=[];
+
+
+                   for (var i=0; i<testHistory.states_tested_data.length ;i++)
+                    {
+                     if(stateName == testHistory.states_tested_data[i].state)
+                     {
+                        var dateParts = testHistory.states_tested_data[i].updatedon.split("/");
+                        var x = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
+                        var y = parseInt(testHistory.states_tested_data[i].totaltested);
+                        var objA= {x,y}
+                        data.push(objA);
+
+                      }
+                    }
+                    console.log(data);
+
+                                var chart = new CanvasJS.Chart("chartContainer1", {
+                                    animationEnabled: true,
+                                    title:{
+                                        text: "Testing by Date"
+                                    },
+                                    axisY: {
+                                        title: "Count",
+                                        valueFormatString: "#"
+
+                                    },
+                                    data: [{
+                                        yValueFormatString: "#,### tests",
+                                        xValueFormatString: "DD-MM",
+                                        type: "spline",
+                                        dataPoints: data
+                                    }]
+                                });
+                                chart.render();
 
 }

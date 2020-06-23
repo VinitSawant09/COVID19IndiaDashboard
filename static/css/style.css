@@ -70,7 +70,7 @@ color:red;
 font-size: 3em;
 }
 
-#totalDeaths,#mortalityRate,#deathsToday, #deathsSampleSize,#deceasedAgeAverage
+#totalDeaths,#mortalityRate,#deathsToday, #deathsSampleSize,#deceasedAgeAverage,#deathsGenderSampleSize
 {
 font-family: serif;
 color:#696969;
@@ -275,7 +275,7 @@ body {
   padding: 15px;
   width: 100px;
   text-decoration: none;
-  font-size: 20px;
+  font-size: 1em;
   color: white;
   border-radius: 0 5px 5px 0;
 }
