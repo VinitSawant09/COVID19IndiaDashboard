@@ -926,7 +926,7 @@ chart.render();
 
    function selectStateTesting()
   {
-        alert("helllo");
+
 
                       var stateName = "";
                       var selectBox = document.getElementById("selectStateTest");

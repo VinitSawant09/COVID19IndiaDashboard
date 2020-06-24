@@ -18,6 +18,11 @@ def analysisLanding():
      session["username"] = ''
      return render_template('analysis.html')
 
+@app.route('/stateAnalysisLanding')
+def stateAnalysisLanding():
+     session["username"] = ''
+     return render_template('stateAnalysis.html')
+
 #Error Handling
 @app.errorhandler(404)
 # inbuilt function which takes error as parameter

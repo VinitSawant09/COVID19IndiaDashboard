@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>COVID-19 India Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+     <script src="{{ url_for('static', filename='/js/stateAnalysis.js') }}"></script>
+</head>
+<body  onload="myFunction()">
+<center><h1><span id="websiteHeader">COVID-19 India Detailed Analysis</span></h1></center>
+<marquee><span id="slidingMarquee">Stay Home.!  Stay Safe..! Wash your hands.! Wear mask outdoors.!</span></marquee>
+<div id="mySidenav" class="sidenav">
+  <a href="#" id="dashboard" onclick="window.location.href='{{ url_for( 'landing') }}';">Dashboard</a>
+  <a href="#" id="analysis" onclick="window.location.href='{{ url_for( 'analysisLanding') }}';">Analysis</a>
+    <a href="#" id="stateanalysis" onclick="window.location.href='{{ url_for( 'stateAnalysisLanding') }}';">Geographical</a>
+</div>
+
+<div class="graphrow">
+    <div class="graphcolumn" >
+
+        <div id="sectionWiseCase" style="height: 300px; width: 100%;"></div>
+    </div>
+
+    <div class="graphcolumn" >
+
+        <div id="airportWiseCase" style="height: 300px; width: 100%;"></div>
+    </div>
+</div>
+<br>
+<br>
+<div class="graphrow">
+    <div class="graphcolumn" >
+
+        <div id="sectionWiseDeaths" style="height: 300px; width: 100%;"></div>
+    </div>
+
+    <div class="graphcolumn" >
+
+        <div id="airportWiseDeaths" style="height: 300px; width: 100%;"></div>
+    </div>
+</div>
+<br>
+<br>
+<div class="graphrow">
+    <div class="graphcolumn" >
+
+        <div id="sectionWiseRecoveries" style="height: 300px; width: 100%;"></div>
+    </div>
+
+    <div class="graphcolumn" >
+
+        <div id="airportWiseRecoveries" style="height: 300px; width: 100%;"></div>
+    </div>
+</div>
+
+
+</body>
+</html>
