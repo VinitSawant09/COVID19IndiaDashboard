@@ -4,6 +4,7 @@ var zoneRecoveredStats =[0,0,0,0,0,0,0];
 var airportConfirmedStats=[0,0,0,0,0];
 var airportDeathStats=[0,0,0,0,0];
 var airportRecoveredStats=[0,0,0,0,0];
+var entireData=[];
 function myFunction()
 {
 
@@ -18,6 +19,7 @@ $.ajax(
         success: function(response){
         console.log(response.data.regional);
         var arrState= response.data.regional;
+        entireData = arrState;
         for (var i=0;i<arrState.length;i++)
         {
             if(arrState[i].loc == 'Tamil Nadu'
@@ -106,6 +108,7 @@ $.ajax(
                  airportRecoveredStats[4] = airportRecoveredStats[4] + arrState[i].discharged;
                 }
          else if(arrState[i].loc == 'Maharashtra'
+                 || arrState[i].loc == 'Andhra Pradesh'
                 )
                 {
 
@@ -517,6 +520,612 @@ $.ajax(
                     });
         }
         });
+
+
+
+}
+
+function selectZone()
+{
+        //alert("Hello");
+        //console.log(entireData);
+        var selectBox = document.getElementById("selectZone");
+        var zone = selectBox.options[selectBox.selectedIndex].value;
+        var data = [];
+        var data1 = [];
+        var data2 =[];
+       if (zone == 'Islands')
+       {
+        for (var i=0; i<entireData.length; i++)
+        {
+            if(entireData[i].loc == 'Andaman and Nicobar Islands')
+            {
+                var name = entireData[i].loc;
+                var y = entireData[i].totalConfirmed;
+                var objA= {name,y}
+                data.push(objA);
+
+                 var name = entireData[i].loc;
+                var y = entireData[i].deaths;
+                var objA= {name,y}
+                data1.push(objA);
+
+                 var name = entireData[i].loc;
+                var y = entireData[i].discharged;
+                var objA= {name,y}
+                data2.push(objA);
+
+            }
+        }
+        }
+        else if (zone == 'Central')
+        {
+                 for (var i=0; i<entireData.length; i++)
+             {
+                if(entireData[i].loc == 'Madhya Pradesh')
+                {
+                    var name = entireData[i].loc;
+                    var y = entireData[i].totalConfirmed;
+                    var objA= {name,y}
+                    data.push(objA);
+
+                     var name = entireData[i].loc;
+                var y = entireData[i].deaths;
+                var objA= {name,y}
+                data1.push(objA);
+
+                 var name = entireData[i].loc;
+                var y = entireData[i].discharged;
+                var objA= {name,y}
+                data2.push(objA);
+
+                }
+             }
+        }
+        else if (zone == 'West')
+        {
+                 for (var i=0; i<entireData.length; i++)
+             {
+                if(entireData[i].loc == 'Gujarat'
+                || entireData[i].loc == 'Maharashtra'
+                || entireData[i].loc == 'Goa'
+                || entireData[i].loc == 'Dadra and Nagar Haveli and Daman and Diu' )
+                {
+                    var name = entireData[i].loc;
+                    var y = entireData[i].totalConfirmed;
+                    var objA= {name,y}
+                    data.push(objA);
+
+                     var name = entireData[i].loc;
+                var y = entireData[i].deaths;
+                var objA= {name,y}
+                data1.push(objA);
+
+                 var name = entireData[i].loc;
+                var y = entireData[i].discharged;
+                var objA= {name,y}
+                data2.push(objA);
+
+                }
+             }
+        }
+        else if (zone == 'North East')
+        {
+                 for (var i=0; i<entireData.length; i++)
+             {
+                if(entireData[i].loc == 'Assam'
+                || entireData[i].loc == 'Manipur'
+                || entireData[i].loc == 'Arunachal Pradesh'
+                || entireData[i].loc == 'Meghalaya'
+                || entireData[i].loc == 'Mizoram'
+                || entireData[i].loc == 'Nagaland'
+                || entireData[i].loc == 'Sikkim'
+                || entireData[i].loc == 'Tripura'
+                )
+                {
+                    var name = entireData[i].loc;
+                    var y = entireData[i].totalConfirmed;
+                    var objA= {name,y}
+                    data.push(objA);
+
+                     var name = entireData[i].loc;
+                var y = entireData[i].deaths;
+                var objA= {name,y}
+                data1.push(objA);
+
+                 var name = entireData[i].loc;
+                var y = entireData[i].discharged;
+                var objA= {name,y}
+                data2.push(objA);
+
+                }
+             }
+
+        }
+        else if (zone == 'South')
+        {
+                 for (var i=0; i<entireData.length; i++)
+             {
+                if(entireData[i].loc == 'Tamil Nadu'
+                || entireData[i].loc == 'Kerala'
+                || entireData[i].loc == 'Karnataka'
+                || entireData[i].loc == 'Puducherry'
+                || entireData[i].loc == 'Andhra Pradesh'
+                || entireData[i].loc == 'Telangana'
+                )
+                {
+                    var name = entireData[i].loc;
+                    var y = entireData[i].totalConfirmed;
+                    var objA= {name,y}
+                    data.push(objA);
+
+                     var name = entireData[i].loc;
+                var y = entireData[i].deaths;
+                var objA= {name,y}
+                data1.push(objA);
+
+                 var name = entireData[i].loc;
+                var y = entireData[i].discharged;
+                var objA= {name,y}
+                data2.push(objA);
+
+                }
+             }
+
+
+        }
+         else if (zone == 'North')
+         {
+            for (var i=0; i<entireData.length; i++)
+             {
+                if(entireData[i].loc == 'Delhi'
+                || entireData[i].loc == 'Uttar Pradesh'
+                || entireData[i].loc == 'Rajasthan'
+                || entireData[i].loc == 'Himachal Pradesh'
+                || entireData[i].loc == 'Jammu and Kashmir'
+                || entireData[i].loc == 'Punjab'
+                 || entireData[i].loc == 'Bihar'
+                || entireData[i].loc == 'Uttarakhand'
+                || entireData[i].loc == 'Jharkhand'
+                || entireData[i].loc == 'Haryana'
+                || entireData[i].loc == 'Chandigarh'
+                || entireData[i].loc == 'Chhattisgarh'
+                || entireData[i].loc == 'Ladakh'
+                )
+                {
+                    var name = entireData[i].loc;
+                    var y = entireData[i].totalConfirmed;
+                    var objA= {name,y}
+                    data.push(objA);
+
+                     var name = entireData[i].loc;
+                var y = entireData[i].deaths;
+                var objA= {name,y}
+                data1.push(objA);
+
+                 var name = entireData[i].loc;
+                var y = entireData[i].discharged;
+                var objA= {name,y}
+                data2.push(objA);
+
+                }
+             }
+
+
+
+         }
+          else if (zone == 'East')
+         {
+            for (var i=0; i<entireData.length; i++)
+             {
+                if(entireData[i].loc == 'Odisha'
+                || entireData[i].loc == 'West Bengal'
+                )
+                {
+                    var name = entireData[i].loc;
+                    var y = entireData[i].totalConfirmed;
+                    var objA= {name,y}
+                    data.push(objA);
+
+                     var name = entireData[i].loc;
+                var y = entireData[i].deaths;
+                var objA= {name,y}
+                data1.push(objA);
+
+                 var name = entireData[i].loc;
+                var y = entireData[i].discharged;
+                var objA= {name,y}
+                data2.push(objA);
+
+                }
+             }
+
+         }
+
+        //Form new chart based on specific zone
+
+         Highcharts.chart('sectionWiseCase', {
+                        chart: {
+                            plotBackgroundColor: null,
+                            plotBorderWidth: null,
+                            plotShadow: false,
+                            type: 'pie'
+                        },
+                        title: {
+                            text: 'Confirmed Cases distribution by specific zone in India'
+                        },
+                        tooltip: {
+                            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                        },
+                        accessibility: {
+                            point: {
+                                valueSuffix: '%'
+                            }
+                        },
+                        plotOptions: {
+                            pie: {
+                                allowPointSelect: true,
+                                cursor: 'pointer',
+                                dataLabels: {
+                                    enabled: true,
+                                    format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                                }
+                            }
+                        },
+                        series: [{
+                            name: 'Count',
+                            colorByPoint: true,
+                            data: data
+                        }]
+                    });
+
+         Highcharts.chart('sectionWiseDeaths', {
+                        chart: {
+                            plotBackgroundColor: null,
+                            plotBorderWidth: null,
+                            plotShadow: false,
+                            type: 'pie'
+                        },
+                        title: {
+                            text: 'Deaths distribution by specific zone in India'
+                        },
+                        tooltip: {
+                            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                        },
+                        accessibility: {
+                            point: {
+                                valueSuffix: '%'
+                            }
+                        },
+                        plotOptions: {
+                            pie: {
+                                allowPointSelect: true,
+                                cursor: 'pointer',
+                                dataLabels: {
+                                    enabled: true,
+                                    format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                                }
+                            }
+                        },
+                        series: [{
+                            name: 'Count',
+                            colorByPoint: true,
+                            data: data1
+                        }]
+                    });
+
+           Highcharts.chart('sectionWiseRecoveries', {
+                        chart: {
+                            plotBackgroundColor: null,
+                            plotBorderWidth: null,
+                            plotShadow: false,
+                            type: 'pie'
+                        },
+                        title: {
+                            text: 'Recovery distribution by specific zone in India'
+                        },
+                        tooltip: {
+                            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                        },
+                        accessibility: {
+                            point: {
+                                valueSuffix: '%'
+                            }
+                        },
+                        plotOptions: {
+                            pie: {
+                                allowPointSelect: true,
+                                cursor: 'pointer',
+                                dataLabels: {
+                                    enabled: true,
+                                    format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                                }
+                            }
+                        },
+                        series: [{
+                            name: 'Count',
+                            colorByPoint: true,
+                            data: data2
+                        }]
+                    });
+
+
+
+}
+
+function selectAirports()
+{
+        var selectBox = document.getElementById("selectAirports");
+        var airports = selectBox.options[selectBox.selectedIndex].value;
+        var data = [];
+        var data1 = [];
+        var data2 =[];
+       if (airports == '4')
+       {
+            for (var i=0; i<entireData.length; i++)
+             {
+              if(entireData[i].loc == 'Tamil Nadu'
+                || entireData[i].loc == 'Kerala'
+              )
+              {
+                 var name = entireData[i].loc;
+                 var y = entireData[i].totalConfirmed;
+                 var objA= {name,y}
+                 data.push(objA);
+
+                 var name = entireData[i].loc;
+                 var y = entireData[i].deaths;
+                 var objA= {name,y}
+                 data1.push(objA);
+
+                 var name = entireData[i].loc;
+                 var y = entireData[i].discharged;
+                 var objA= {name,y}
+                 data2.push(objA);
+
+              }
+
+             }
+       }
+       else if (airports == '3')
+       {
+            for (var i=0; i<entireData.length; i++)
+             {
+              if(entireData[i].loc == 'Maharashtra'
+              || entireData[i].loc == 'Andhra Pradesh'
+
+              )
+              {
+                 var name = entireData[i].loc;
+                 var y = entireData[i].totalConfirmed;
+                 var objA= {name,y}
+                 data.push(objA);
+
+                 var name = entireData[i].loc;
+                 var y = entireData[i].deaths;
+                 var objA= {name,y}
+                 data1.push(objA);
+
+                 var name = entireData[i].loc;
+                 var y = entireData[i].discharged;
+                 var objA= {name,y}
+                 data2.push(objA);
+
+              }
+
+             }
+       }
+        else if (airports == '2')
+       {
+         for (var i=0; i<entireData.length; i++)
+         {
+                if(    entireData[i].loc == 'Bihar'
+                || entireData[i].loc == 'Gujarat'
+                || entireData[i].loc == 'Karnataka'
+                || entireData[i].loc == 'Uttar Pradesh'
+                || entireData[i].loc == 'West Bengal'
+                || entireData[i].loc == 'Telangana')
+                {
+                var name = entireData[i].loc;
+                 var y = entireData[i].totalConfirmed;
+                 var objA= {name,y}
+                 data.push(objA);
+
+                 var name = entireData[i].loc;
+                 var y = entireData[i].deaths;
+                 var objA= {name,y}
+                 data1.push(objA);
+
+                 var name = entireData[i].loc;
+                 var y = entireData[i].discharged;
+                 var objA= {name,y}
+                 data2.push(objA);
+                }
+         }
+       }
+       else if (airports == '1')
+       {
+         for (var i=0; i<entireData.length; i++)
+         {
+                if(    entireData[i].loc == 'Assam'
+                || entireData[i].loc == 'Delhi'
+                || entireData[i].loc == 'Goa'
+                || entireData[i].loc == 'Madhya Pradesh'
+                || entireData[i].loc == 'Manipur'
+                || entireData[i].loc == 'Telangana'
+                || entireData[i].loc == 'Odisha'
+                || entireData[i].loc == 'Rajasthan'
+                || entireData[i].loc == 'Punjab'
+                || entireData[i].loc == 'Chandigarh'
+                || entireData[i].loc == 'Jammu and Kashmir')
+                {
+                var name = entireData[i].loc;
+                 var y = entireData[i].totalConfirmed;
+                 var objA= {name,y}
+                 data.push(objA);
+
+                 var name = entireData[i].loc;
+                 var y = entireData[i].deaths;
+                 var objA= {name,y}
+                 data1.push(objA);
+
+                 var name = entireData[i].loc;
+                 var y = entireData[i].discharged;
+                 var objA= {name,y}
+                 data2.push(objA);
+                }
+         }
+       }
+       else if (airports == '0')
+       {
+         for (var i=0; i<entireData.length; i++)
+         {
+                if(    entireData[i].loc == 'Ladakh'
+                || entireData[i].loc == 'Jharkhand'
+                || entireData[i].loc == 'Haryana'
+                || entireData[i].loc == 'Chattisgarh'
+                || entireData[i].loc == 'Uttarakhand'
+                || entireData[i].loc == 'Himachal Pradesh'
+                || entireData[i].loc == 'Arunachal Pradesh'
+                || entireData[i].loc == 'Meghalaya'
+                || entireData[i].loc == 'Mizoram'
+                || entireData[i].loc == 'Nagaland'
+                || entireData[i].loc == 'Sikkim'
+                || entireData[i].loc == 'Tripura'
+                || entireData[i].loc == 'Andaman and Nicobar Islands '
+                || entireData[i].loc == 'Dadra and Nagar Haveli and Daman and Diu '
+
+                )
+                {
+                var name = entireData[i].loc;
+                 var y = entireData[i].totalConfirmed;
+                 var objA= {name,y}
+                 data.push(objA);
+
+                 var name = entireData[i].loc;
+                 var y = entireData[i].deaths;
+                 var objA= {name,y}
+                 data1.push(objA);
+
+                 var name = entireData[i].loc;
+                 var y = entireData[i].discharged;
+                 var objA= {name,y}
+                 data2.push(objA);
+                }
+         }
+       }
+
+
+       //Form new chart based on specific number of airports
+
+         Highcharts.chart('airportWiseCase', {
+                        chart: {
+                            plotBackgroundColor: null,
+                            plotBorderWidth: null,
+                            plotShadow: false,
+                            type: 'pie'
+                        },
+                        title: {
+                            text: 'Confirmed Cases distribution by number of airports in India'
+                        },
+                        tooltip: {
+                            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                        },
+                        accessibility: {
+                            point: {
+                                valueSuffix: '%'
+                            }
+                        },
+                        plotOptions: {
+                            pie: {
+                                allowPointSelect: true,
+                                cursor: 'pointer',
+                                dataLabels: {
+                                    enabled: true,
+                                    format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                                }
+                            }
+                        },
+                        series: [{
+                            name: 'Count',
+                            colorByPoint: true,
+                            data: data
+                        }]
+                    });
+
+         Highcharts.chart('airportWiseDeaths', {
+                        chart: {
+                            plotBackgroundColor: null,
+                            plotBorderWidth: null,
+                            plotShadow: false,
+                            type: 'pie'
+                        },
+                        title: {
+                            text: 'Deaths distribution by number of airports in India'
+                        },
+                        tooltip: {
+                            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                        },
+                        accessibility: {
+                            point: {
+                                valueSuffix: '%'
+                            }
+                        },
+                        plotOptions: {
+                            pie: {
+                                allowPointSelect: true,
+                                cursor: 'pointer',
+                                dataLabels: {
+                                    enabled: true,
+                                    format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                                }
+                            }
+                        },
+                        series: [{
+                            name: 'Count',
+                            colorByPoint: true,
+                            data: data1
+                        }]
+                    });
+
+           Highcharts.chart('airportWiseRecoveries', {
+                        chart: {
+                            plotBackgroundColor: null,
+                            plotBorderWidth: null,
+                            plotShadow: false,
+                            type: 'pie'
+                        },
+                        title: {
+                            text: 'Recovery distribution by number of airports in India'
+                        },
+                        tooltip: {
+                            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                        },
+                        accessibility: {
+                            point: {
+                                valueSuffix: '%'
+                            }
+                        },
+                        plotOptions: {
+                            pie: {
+                                allowPointSelect: true,
+                                cursor: 'pointer',
+                                dataLabels: {
+                                    enabled: true,
+                                    format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                                }
+                            }
+                        },
+                        series: [{
+                            name: 'Count',
+                            colorByPoint: true,
+                            data: data2
+                        }]
+                    });
+
+
+
+
 
 
 
