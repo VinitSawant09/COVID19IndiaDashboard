@@ -23,6 +23,14 @@ def stateAnalysisLanding():
      session["username"] = ''
      return render_template('stateAnalysis.html')
 
+@app.route("/getMultiLineSeries/", methods=['POST'])
+def sendPassword():
+    print("inside getMultiLineSeries")
+    userdata = request.get_json()
+    print(len(userdata))
+    print(userdata['html_data'])
+    return '0'
+
 #Error Handling
 @app.errorhandler(404)
 # inbuilt function which takes error as parameter

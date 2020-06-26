@@ -1,6 +1,7 @@
 var regionalStats = null;
 var totalDailyCount = null;
 var testHistory= null;
+var responseF= null;
 function myFunction()
 {
  var confirmedCasesCountTill2Day = null;
@@ -119,12 +120,13 @@ function myFunction()
 
         if (response!=null)
         {
-          console.log(response);
-          var data= response.data;
+          //console.log(response);
+          var newdata= response.data;
           totalDailyCount = response.data;
-          var numberOfDays= data.length;
+          responseF=response;
+          var numberOfDays= newdata.length;
 
-          var deathsToday= deathCountTill2Day - data[numberOfDays-1].summary.deaths;
+          var deathsToday= deathCountTill2Day - newdata[numberOfDays-1].summary.deaths;
           if(deathsToday<0)
           {
           deathsToday = 0;
@@ -132,7 +134,7 @@ function myFunction()
           document.getElementById("deathsToday").innerHTML="+"+deathsToday;
 
 
-          var recoveredToday= recoveryCountTill2Day - data[numberOfDays-1].summary.discharged;
+          var recoveredToday= recoveryCountTill2Day - newdata[numberOfDays-1].summary.discharged;
           if(recoveredToday<0)
           {
           recoveredToday = 0;
@@ -142,7 +144,7 @@ function myFunction()
 
 
 
-          var confirmedToday= confirmedCasesCountTill2Day - data[numberOfDays-1].summary.total;
+          var confirmedToday= confirmedCasesCountTill2Day - newdata[numberOfDays-1].summary.total;
           if(confirmedToday<0)
           {
           confirmedToday = 0;
@@ -157,7 +159,308 @@ function myFunction()
 
         splineConfirmed();
 
+        console.log(totalDailyCount);
+        var historyCases = [];
+        var historyDeaths = [];
+        var historyRecovery = [];
+        console.log(totalDailyCount[0].regional.length);
+        for (var i=0; i < totalDailyCount.length;i++)
+        {
+            for (var j=0;j<totalDailyCount[i].regional.length;j++)
+            {
+                 if (totalDailyCount[i].regional[j].loc == 'Telengana')
+                 {
+                   totalDailyCount[i].regional[j].loc = 'Telangana'
+                 }
+                 else if (totalDailyCount[i].regional[j].loc == 'Nagaland#')
+                 {
+                   totalDailyCount[i].regional[j].loc = 'Nagaland'
+                 }
+                 else if (totalDailyCount[i].regional[j].loc == 'Madhya Pradesh#')
+                 {
+                   totalDailyCount[i].regional[j].loc = 'Madhya Pradesh'
+                 }
+                 else if (totalDailyCount[i].regional[j].loc == 'Jharkhand#')
+                 {
+                   totalDailyCount[i].regional[j].loc = 'Jharkhand'
+                 }
+                 else if (totalDailyCount[i].regional[j].loc == 'Dadar Nagar Haveli' || totalDailyCount[i].regional[j].loc =='Dadar and Nagar Haveli and Daman and Diu')
+                 {
+                   totalDailyCount[i].regional[j].loc = 'Dadra and Nagar Haveli and Daman and Diu'
+                 }
+            }
         }
+       //confirmed cases multi line chart
+        for (var i=0; i < totalDailyCount.length;i++)
+        {
+             //console.log(historyCases);
+             for (var j=0;j<totalDailyCount[i].regional.length;j++)
+            {
+                var location = totalDailyCount[i].regional[j].loc;
+                var count = totalDailyCount[i].regional[j].totalConfirmed;
+                var date =  totalDailyCount[i].day;
+                var found = 0;
+                 if (j== 0 && i==0)
+                 {
+                 found =0;
+                 }
+                 else
+                 {
+                  for (var k =0;k<historyCases.length;k++)
+                 {
+                   if(historyCases[k].name == location)
+                   {
+                   found=1;
+                   var datapoints = historyCases[k].dataPoints;
+                   //console.log(olddata);
+                   var x = new Date(date);
+                   var y = count;
+                   var xyobj= {x,y};
+                   datapoints.push(xyobj);
+                   historyCases[k].dataPoints=datapoints;
+
+                   }
+
+                }
+                }
+                 if(found==0)
+                    {
+                           console.log("newly found location");
+                            var type = "line";
+                            var axisYType= "secondary";
+                            var name= location;
+                            var showInLegend= true;
+                            var markerSize= 0;
+                            var yValueFormatString= "#,###";
+                            var x = new Date(totalDailyCount[i].day);
+                            var y = count;
+                            var xyobj= {x,y};
+                            var dataPoints =[];
+                            dataPoints.push(xyobj);
+                            var finalObjects = {type,axisYType,name,showInLegend,markerSize,yValueFormatString,dataPoints};
+                            historyCases.push(finalObjects);
+
+                    }
+             }
+         }
+
+         //deaths multi line chart
+        for (var i=0; i < totalDailyCount.length;i++)
+        {
+             //console.log(historyCases);
+             for (var j=0;j<totalDailyCount[i].regional.length;j++)
+            {
+                var location = totalDailyCount[i].regional[j].loc;
+                var count = totalDailyCount[i].regional[j].deaths;
+                var date =  totalDailyCount[i].day;
+                var found = 0;
+                 if (j== 0 && i==0)
+                 {
+                 found =0;
+                 }
+                 else
+                 {
+                  for (var k =0;k<historyDeaths.length;k++)
+                 {
+                   if(historyDeaths[k].name == location)
+                   {
+                   found=1;
+                   var datapoints = historyDeaths[k].dataPoints;
+                   //console.log(olddata);
+                   var x = new Date(date);
+                   var y = count;
+                   var xyobj= {x,y};
+                   datapoints.push(xyobj);
+                   historyDeaths[k].dataPoints=datapoints;
+
+                   }
+
+                }
+                }
+                 if(found==0)
+                    {
+                           console.log("newly found location");
+                            var type = "line";
+                            var axisYType= "secondary";
+                            var name= location;
+                            var showInLegend= true;
+                            var markerSize= 0;
+                            var yValueFormatString= "#,###";
+                            var x = new Date(totalDailyCount[i].day);
+                            var y = count;
+                            var xyobj= {x,y};
+                            var dataPoints =[];
+                            dataPoints.push(xyobj);
+                            var finalObjects = {type,axisYType,name,showInLegend,markerSize,yValueFormatString,dataPoints};
+                            historyDeaths.push(finalObjects);
+
+                    }
+             }
+         }
+
+
+        var chart = new CanvasJS.Chart("allStatesConfirmed", {
+	title: {
+		text: "Confirmed Cases Growth"
+	},
+	axisX: {
+		valueFormatString: "DD MM YYYY"
+	},
+	axisY2: {
+		title: "Confirmed Cases",
+	},
+	toolTip: {
+		shared: true
+	},
+	legend: {
+		cursor: "pointer",
+		verticalAlign: "top",
+		horizontalAlign: "center",
+		dockInsidePlotArea: true,
+		itemclick: toogleDataSeries
+	},
+	data:  historyCases
+
+});
+chart.render();
+
+function toogleDataSeries(e){
+	if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+		e.dataSeries.visible = false;
+	} else{
+		e.dataSeries.visible = true;
+	}
+	chart.render();
+	}
+
+	 var chart = new CanvasJS.Chart("allStatesDeaths", {
+	title: {
+		text: "Deaths Growth"
+	},
+	axisX: {
+		valueFormatString: "DD MM YYYY"
+	},
+	axisY2: {
+		title: "Deaths",
+	},
+	toolTip: {
+		shared: true
+	},
+	legend: {
+		cursor: "pointer",
+		verticalAlign: "top",
+		horizontalAlign: "center",
+		dockInsidePlotArea: true,
+		itemclick: toogleDataSeries
+	},
+	data:  historyDeaths
+
+});
+chart.render();
+
+function toogleDataSeries(e){
+	if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+		e.dataSeries.visible = false;
+	} else{
+		e.dataSeries.visible = true;
+	}
+	chart.render();
+
+}
+
+
+ //Recoveries multi line chart
+        for (var i=0; i < totalDailyCount.length;i++)
+        {
+             //console.log(historyCases);
+             for (var j=0;j<totalDailyCount[i].regional.length;j++)
+            {
+                var location = totalDailyCount[i].regional[j].loc;
+                var count = totalDailyCount[i].regional[j].discharged;
+                var date =  totalDailyCount[i].day;
+                var found = 0;
+                 if (j== 0 && i==0)
+                 {
+                 found =0;
+                 }
+                 else
+                 {
+                  for (var k =0;k<historyRecovery.length;k++)
+                 {
+                   if(historyRecovery[k].name == location)
+                   {
+                   found=1;
+                   var datapoints = historyRecovery[k].dataPoints;
+                   //console.log(olddata);
+                   var x = new Date(date);
+                   var y = count;
+                   var xyobj= {x,y};
+                   datapoints.push(xyobj);
+                   historyRecovery[k].dataPoints=datapoints;
+
+                   }
+
+                }
+                }
+                 if(found==0)
+                    {
+                           console.log("newly found location");
+                            var type = "line";
+                            var axisYType= "secondary";
+                            var name= location;
+                            var showInLegend= true;
+                            var markerSize= 0;
+                            var yValueFormatString= "#,###";
+                            var x = new Date(totalDailyCount[i].day);
+                            var y = count;
+                            var xyobj= {x,y};
+                            var dataPoints =[];
+                            dataPoints.push(xyobj);
+                            var finalObjects = {type,axisYType,name,showInLegend,markerSize,yValueFormatString,dataPoints};
+                            historyRecovery.push(finalObjects);
+
+                    }
+             }
+         }
+
+
+        var chart = new CanvasJS.Chart("allStatesRecoveries", {
+	title: {
+		text: "Recoveries Growth"
+	},
+	axisX: {
+		valueFormatString: "DD MM YYYY"
+	},
+	axisY2: {
+		title: " Cases",
+	},
+	toolTip: {
+		shared: true
+	},
+	legend: {
+		cursor: "pointer",
+		verticalAlign: "top",
+		horizontalAlign: "center",
+		dockInsidePlotArea: true,
+		itemclick: toogleDataSeries
+	},
+	data:  historyRecovery
+
+});
+chart.render();
+
+function toogleDataSeries(e){
+	if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+		e.dataSeries.visible = false;
+	} else{
+		e.dataSeries.visible = true;
+	}
+	chart.render();
+	}
+
+
+}
+
        });
 
    $.ajax(
@@ -207,10 +510,9 @@ function myFunction()
 
         if (response!=null)
         {
-                   // console.log(response);
+                   //console.log(response);
                    testHistory=response;
-                   // var selectState = document.getElementById("selectState");
-                   // var  stateName = selectState.options[selectState.selectedIndex].value;
+
                     var stateName = 'Andaman and Nicobar Islands'
                     var data=[];
                     /*
@@ -237,7 +539,7 @@ function myFunction()
 
                       }
                     }
-                    console.log(data);
+                    //console.log(data);
                   //  }
 
                                 var chart = new CanvasJS.Chart("chartContainer1", {
@@ -267,6 +569,10 @@ function myFunction()
 
         }
        });
+
+
+
+
 
 
 
