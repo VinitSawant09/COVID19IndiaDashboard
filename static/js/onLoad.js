@@ -226,7 +226,7 @@ function myFunction()
                 }
                  if(found==0)
                     {
-                           console.log("newly found location");
+
                             var type = "line";
                             var axisYType= "secondary";
                             var name= location;
@@ -280,7 +280,7 @@ function myFunction()
                 }
                  if(found==0)
                     {
-                           console.log("newly found location");
+
                             var type = "line";
                             var axisYType= "secondary";
                             var name= location;
@@ -405,7 +405,7 @@ function toogleDataSeries(e){
                 }
                  if(found==0)
                     {
-                           console.log("newly found location");
+
                             var type = "line";
                             var axisYType= "secondary";
                             var name= location;
@@ -1010,7 +1010,11 @@ function splineConfirmed()
 {
 var selectState = document.getElementById("selectState");
 var  stateName = selectState.options[selectState.selectedIndex].value;
+var selectType = document.getElementById("selectType");
+var  graphType = selectType.options[selectType.selectedIndex].value;
 var data=[];
+if (graphType == 'Linear')
+{
 if(stateName == 'All States')
 {
 var selectBox = document.getElementById("selectDays");
@@ -1081,6 +1085,92 @@ var chart = new CanvasJS.Chart("chartContainer", {
 	}]
 });
 chart.render();
+}
+else
+{
+
+var selectState = document.getElementById("selectState");
+var  stateName = selectState.options[selectState.selectedIndex].value;
+var dataDates=[];
+var dataCount=[];
+if(stateName == 'All States')
+{
+var selectBox = document.getElementById("selectDays");
+var days = selectBox.options[selectBox.selectedIndex].value;
+
+var startDay = 0
+if(days!=0)
+{
+   startDay= totalDailyCount.length- days;
+}
+for (var i=startDay; i<totalDailyCount.length ;i++)
+{
+var x = new Date(totalDailyCount[i].day);
+var y = totalDailyCount[i].summary.total;
+dataDates.push(x);
+dataCount.push(y);
+}
+}
+
+else
+   {
+
+        var selectBox = document.getElementById("selectDays");
+        var days = selectBox.options[selectBox.selectedIndex].value;
+
+        var startDay = 0
+        if(days!=0)
+        {
+           startDay= totalDailyCount.length- days;
+        }
+            for (var i=startDay; i<totalDailyCount.length ;i++)
+            {
+               var day= totalDailyCount[i].day;
+               for (var j=0;j<totalDailyCount[i].regional.length;j++ )
+               {
+                  if(stateName==totalDailyCount[i].regional[j].loc)
+                  {
+                  var x = new Date(day);
+                   var y = totalDailyCount[i].regional[j].totalConfirmed;
+                   dataDates.push(x);
+                   dataCount.push(y);
+                  }
+
+                }
+            }
+
+   }
+
+Highcharts.chart("chartContainer", {
+	animationEnabled: true,
+	title:{
+		text: "Confirmed Cases By Date"
+	},
+
+   xAxis: {
+        categories: dataDates
+    },
+
+    yAxis: {
+        type: 'logarithmic',
+        minorTickInterval: 'auto'
+    },
+
+    series: [{
+        data: dataCount
+    }]
+
+
+});
+
+
+
+
+
+}
+
+
+
 
 }
 
@@ -1090,6 +1180,10 @@ function splineDeaths()
 var selectState = document.getElementById("selectState");
 var  stateName = selectState.options[selectState.selectedIndex].value;
 var data=[];
+var selectType = document.getElementById("selectType");
+var  graphType = selectType.options[selectType.selectedIndex].value;
+if (graphType == 'Linear')
+{
 if(stateName == 'All States')
 {
  var selectBox = document.getElementById("selectDays");
@@ -1133,8 +1227,8 @@ else
 
                 }
             }
-
 }
+
 var chart = new CanvasJS.Chart("chartContainer", {
 	animationEnabled: true,
 	title:{
@@ -1157,6 +1251,92 @@ var chart = new CanvasJS.Chart("chartContainer", {
 	}]
 });
 chart.render();
+}
+else
+{
+
+var selectState = document.getElementById("selectState");
+var  stateName = selectState.options[selectState.selectedIndex].value;
+var dataDates=[];
+var dataCount=[];
+if(stateName == 'All States')
+{
+var selectBox = document.getElementById("selectDays");
+var days = selectBox.options[selectBox.selectedIndex].value;
+
+var startDay = 0
+if(days!=0)
+{
+   startDay= totalDailyCount.length- days;
+}
+for (var i=startDay; i<totalDailyCount.length ;i++)
+{
+var x = new Date(totalDailyCount[i].day);
+var y = totalDailyCount[i].summary.deaths;
+dataDates.push(x);
+dataCount.push(y);
+}
+}
+
+else
+   {
+
+        var selectBox = document.getElementById("selectDays");
+        var days = selectBox.options[selectBox.selectedIndex].value;
+
+        var startDay = 0
+        if(days!=0)
+        {
+           startDay= totalDailyCount.length- days;
+        }
+            for (var i=startDay; i<totalDailyCount.length ;i++)
+            {
+               var day= totalDailyCount[i].day;
+               for (var j=0;j<totalDailyCount[i].regional.length;j++ )
+               {
+                  if(stateName==totalDailyCount[i].regional[j].loc)
+                  {
+                  var x = new Date(day);
+                   var y = totalDailyCount[i].regional[j].deaths;
+                   dataDates.push(x);
+                   dataCount.push(y);
+                  }
+
+                }
+            }
+
+   }
+
+Highcharts.chart("chartContainer", {
+	animationEnabled: true,
+	title:{
+		text: "Deaths By Date"
+	},
+
+   xAxis: {
+        categories: dataDates
+    },
+
+    yAxis: {
+        type: 'logarithmic',
+        minorTickInterval: 'auto'
+    },
+
+    series: [{
+        data: dataCount
+    }]
+
+
+});
+
+
+
+
+
+
+
+}
+
 
 }
 
@@ -1167,6 +1347,10 @@ function splineRecovered()
 var selectState = document.getElementById("selectState");
 var  stateName = selectState.options[selectState.selectedIndex].value;
 var data=[];
+var selectType = document.getElementById("selectType");
+var  graphType = selectType.options[selectType.selectedIndex].value;
+if (graphType == 'Linear')
+{
 if(stateName == 'All States')
 {
         var selectBox = document.getElementById("selectDays");
@@ -1213,8 +1397,8 @@ else
                 }
             }
 
-
 }
+
 var chart = new CanvasJS.Chart("chartContainer", {
 	animationEnabled: true,
 	title:{
@@ -1236,16 +1420,99 @@ var chart = new CanvasJS.Chart("chartContainer", {
 		dataPoints: data
 	}]
 });
-chart.render();
+chart.render();}
+
+else
+{
+
+var selectState = document.getElementById("selectState");
+var  stateName = selectState.options[selectState.selectedIndex].value;
+var dataDates=[];
+var dataCount=[];
+if(stateName == 'All States')
+{
+var selectBox = document.getElementById("selectDays");
+var days = selectBox.options[selectBox.selectedIndex].value;
+
+var startDay = 0
+if(days!=0)
+{
+   startDay= totalDailyCount.length- days;
+}
+for (var i=startDay; i<totalDailyCount.length ;i++)
+{
+var x = new Date(totalDailyCount[i].day);
+var y = totalDailyCount[i].summary.discharged;
+dataDates.push(x);
+dataCount.push(y);
+}
+}
+
+else
+   {
+
+        var selectBox = document.getElementById("selectDays");
+        var days = selectBox.options[selectBox.selectedIndex].value;
+
+        var startDay = 0
+        if(days!=0)
+        {
+           startDay= totalDailyCount.length- days;
+        }
+            for (var i=startDay; i<totalDailyCount.length ;i++)
+            {
+               var day= totalDailyCount[i].day;
+               for (var j=0;j<totalDailyCount[i].regional.length;j++ )
+               {
+                  if(stateName==totalDailyCount[i].regional[j].loc)
+                  {
+                  var x = new Date(day);
+                   var y = totalDailyCount[i].regional[j].discharged;
+                   dataDates.push(x);
+                   dataCount.push(y);
+                  }
+
+                }
+            }
+
+   }
+
+Highcharts.chart("chartContainer", {
+	animationEnabled: true,
+	title:{
+		text: "Recovery Cases By Date"
+	},
+
+   xAxis: {
+        categories: dataDates
+    },
+
+    yAxis: {
+        type: 'logarithmic',
+        minorTickInterval: 'auto'
+    },
+
+    series: [{
+        data: dataCount
+    }]
+
+
+});
 
 }
-function splineActive()
+
+}
+ function splineActive()
 {
 
 
 var selectState = document.getElementById("selectState");
 var  stateName = selectState.options[selectState.selectedIndex].value;
+var selectType = document.getElementById("selectType");
+var  graphType = selectType.options[selectType.selectedIndex].value;
 var data=[];
+if (graphType == 'Linear')
+{
 if(stateName == 'All States')
 {
  var selectBox = document.getElementById("selectDays");
@@ -1317,8 +1584,101 @@ var chart = new CanvasJS.Chart("chartContainer", {
 chart.render();
 
 }
+else
+{
 
-   function selectStateTesting()
+var selectState = document.getElementById("selectState");
+var  stateName = selectState.options[selectState.selectedIndex].value;
+
+var dataDates=[];
+var dataCount=[];
+if(stateName == 'All States')
+{
+var selectBox = document.getElementById("selectDays");
+var days = selectBox.options[selectBox.selectedIndex].value;
+
+var startDay = 0
+        if(days!=0)
+        {
+           startDay= totalDailyCount.length- days;
+        }
+        for (var i=startDay; i<totalDailyCount.length ;i++)
+        {
+        var x = new Date(totalDailyCount[i].day);
+        var y = totalDailyCount[i].summary.total - totalDailyCount[i].summary.discharged -totalDailyCount[i].summary.deaths;
+        dataDates.push(x);
+        dataCount.push(y);
+        }
+        }
+
+   else
+   {
+
+        var selectBox = document.getElementById("selectDays");
+        var days = selectBox.options[selectBox.selectedIndex].value;
+
+         var selectState = document.getElementById("selectState");
+         var  stateName = selectState.options[selectState.selectedIndex].value;
+        var dataDates=[];
+          var dataCount=[];
+
+        var startDay = 0
+        if(days!=0)
+        {
+           startDay= totalDailyCount.length- days;
+        }
+            for (var i=startDay; i<totalDailyCount.length ;i++)
+            {
+               var day= totalDailyCount[i].day;
+               for (var j=0;j<totalDailyCount[i].regional.length;j++ )
+               {
+                  if(stateName==totalDailyCount[i].regional[j].loc)
+                  {
+                  var x = new Date(day);
+                  var y = totalDailyCount[i].regional[j].totalConfirmed - totalDailyCount[i].regional[j].discharged - totalDailyCount[i].regional[j].deaths;
+
+                   dataDates.push(x);
+                   dataCount.push(y);
+                  }
+
+                }
+            }
+
+}
+
+Highcharts.chart("chartContainer", {
+	animationEnabled: true,
+	title:{
+		text: "Active Cases By Date"
+	},
+
+   xAxis: {
+        categories: dataDates
+    },
+
+    yAxis: {
+        type: 'logarithmic',
+        minorTickInterval: 'auto'
+    },
+
+    series: [{
+        data: dataCount
+    }]
+
+
+});
+
+}
+
+
+
+
+}
+
+
+
+
+function selectStateTesting()
   {
 
 
@@ -1340,7 +1700,7 @@ chart.render();
 
                       }
                     }
-                    console.log(data);
+
 
                                 var chart = new CanvasJS.Chart("chartContainer1", {
                                     animationEnabled: true,
@@ -1362,3 +1722,4 @@ chart.render();
                                 chart.render();
 
 }
+
