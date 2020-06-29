@@ -163,6 +163,7 @@ function myFunction()
         var historyCases = [];
         var historyDeaths = [];
         var historyRecovery = [];
+        var historyMortality = [];
         console.log(totalDailyCount[0].regional.length);
         for (var i=0; i < totalDailyCount.length;i++)
         {
@@ -445,6 +446,93 @@ function toogleDataSeries(e){
 		itemclick: toogleDataSeries
 	},
 	data:  historyRecovery
+
+});
+chart.render();
+
+function toogleDataSeries(e){
+	if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+		e.dataSeries.visible = false;
+	} else{
+		e.dataSeries.visible = true;
+	}
+	chart.render();
+	}
+
+
+for (var i=0; i < totalDailyCount.length;i++)
+        {
+             //console.log(historyCases);
+             for (var j=0;j<totalDailyCount[i].regional.length;j++)
+            {
+                var location = totalDailyCount[i].regional[j].loc;
+                var count = (totalDailyCount[i].regional[j].deaths * 100) / totalDailyCount[i].regional[j].totalConfirmed;
+                var date =  totalDailyCount[i].day;
+                var found = 0;
+                 if (j== 0 && i==0)
+                 {
+                 found =0;
+                 }
+                 else
+                 {
+                  for (var k =0;k<historyMortality.length;k++)
+                 {
+                   if(historyMortality[k].name == location)
+                   {
+                   found=1;
+                   var datapoints = historyMortality[k].dataPoints;
+                   //console.log(olddata);
+                   var x = new Date(date);
+                   var y = count;
+                   var xyobj= {x,y};
+                   datapoints.push(xyobj);
+                   historyMortality[k].dataPoints=datapoints;
+
+                   }
+
+                }
+                }
+                 if(found==0)
+                    {
+                            var type = "line";
+                            var axisYType= "secondary";
+                            var name= location;
+                            var showInLegend= true;
+                            var markerSize= 0;
+                            var yValueFormatString= "#,###";
+                            var x = new Date(totalDailyCount[i].day);
+                            var y = count;
+                            var xyobj= {x,y};
+                            var dataPoints =[];
+                            dataPoints.push(xyobj);
+                            var finalObjects = {type,axisYType,name,showInLegend,markerSize,yValueFormatString,dataPoints};
+                            historyMortality.push(finalObjects);
+
+                    }
+             }
+         }
+
+	var chart = new CanvasJS.Chart("allStatesMortality", {
+	title: {
+		text: "Mortality Growth"
+	},
+	axisX: {
+		valueFormatString: "DD MM YYYY"
+	},
+	axisY2: {
+		title: " Rate",
+	},
+	toolTip: {
+		shared: true
+	},
+	legend: {
+		cursor: "pointer",
+		verticalAlign: "top",
+		horizontalAlign: "center",
+		dockInsidePlotArea: true,
+		itemclick: toogleDataSeries
+	},
+	data:  historyMortality
 
 });
 chart.render();
