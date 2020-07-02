@@ -1,1 +1,1 @@
-web: gunicorn app:covid-19indiadashboard
+web: gunicorn Covid19Dashboard:app
