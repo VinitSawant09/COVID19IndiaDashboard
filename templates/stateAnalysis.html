@@ -7,9 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
 
      <script src="{{ url_for('static', filename='js/stateAnalysis.js') }}"></script>
 </head>
@@ -83,7 +85,15 @@
         <div id="airportWiseRecoveries" style="height: 300px; width: 100%;"></div>
     </div>
 </div>
+<div>
 
+    <figure class="highcharts-figure">
+    <div id="containerDensity"></div>
+    <p class="highcharts-description">
+
+    </p>
+</figure>
+</div>
 
 </body>
 </html>
