@@ -138,7 +138,7 @@ function myFunction()
           if(recoveredToday<0)
           {
           recoveredToday = 0;
-          alert("zero");
+         // alert("zero");
           }
           document.getElementById("recoveredToday").innerHTML="+"+recoveredToday;
 
@@ -159,12 +159,12 @@ function myFunction()
 
         splineConfirmed();
 
-        console.log(totalDailyCount);
+        //console.log(totalDailyCount);
         var historyCases = [];
         var historyDeaths = [];
         var historyRecovery = [];
         var historyMortality = [];
-        console.log(totalDailyCount[0].regional.length);
+       // console.log(totalDailyCount[0].regional.length);
         for (var i=0; i < totalDailyCount.length;i++)
         {
             for (var j=0;j<totalDailyCount[i].regional.length;j++)
