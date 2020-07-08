@@ -26,27 +26,7 @@ body {
   clear: both;
 }
 
-/* Responsive columns */
-@media screen and (max-width: 600px) {
-  .column {
-    width: 100%;
-    display: block;
-    margin-bottom: 20px;
-  }
 
-  .statescolumn {
-    width: 100%;
-    display: block;
-    margin-bottom: 20px;
-  }
-
-  .graphcolumn {
-    float: left;
-    width: 100%;
-    padding: 0 10px;
-}
-
-}
 
 /* Style the counter cards */
 .card {
@@ -380,4 +360,31 @@ input[type="number"] {
     display: block;
     margin-left: 45%;
     margin-top: 20%;
+}
+
+/* Responsive columns */
+@media only screen and (max-width: 600px) {
+  .column {
+    width: 100%;
+    display: block;
+    margin-bottom: 20px;
+  }
+
+  .statescolumn {
+    width: 100%;
+    display: block;
+    margin-bottom: 20px;
+  }
+
+  .graphcolumn {
+    float: left;
+    width: 100%;
+    padding: 0 10px;
+}
+
+  .button {
+
+    width: 47%;
+    }
+
 }
