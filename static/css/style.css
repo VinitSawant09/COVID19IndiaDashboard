@@ -438,3 +438,11 @@ input[type="number"] {
     }
 
 }
+
+//trial side bar
+
+.w3-teal, .w3-hover-teal:hover {
+    color: #fff!important;
+    background-color: black;
+}
+

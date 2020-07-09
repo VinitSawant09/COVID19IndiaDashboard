@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>COVID-19 India Dashboard</title>
+     <link rel="stylesheet" href="{{ url_for('static', filename='css/w3schools.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
@@ -15,13 +17,17 @@
 
 </head>
 <body onload="myFunction()">
+<div>
+    <div class="w3-sidebar w3-bar-block w3-border-right" style="display:none" id="mySidebar">
+  <button onclick="w3_close()" class="w3-bar-item w3-large">Close &times;</button>
+  <a href="#" class="w3-bar-item w3-button" onclick="window.location.href='{{ url_for( 'landing') }}';">Live Dashboard</a>
+  <a href="#" class="w3-bar-item w3-button" onclick="window.location.href='{{ url_for( 'analysisLanding') }}';">Gender and Age Analysis</a>
+  <a href="#" class="w3-bar-item w3-button" onclick="window.location.href='{{ url_for( 'stateAnalysisLanding') }}';">Geographical Analysis</a>
+  </div>
+    <button class="w3-button w3-teal w3-xlarge" onclick="w3_open()">☰</button>
+</div>
 <center><h1><span id="websiteHeader">COVID-19 India Analysis</span></h1></center>
 <marquee><span id="slidingMarquee">Stay Home.!  Stay Safe..! Wash your hands.! Wear mask outdoors.!</span></marquee>
-<div id="mySidenav" class="sidenav">
-  <a href="#" id="dashboard" onclick="window.location.href='{{ url_for( 'landing') }}';">Dashboard</a>
-  <a href="#" id="analysis" onclick="window.location.href='{{ url_for( 'analysisLanding') }}';">Analysis</a>
-     <a href="#" id="stateanalysis" onclick="window.location.href='{{ url_for( 'stateAnalysisLanding') }}';">Geographical</a>
-</div>
 
       <div id="overlay">
         <div id="progstat"></div>
