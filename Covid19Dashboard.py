@@ -20,6 +20,9 @@ def analysisLanding():
 def stateAnalysisLanding():
      return render_template('stateAnalysis.html')
 
+@app.route('/test')
+def test():
+     return render_template('test.html')
 
 #Error Handling
 @app.errorhandler(404)
