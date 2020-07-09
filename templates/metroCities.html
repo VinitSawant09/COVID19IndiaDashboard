@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Metro Cities</title>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.1/moment.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/w3schools.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.css"/>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.js"></script>
+
+    <script src="https://code.highcharts.com/maps/highmaps.js"></script>
+    <script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/mapdata/countries/in/custom/in-all-disputed.js"></script>
+
+    <script src="{{ url_for('static', filename='js/metroCities.js') }}"></script>
+</head>
+<body onload="myFunction()">
+<div>
+    <div class="w3-sidebar w3-bar-block w3-border-right" style="display:none" id="mySidebar">
+  <button onclick="w3_close()" class="w3-bar-item w3-large">Close &times;</button>
+  <a href="#" class="w3-bar-item w3-button" onclick="window.location.href='{{ url_for( 'landing') }}';">Live Dashboard</a>
+  <a href="#" class="w3-bar-item w3-button" onclick="window.location.href='{{ url_for( 'analysisLanding') }}';">Gender and Age Analysis</a>
+  <a href="#" class="w3-bar-item w3-button" onclick="window.location.href='{{ url_for( 'stateAnalysisLanding') }}';">Geographical Analysis</a>
+  <a href="#" class="w3-bar-item w3-button" onclick="window.location.href='{{ url_for( 'metroAnalysisLanding') }}';">Metro Cities</a>
+  </div>
+    <button class="w3-button w3-teal w3-xlarge" onclick="w3_open()">☰</button>
+</div>
+<center><h1><span id="websiteHeader">Metro Cities</span></h1></center>
+
+<marquee><span id="slidingMarquee">Stay Home.!  Stay Safe..! Wash your hands.! Wear mask outdoors.!</span></marquee>
+
+<div class="statesrow">
+    <div class="statescolumn" >
+    <h1><span class="subTitles">Metro-wise COVID-19 distribution</span></h1>
+<div id="statesTable" class="statesTable" >
+    <table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+        <thead>
+        <tr>
+        <th class="th-sm">Metro
+
+          </th>
+      <th class="th-sm">Confirmed
+
+      </th>
+      <th class="th-sm">Deaths
+
+      </th>
+      <th class="th-sm">Recovered
+
+      </th>
+      <th class="th-sm">Active Cases
+
+      </th>
+            <th class="th-sm">Mortality %
+
+      </th>
+    </tr>
+    </thead>
+    <tbody id ="transactOrder">
+
+    </tbody>
+    <tfoot class="tfoot">
+    <tr>
+      <th>Metro
+      </th>
+      <th>Confirmed
+      </th>
+      <th>Deaths
+      </th>
+      <th>Recovered
+      </th>
+      <th>Active Cases
+      </th>
+         <th>Mortality %
+
+      </th>
+    </tr>
+    </tfoot>
+    </table>
+</div>
+    </div>
+
+     <div class="statescolumn" >
+        <h1><span class="subTitles">Metro-wise COVID-19 distribution</span></h1>
+         <button class="button" id="buttonRecovered" onClick="showRecoveriesOnMap()">Recovered</button>
+         <button class="button button3" id="buttonConfirmed"  onClick="showConfirmedOnMap()">Confirmed</button>
+          <button class="button button4" id="buttonDeaths" onClick="showDeathsOnMap()">Deaths</button>
+         <button class="button button2" id="buttonActive" onClick="showActiveOnMap()">Active</button>
+         <div id="container"></div>
+     </div>
+</div>
+
+</div>
+</body>
+</html>

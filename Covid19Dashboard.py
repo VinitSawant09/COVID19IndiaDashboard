@@ -20,6 +20,10 @@ def analysisLanding():
 def stateAnalysisLanding():
      return render_template('stateAnalysis.html')
 
+@app.route('/metroAnalysisLanding')
+def metroAnalysisLanding():
+     return render_template('metroCities.html')
+
 @app.route('/test')
 def test():
      return render_template('test.html')
