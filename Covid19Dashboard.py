@@ -28,6 +28,10 @@ def metroAnalysisLanding():
 def test():
      return render_template('test.html')
 
+@app.route('/racingGraphs')
+def racingGraphs():
+     return render_template('racingGraphs.html')
+
 #Error Handling
 @app.errorhandler(404)
 # inbuilt function which takes error as parameter

@@ -17,7 +17,7 @@ $.ajax(
 
         if (response!=null)
         {
-        console.log(response);
+        //console.log(response);
         var entireStateObj = [];
 
         entireStateObj.push(response['Maharashtra'].districtData['Mumbai']);
@@ -34,10 +34,6 @@ $.ajax(
         entireStateObj.push('Thane');
         metroFull.push(entireStateObj);
 
-        var entireStateObj = [];
-        entireStateObj.push(response['Maharashtra'].districtData['Nagpur']);
-        entireStateObj.push('Nagpur');
-        metroFull.push(entireStateObj);
 
         var entireStateObj = [];
         entireStateObj.push(response['Tamil Nadu'].districtData['Chennai']);
@@ -70,7 +66,7 @@ $.ajax(
         metroFull.push(entireStateObj);
 
         }
-        console.log(metroFull);
+        //console.log(metroFull);
 
           for (var i=0;i < metroFull.length; i++)
          {

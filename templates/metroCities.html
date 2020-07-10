@@ -18,6 +18,19 @@
     <script src="https://code.highcharts.com/mapdata/countries/in/custom/in-all-disputed.js"></script>
 
     <script src="{{ url_for('static', filename='js/metroCities.js') }}"></script>
+    <!-- Resources -->
+        <script src="https://www.amcharts.com/lib/4/core.js"></script>
+        <script src="https://www.amcharts.com/lib/4/charts.js"></script>
+        <script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
+
+        <script src="{{ url_for('static', filename='js/racingBar.js') }}"></script>
+    <style>
+        #chartdiv {
+          width: 100%;
+          height: 500px;
+          background-color: white;
+        }
+        </style>
 </head>
 <body onload="myFunction()">
 <div>
@@ -86,12 +99,14 @@
     </div>
 
      <div class="statescolumn" >
-        <h1><span class="subTitles">Metro-wise COVID-19 distribution</span></h1>
-         <button class="button" id="buttonRecovered" onClick="showRecoveriesOnMap()">Recovered</button>
-         <button class="button button3" id="buttonConfirmed"  onClick="showConfirmedOnMap()">Confirmed</button>
-          <button class="button button4" id="buttonDeaths" onClick="showDeathsOnMap()">Deaths</button>
-         <button class="button button2" id="buttonActive" onClick="showActiveOnMap()">Active</button>
-         <div id="container"></div>
+        <h1><span class="subTitles">Metro-wise COVID-19 growth</span></h1>
+          <button class="button" id="buttonRecovered"  onClick="barcharts(this.id)">Recovered</button>
+         <button class="button button3" id="buttonConfirmed" onClick="barcharts(this.id)">Confirmed </button>
+          <button class="button button4" id="buttonDeaths" onClick="barcharts(this.id)">Deaths</button>
+         <button class="button button2" id="buttonActive" onClick="barcharts(this.id)">Active</button>
+
+
+         <div id="chartdiv"></div>
      </div>
 </div>
 
