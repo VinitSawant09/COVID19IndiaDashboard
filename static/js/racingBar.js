@@ -1,6 +1,10 @@
 function barcharts(clicked_id)
 {
+/*
+var audio = new Audio('barchartsad.mp3');
+audio.play();*/
 
+play_single_sound();
 
 $.ajax(
        {
@@ -536,6 +540,8 @@ $.ajax(
 
                         }); // end am4core.ready()
         } });
+
+
 }
 
 function calculateDay(dateC)
@@ -560,3 +566,7 @@ function formatDate(date) {
 
     return [year, month, day].join('-');
 }
+
+function play_single_sound() {
+		document.getElementById('audiotag1').play();
+	}

@@ -24,6 +24,7 @@
         <script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
 
         <script src="{{ url_for('static', filename='js/racingBar.js') }}"></script>
+
     <style>
         #chartdiv {
           width: 100%;
@@ -97,7 +98,7 @@
     </table>
 </div>
     </div>
-
+     <audio id="audiotag1" src="{{ url_for('static', filename='mp3/barchartsad.mp3') }}" preload="auto"></audio>
      <div class="statescolumn" >
         <h1><span class="subTitles">Metro-wise COVID-19 growth</span></h1>
           <button class="button" id="buttonRecovered"  onClick="barcharts(this.id)">Recovered</button>
