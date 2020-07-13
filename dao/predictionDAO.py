@@ -123,6 +123,6 @@ class predictionDAO:
             finalResponse[i][0] = round(datetime.timestamp(finalResponse[i][0])*1000)
         print(len(finalResponse));
         m.plot(forecast)
-        plt.savefig('myfig.png')
+        #plt.savefig('myfig.png')
         return finalResponse
 
