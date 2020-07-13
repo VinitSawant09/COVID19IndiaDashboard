@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/w3schools.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <!-- Resources -->
+        <script src="https://www.amcharts.com/lib/4/core.js"></script>
+        <script src="https://www.amcharts.com/lib/4/charts.js"></script>
+        <script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
+        <script src="https://code.highcharts.com/highcharts.js"></script>
+        <script src="https://code.highcharts.com/modules/data.js"></script>
+        <script src="https://code.highcharts.com/modules/exporting.js"></script>
+        <script src="https://code.highcharts.com/modules/export-data.js"></script>
+        <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+        <script src="{{ url_for('static', filename='js/prediction.js') }}"></script>
+
+</head>
+<body onload="predict()">
+<!-- HTML
+<div id="chartdiv"></div>
+-->
+<div>
+<div class="w3-sidebar w3-bar-block w3-border-right" style="display:none" id="mySidebar">
+  <button onclick="w3_close()" class="w3-bar-item w3-large">Close &times;</button>
+  <a href="#" class="w3-bar-item w3-button" onclick="window.location.href='{{ url_for( 'landing') }}';">Live Dashboard</a>
+  <a href="#" class="w3-bar-item w3-button" onclick="window.location.href='{{ url_for( 'analysisLanding') }}';">Gender and Age Analysis</a>
+  <a href="#" class="w3-bar-item w3-button" onclick="window.location.href='{{ url_for( 'stateAnalysisLanding') }}';">Geographical Analysis</a>
+     <a href="#" class="w3-bar-item w3-button" onclick="window.location.href='{{ url_for( 'metroAnalysisLanding') }}';">Metro Cities</a>
+        <a href="#" class="w3-bar-item w3-button" onclick="window.location.href='{{ url_for( 'prediction') }}';">Prediction</a>
+</div>
+     <button class="w3-button w3-teal w3-xlarge" onclick="w3_open()">☰</button>
+</div>
+<center><h1><span id="websiteHeader">COVID-19 India Prediction</span></h1></center>
+<marquee><span id="slidingMarquee">Stay Home.!  Stay Safe..! Wash your hands.! Wear mask outdoors.!</span></marquee>
+
+<div>
+    <div class="statesrow">
+         <div class="statescolumn" >
+            <figure class="highcharts-figure">
+                <div id="container"></div>
+                <p class="highcharts-description">
+                    Highcharts has extensive support for time series, and will adapt
+                    intelligently to the input data. Click and drag in the chart to zoom in
+                    and inspect the data.
+                </p>
+            </figure>
+         </div>
+    </div>
+</div>
+</body>
+</html>

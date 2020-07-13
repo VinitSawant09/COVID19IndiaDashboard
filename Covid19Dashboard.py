@@ -1,10 +1,7 @@
 from flask import *
-from flask import flash
-import os
-import base64
-import json
-from werkzeug.utils import secure_filename
-
+from controller.predictionController import predictionController as predictionController
+import sys
+sys.path.append('path-to-site-packages-for-current-working-environment')
 app = Flask(__name__)
 
 @app.route('/')
@@ -28,9 +25,23 @@ def metroAnalysisLanding():
 def test():
      return render_template('test.html')
 
-@app.route('/racingGraphs')
-def racingGraphs():
-     return render_template('racingGraphs.html')
+@app.route('/prediction')
+def prediction():
+     return render_template('prediction.html')
+
+@app.route('/predictLR',methods=['GET','POST'])
+def pie():
+    search = request.get_json()
+    # new_search = json.dumps(scrape(data))
+    cumulativeList = search['listC']
+
+    response = predictionController.predictProphet(cumulativeList);
+    print(response)
+    print(len(response));
+
+
+
+    return jsonify(deaths=response)
 
 #Error Handling
 @app.errorhandler(404)
