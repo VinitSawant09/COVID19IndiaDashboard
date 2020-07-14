@@ -105,24 +105,83 @@ class predictionDAO:
         plt.show()
         return "yes"
 
-    def predictProphet(listC):
+    def predictProphetDeaths(listC):
 
-        print("inside predictProphet predictionDAO")
-        print(listC)
-        df = pd.DataFrame(listC[:-1], columns=['ds', 'y'])
-        print(df);
+        print("inside predictProphetDeaths predictionDAO")
+        #print(listC)
+        df = pd.DataFrame(listC, columns=['ds', 'y'])
+        #print(df);
         m = Prophet()
-
         m.fit(df)
         future = m.make_future_dataframe(periods=5)
         future.tail()
         forecast = m.predict(future)
+        #print(forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].tail())
+        finalResponse = forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].values.tolist()
+        for i in range(0, len(finalResponse)):
+            finalResponse[i][0] = round(datetime.timestamp(finalResponse[i][0])*1000)
+        #print(len(finalResponse));
+        m.plot(forecast)
+        return finalResponse
+
+    def predictProphetConfirmed(listC):
+
+        print("inside predictProphetConfirmed predictionDAO")
+        #print(listC)
+        df = pd.DataFrame(listC, columns=['ds', 'y'])
+        #print(df);
+        m = Prophet()
+        m.fit(df)
+        future = m.make_future_dataframe(periods=5)
+        future.tail()
+        forecast = m.predict(future)
+        #print(forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].tail())
+        finalResponse = forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].values.tolist()
+        for i in range(0, len(finalResponse)):
+            finalResponse[i][0] = round(datetime.timestamp(finalResponse[i][0])*1000)
+        #print(len(finalResponse));
+        m.plot(forecast)
+        return finalResponse
+
+    def predictProphetRecovered(listC):
+
+        print("inside predictProphetRecovered predictionDAO")
+        #print(listC)
+        df = pd.DataFrame(listC, columns=['ds', 'y'])
+        #print(df);
+        m = Prophet()
+        m.fit(df)
+        future = m.make_future_dataframe(periods=5)
+        future.tail()
+        forecast = m.predict(future)
+        #print(forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].tail())
+        finalResponse = forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].values.tolist()
+        for i in range(0, len(finalResponse)):
+            finalResponse[i][0] = round(datetime.timestamp(finalResponse[i][0])*1000)
+        #print(len(finalResponse));
+        m.plot(forecast)
+        return finalResponse
+
+    def predictProphetDeathsLog(listC):
+
+        print("inside predictProphetDeathsLog predictionDAO")
+        print(listC)
+        df = pd.DataFrame(listC, columns=['ds', 'y'])
+        print(df);
+        df['cap'] = 1380004385
+        m = Prophet(growth='logistic')
+        m.fit(df)
+        future = m.make_future_dataframe(periods=5)
+        future['cap'] = 1380004385
+        future.tail()
+        forecast = m.predict(future)
+        fig1 = m.plot(forecast)
+
+        #plt.savefig('foo.png')
         print(forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].tail())
         finalResponse = forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].values.tolist()
         for i in range(0, len(finalResponse)):
             finalResponse[i][0] = round(datetime.timestamp(finalResponse[i][0])*1000)
-        print(len(finalResponse));
+        #print(len(finalResponse));
         m.plot(forecast)
-        #plt.savefig('myfig.png')
         return finalResponse
-

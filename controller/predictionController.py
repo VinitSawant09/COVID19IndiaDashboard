@@ -16,9 +16,30 @@ class predictionController:
 
          return response
 
-    def predictProphet (cumulativeList):
+    def predictProphetDeaths (cumulativeList):
          response = ''
-         print("inside predictProphet Controller")
-         response = predictiondao.predictProphet(cumulativeList)
+         print("inside predictProphetDeaths Controller")
+         response = predictiondao.predictProphetDeaths(cumulativeList)
 
          return response
+
+    def predictProphetConfirmed(cumulativeList):
+        response = ''
+        print("inside predictProphetConfirmed Controller")
+        response = predictiondao.predictProphetConfirmed(cumulativeList)
+
+        return response
+
+    def predictProphetRecovered(cumulativeList):
+        response = ''
+        print("inside predictProphetRecovered Controller")
+        response = predictiondao.predictProphetRecovered(cumulativeList)
+
+        return response
+
+    def predictProphetDeathsLog(cumulativeList):
+        response = ''
+        print("inside predictProphetDeathsLog Controller")
+        response = predictiondao.predictProphetDeathsLog(cumulativeList)
+
+        return response

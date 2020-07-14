@@ -33,15 +33,18 @@ def prediction():
 def pie():
     search = request.get_json()
     # new_search = json.dumps(scrape(data))
-    cumulativeList = search['listC']
+    cumulativeDeathList = search['listC']
+    cumulativeConfirmedList = search['listConfirmed']
+    cumulativeRecoveredList = search['listRecovered']
 
-    response = predictionController.predictProphet(cumulativeList);
-    print(response)
-    print(len(response));
+    deaths = predictionController.predictProphetDeaths(cumulativeDeathList)
+    confirmed =  predictionController.predictProphetConfirmed(cumulativeConfirmedList)
+    recovered = predictionController.predictProphetRecovered(cumulativeRecoveredList)
+    deathsLog = predictionController.predictProphetDeathsLog(cumulativeDeathList)
 
 
 
-    return jsonify(deaths=response)
+    return jsonify(deaths=deaths, confirmed =confirmed , recovered = recovered)
 
 #Error Handling
 @app.errorhandler(404)
