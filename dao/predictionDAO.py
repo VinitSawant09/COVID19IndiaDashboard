@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import math
 from sklearn.linear_model import LinearRegression
 from sklearn import metrics
 from sklearn.model_selection import train_test_split
@@ -20,6 +21,11 @@ class predictionDAO:
     def predictLR (listC):
 
          print("inside predictLR predictionDAO")
+         print(listC)
+         for i in range(0,len(listC)):
+
+            listC[i][0]=i+1;
+
          print(listC)
          # Create the pandas DataFrame
          df = pd.DataFrame(listC, columns=['Day', 'Count'])
@@ -45,8 +51,6 @@ class predictionDAO:
          print('Mean Absolute Error:', metrics.mean_absolute_error(y_test, y_pred))
          print('Mean Squared Error:', metrics.mean_squared_error(y_test, y_pred))
          print('Root Mean Squared Error:', np.sqrt(metrics.mean_squared_error(y_test, y_pred)))
-
-         from sklearn.metrics import accuracy_score
          print(metrics.r2_score(y_test, y_pred))
 
          return "yes"
@@ -136,7 +140,7 @@ class predictionDAO:
 
 
         print("R squared = %s" % r2_score(metric_df.y, metric_df.yhat));
-        print("Mean Squared Error = %s" % mean_squared_error(metric_df.y, metric_df.yhat));
+        print("Root Mean Squared Error = %s" % math.sqrt(mean_squared_error(metric_df.y, metric_df.yhat)));
         print("Mean Absolute Error = %s" % mean_absolute_error(metric_df.y, metric_df.yhat));
         mae =  mean_absolute_error(metric_df.y, metric_df.yhat)
         print(forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].tail())
@@ -168,7 +172,7 @@ class predictionDAO:
         #print("MAPE = %s" % mape_baseline)
         print("R squared = %s" % r2_score(metric_df.y, metric_df.yhat));
         mae = mean_absolute_error(metric_df.y, metric_df.yhat)
-        print("Mean Squared Error = %s" % mean_squared_error(metric_df.y, metric_df.yhat));
+        print("Mean Squared Error = %s" % math.sqrt(mean_squared_error(metric_df.y, metric_df.yhat)));
         print("Mean Absolute Error = %s" % mean_absolute_error(metric_df.y, metric_df.yhat));
         print(forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].tail())
         finalList = forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].values.tolist()
@@ -198,7 +202,7 @@ class predictionDAO:
         #mape_baseline = predictionDAO.meanAbsolutePercentageError(metric_df.y, metric_df.yhat)
         #print("MAPE = %s" % mape_baseline)
         print("R squared = %s" % r2_score(metric_df.y, metric_df.yhat));
-        print("Mean Squared Error = %s" % mean_squared_error(metric_df.y, metric_df.yhat));
+        print("Root Mean Squared Error = %s" % math.sqrt(mean_squared_error(metric_df.y, metric_df.yhat)));
         mae = mean_absolute_error(metric_df.y, metric_df.yhat);
         print("Mean Absolute Error = %s" % mean_absolute_error(metric_df.y, metric_df.yhat));
         print(forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].tail())

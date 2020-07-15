@@ -1,3 +1,4 @@
+keras
 matplotlib
 fbprophet
 scikit-learn

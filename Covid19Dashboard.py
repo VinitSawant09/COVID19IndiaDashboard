@@ -40,11 +40,12 @@ def pie():
     deaths = predictionController.predictProphetDeaths(cumulativeDeathList)
     confirmed = predictionController.predictProphetConfirmed(cumulativeConfirmedList)
     recovered = predictionController.predictProphetRecovered(cumulativeRecoveredList)
+    lr = predictionController.predictLR(cumulativeDeathList)
     #deathsLog = predictionController.predictProphetDeathsLog(cumulativeDeathList)
 
 
 
-    return jsonify(deaths=deaths['list'], confirmed =confirmed , recovered = recovered , dmae = deaths['mae'] , cmae= confirmed['mae'] ,rmae=recovered['mae'])
+    return jsonify(deaths=deaths['list'], confirmed =confirmed['list'] , recovered = recovered['list'] , dmae = deaths['mae'] , cmae= confirmed['mae'] ,rmae=recovered['mae'])
 
 #Error Handling
 @app.errorhandler(404)
