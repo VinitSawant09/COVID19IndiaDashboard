@@ -93,8 +93,16 @@ function predict()
                                           {
                                              console.log(data)
                                              var listData = data['deaths'];
-                                             var listConfirmed = data['confirmed']
-                                             var listRecovered = data['recovered']
+                                             var listConfirmed = data['confirmed'];
+                                             var listRecovered = data['recovered'];
+                                             var maeDeath = Math.round((data['dmae'] + Number.EPSILON) * 100) / 100;
+                                             var maeConfirmed = Math.round((data['cmae'] + Number.EPSILON) * 100) / 100;
+                                             var maeRecovered = Math.round((data['rmae'] + Number.EPSILON) * 100) / 100;
+                                             console.log(maeDeath);
+                                             console.log(maeConfirmed);
+                                             console.log(maeRecovered);
+
+
 
                                             for(var i=0;i<listData.length;i++)
                                             {
@@ -355,7 +363,9 @@ function predict()
 
                                                     ]
                                                 });
-
+                                          document.getElementById('dmae').innerHTML = "Mean Absolute Error (MAE) = "+maeDeath;
+                                          document.getElementById('cmae').innerHTML = "Mean Absolute Error (MAE) = "+maeConfirmed;
+                                          document.getElementById('rmae').innerHTML = "Mean Absolute Error (MAE) = "+maeRecovered;
 
                                         }
 

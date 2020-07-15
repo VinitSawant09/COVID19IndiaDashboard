@@ -5,9 +5,17 @@ from sklearn import metrics
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import max_error
 from fbprophet import Prophet
+from fbprophet.diagnostics import cross_validation, performance_metrics
 import matplotlib.pyplot as plt
 from datetime import datetime
+from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
 class predictionDAO:
+
+
+    def meanAbsolutePercentageError(y_true, y_pred):
+
+        y_true,y_pred = np.array(y_true),np.array(y_pred)
+        return np.mean(np.abs((y_true-y_pred)/y_true))*100
 
     def predictLR (listC):
 
@@ -108,21 +116,39 @@ class predictionDAO:
     def predictProphetDeaths(listC):
 
         print("inside predictProphetDeaths predictionDAO")
-        #print(listC)
+        print(listC)
         df = pd.DataFrame(listC, columns=['ds', 'y'])
-        #print(df);
+        print(df);
         m = Prophet()
         m.fit(df)
         future = m.make_future_dataframe(periods=5)
-        future.tail()
+
         forecast = m.predict(future)
-        #print(forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].tail())
-        finalResponse = forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].values.tolist()
-        for i in range(0, len(finalResponse)):
-            finalResponse[i][0] = round(datetime.timestamp(finalResponse[i][0])*1000)
+        print(forecast.tail())
+
+       # cv_results = cross_validation(forecast, horizon='30 days')
+       # mape_baseline = predictionDAO.meanAbsolutePercentageError(cv_results.y, cv_results.yhat)
+       # print("MAPE = %s" % mape_baseline)
+
+        metric_df = forecast.set_index('ds')[['yhat']].join(df.set_index('ds').y).reset_index()
+        metric_df.dropna(inplace=True)
+
+
+
+        print("R squared = %s" % r2_score(metric_df.y, metric_df.yhat));
+        print("Mean Squared Error = %s" % mean_squared_error(metric_df.y, metric_df.yhat));
+        print("Mean Absolute Error = %s" % mean_absolute_error(metric_df.y, metric_df.yhat));
+        mae =  mean_absolute_error(metric_df.y, metric_df.yhat)
+        print(forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].tail())
+
+        finalList = forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].values.tolist()
+        for i in range(0, len(finalList)):
+            finalList[i][0] = round(datetime.timestamp(finalList[i][0])*1000)
         #print(len(finalResponse));
-        m.plot(forecast)
-        return finalResponse
+        response = {}
+        response["list"] = finalList
+        response["mae"] = mae
+        return response
 
     def predictProphetConfirmed(listC):
 
@@ -135,13 +161,25 @@ class predictionDAO:
         future = m.make_future_dataframe(periods=5)
         future.tail()
         forecast = m.predict(future)
-        #print(forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].tail())
-        finalResponse = forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].values.tolist()
-        for i in range(0, len(finalResponse)):
-            finalResponse[i][0] = round(datetime.timestamp(finalResponse[i][0])*1000)
+        metric_df = forecast.set_index('ds')[['yhat']].join(df.set_index('ds').y).reset_index()
+        metric_df.dropna(inplace=True)
+        print(metric_df.isnull().any())
+        #mape_baseline = predictionDAO.meanAbsolutePercentageError(metric_df.y, metric_df.yhat)
+        #print("MAPE = %s" % mape_baseline)
+        print("R squared = %s" % r2_score(metric_df.y, metric_df.yhat));
+        mae = mean_absolute_error(metric_df.y, metric_df.yhat)
+        print("Mean Squared Error = %s" % mean_squared_error(metric_df.y, metric_df.yhat));
+        print("Mean Absolute Error = %s" % mean_absolute_error(metric_df.y, metric_df.yhat));
+        print(forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].tail())
+        finalList = forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].values.tolist()
+        for i in range(0, len(finalList)):
+            finalList[i][0] = round(datetime.timestamp(finalList[i][0])*1000)
         #print(len(finalResponse));
-        m.plot(forecast)
-        return finalResponse
+        #m.plot(forecast)
+        response = {}
+        response["list"] = finalList
+        response["mae"] = mae
+        return response
 
     def predictProphetRecovered(listC):
 
@@ -154,13 +192,25 @@ class predictionDAO:
         future = m.make_future_dataframe(periods=5)
         future.tail()
         forecast = m.predict(future)
-        #print(forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].tail())
-        finalResponse = forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].values.tolist()
-        for i in range(0, len(finalResponse)):
-            finalResponse[i][0] = round(datetime.timestamp(finalResponse[i][0])*1000)
+        metric_df = forecast.set_index('ds')[['yhat']].join(df.set_index('ds').y).reset_index()
+        metric_df.dropna(inplace=True)
+        print(metric_df.isnull().any())
+        #mape_baseline = predictionDAO.meanAbsolutePercentageError(metric_df.y, metric_df.yhat)
+        #print("MAPE = %s" % mape_baseline)
+        print("R squared = %s" % r2_score(metric_df.y, metric_df.yhat));
+        print("Mean Squared Error = %s" % mean_squared_error(metric_df.y, metric_df.yhat));
+        mae = mean_absolute_error(metric_df.y, metric_df.yhat);
+        print("Mean Absolute Error = %s" % mean_absolute_error(metric_df.y, metric_df.yhat));
+        print(forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].tail())
+        finalList = forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].values.tolist()
+        for i in range(0, len(finalList)):
+            finalList[i][0] = round(datetime.timestamp(finalList[i][0])*1000)
         #print(len(finalResponse));
-        m.plot(forecast)
-        return finalResponse
+        #m.plot(forecast)
+        response = {}
+        response["list"] = finalList
+        response["mae"] =  mae
+        return response
 
     def predictProphetDeathsLog(listC):
 
@@ -183,5 +233,6 @@ class predictionDAO:
         for i in range(0, len(finalResponse)):
             finalResponse[i][0] = round(datetime.timestamp(finalResponse[i][0])*1000)
         #print(len(finalResponse));
-        m.plot(forecast)
+        #m.plot(forecast)
         return finalResponse
+

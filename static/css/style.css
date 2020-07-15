@@ -171,6 +171,28 @@ color:#737373;
   clear: both;
 }
 
+.predictrow {margin: 0 -5px;}
+
+.predictcolumn {
+    float: left;
+    width: 33%;
+    padding: 0 10px;
+}
+
+/* Clear floats after the columns */
+.predictrow:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+
+
+
+
+
+
+
 /* class applies to select element itself, not a wrapper element */
 .select-css {
     display: block;
@@ -432,6 +454,13 @@ input[type="number"] {
     padding: 0 10px;
 }
 
+   .predictcolumn{
+   float: left;
+    width: 100%;
+    padding: 0 10px;
+
+   }
+
   .button {
 
     width: 47%;
@@ -484,4 +513,12 @@ font-size: x-large;
 }
 .highcharts-data-table tr:hover {
     background: #f1f7ff;
+}
+
+.highcharts-description
+{
+    color: white;
+
+    font-weight: bold;
+
 }
