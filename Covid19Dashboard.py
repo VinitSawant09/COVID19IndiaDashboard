@@ -36,16 +36,18 @@ def pie():
     cumulativeDeathList = search['listC']
     cumulativeConfirmedList = search['listConfirmed']
     cumulativeRecoveredList = search['listRecovered']
+    predDays = search['predDays']
+    deaths = predictionController.predictProphetDeaths(cumulativeDeathList,predDays)
+    confirmed = predictionController.predictProphetConfirmed(cumulativeConfirmedList,predDays)
+    recovered = predictionController.predictProphetRecovered(cumulativeRecoveredList,predDays)
+    #lr = predictionController.predictLR(cumulativeDeathList)
+    deathsLog = predictionController.predictProphetDeathsLog(cumulativeDeathList,predDays)
+    confirmedLog = predictionController.predictProphetConfirmedLog(cumulativeConfirmedList,predDays)
+    recoveredLog = predictionController.predictProphetRecoveredLog(cumulativeRecoveredList,predDays)
 
-    deaths = predictionController.predictProphetDeaths(cumulativeDeathList)
-    confirmed = predictionController.predictProphetConfirmed(cumulativeConfirmedList)
-    recovered = predictionController.predictProphetRecovered(cumulativeRecoveredList)
-    lr = predictionController.predictLR(cumulativeDeathList)
-    #deathsLog = predictionController.predictProphetDeathsLog(cumulativeDeathList)
-
-
-
-    return jsonify(deaths=deaths['list'], confirmed =confirmed['list'] , recovered = recovered['list'] , dmae = deaths['mae'] , cmae= confirmed['mae'] ,rmae=recovered['mae'])
+    return jsonify(deaths=deaths['list'], confirmed =confirmed['list'] , recovered = recovered['list'] , dmae = deaths['mae'] , cmae= confirmed['mae'] ,rmae=recovered['mae'],
+                   deathsLog = deathsLog['list'], confirmedLog = confirmedLog['list'], recoveredLog=recoveredLog['list'],
+                   ldmae=deathsLog['mae'], lcmae=confirmedLog['mae'], lrmae=recoveredLog['mae'])
 
 #Error Handling
 @app.errorhandler(404)

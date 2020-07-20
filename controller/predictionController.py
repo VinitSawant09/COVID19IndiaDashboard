@@ -16,30 +16,44 @@ class predictionController:
 
          return response
 
-    def predictProphetDeaths (cumulativeList):
+    def predictProphetDeaths (cumulativeList,predDays):
          response = ''
          print("inside predictProphetDeaths Controller")
-         response = predictiondao.predictProphetDeaths(cumulativeList)
+         response = predictiondao.predictProphetDeaths(cumulativeList,predDays)
 
          return response
 
-    def predictProphetConfirmed(cumulativeList):
+    def predictProphetConfirmed(cumulativeList,predDays):
         response = ''
         print("inside predictProphetConfirmed Controller")
-        response = predictiondao.predictProphetConfirmed(cumulativeList)
+        response = predictiondao.predictProphetConfirmed(cumulativeList,predDays)
 
         return response
 
-    def predictProphetRecovered(cumulativeList):
+    def predictProphetRecovered(cumulativeList,predDays):
         response = ''
         print("inside predictProphetRecovered Controller")
-        response = predictiondao.predictProphetRecovered(cumulativeList)
+        response = predictiondao.predictProphetRecovered(cumulativeList,predDays)
 
         return response
 
-    def predictProphetDeathsLog(cumulativeList):
+    def predictProphetDeathsLog(cumulativeList,predDays):
         response = ''
         print("inside predictProphetDeathsLog Controller")
-        response = predictiondao.predictProphetDeathsLog(cumulativeList)
+        response = predictiondao.predictProphetDeathsLog(cumulativeList,predDays)
+
+        return response
+
+    def predictProphetConfirmedLog(cumulativeList,predDays):
+        response = ''
+        print("inside predictProphetConfirmedLog Controller")
+        response = predictiondao.predictProphetConfirmedLog(cumulativeList,predDays)
+
+        return response
+
+    def predictProphetRecoveredLog(cumulativeList,predDays):
+        response = ''
+        print("inside predictProphetRecoveredLog Controller")
+        response = predictiondao.predictProphetRecoveredLog(cumulativeList,predDays)
 
         return response

@@ -38,6 +38,24 @@
 </div>
 <center><h1><span id="websiteHeader">COVID-19 India Prediction</span></h1></center>
 <marquee><span id="slidingMarquee">Stay Home.!  Stay Safe..! Wash your hands.! Wear mask outdoors.!</span></marquee>
+ <div id="overlay">
+        <div id="progstat"></div>
+          <img src="{{ url_for('static', filename='img/load.gif') }}" id="imgLoad" >
+        <div id="progress"></div>
+      </div>
+<div>
+      <p class="highcharts-description">
+                     <span>
+                         Select Future Prediction Days :
+                     </span>
+      </p>
+     <select class="select-css-pred" id="selectPredDays" onChange="selectPredDays()">
+                  <option value="5">5</option>
+         <option value="15">15</option>
+         <option value="30">30</option>
+     </select>
+</div>
+
 
 <div>
     <div class="predictrow">
@@ -70,7 +88,34 @@
     </div>
 </div>
 <div>
+    <div class="predictrow">
+         <div class="predictcolumn" >
+            <figure class="highcharts-figure">
+                <div id="container3"></div>
+                <p class="highcharts-description">
+                   <span id="ldmae"></span>
+                </p>
+            </figure>
+         </div>
+        <div class="predictcolumn" >
+            <figure class="highcharts-figure">
+                <div id="container4"></div>
+                <p class="highcharts-description">
+                     <span id="lcmae"></span>
+                </p>
+            </figure>
+         </div>
 
+        <div class="predictcolumn" >
+            <figure class="highcharts-figure">
+                <div id="container5"></div>
+                <p class="highcharts-description">
+                     <span id="lrmae"></span>
+                </p>
+            </figure>
+        </div>
+
+    </div>
 </div>
 </div>
 <br>
