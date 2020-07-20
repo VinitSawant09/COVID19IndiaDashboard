@@ -9,13 +9,6 @@ class predictionController:
 
          return response
 
-    def predictLSTM (cumulativeList):
-         response = ''
-         print("inside predictLSTM Controller")
-         response = predictiondao.predictLSTM(cumulativeList)
-
-         return response
-
     def predictProphetDeaths (cumulativeList,predDays):
          response = ''
          print("inside predictProphetDeaths Controller")

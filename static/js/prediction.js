@@ -699,6 +699,6 @@ function selectPredDays()
 {
  var selectBox = document.getElementById("selectPredDays");
  var selectDays = selectBox.options[selectBox.selectedIndex].value;
- 
+
  predict(selectDays);
 }
