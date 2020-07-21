@@ -1,5 +1,5 @@
 from dao.predictionDAO import predictionDAO as predictiondao
-
+from dao.arimaDAO import arimaDAO as arimaDAO
 class predictionController:
 
     def predictLR (cumulativeList):
@@ -48,5 +48,26 @@ class predictionController:
         response = ''
         print("inside predictProphetRecoveredLog Controller")
         response = predictiondao.predictProphetRecoveredLog(cumulativeList,predDays)
+
+        return response
+
+    def predictArimaDeaths(cumulativeList,predDays):
+        response = ''
+        print("inside predictArimaDeaths Controller")
+        response = arimaDAO.predictArimaDeaths(cumulativeList,predDays)
+
+        return response
+
+    def predictArimaConfirmed(cumulativeList,predDays):
+        response = ''
+        print("inside predictArimaConfirmed Controller")
+        response = arimaDAO.predictArimaConfirmed(cumulativeList,predDays)
+
+        return response
+
+    def predictArimaRecovered(cumulativeList,predDays):
+        response = ''
+        print("inside predictArimaRecovered Controller")
+        response = arimaDAO.predictArimaRecovered(cumulativeList,predDays)
 
         return response

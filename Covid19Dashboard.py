@@ -45,9 +45,32 @@ def pie():
     confirmedLog = predictionController.predictProphetConfirmedLog(cumulativeConfirmedList,predDays)
     recoveredLog = predictionController.predictProphetRecoveredLog(cumulativeRecoveredList,predDays)
 
+
+
     return jsonify(deaths=deaths['list'], confirmed =confirmed['list'] , recovered = recovered['list'] , dmae = deaths['mae'] , cmae= confirmed['mae'] ,rmae=recovered['mae'],
                    deathsLog = deathsLog['list'], confirmedLog = confirmedLog['list'], recoveredLog=recoveredLog['list'],
                    ldmae=deathsLog['mae'], lcmae=confirmedLog['mae'], lrmae=recoveredLog['mae'])
+
+
+@app.route('/arima')
+def arima():
+    return render_template("predictionArima.html")
+
+
+@app.route('/predictARIMA', methods=['GET', 'POST'])
+def predictARIMA():
+    search = request.get_json()
+    # new_search = json.dumps(scrape(data))
+    cumulativeDeathList = search['listC']
+    cumulativeConfirmedList = search['listConfirmed']
+    cumulativeRecoveredList = search['listRecovered']
+    predDays = search['predDays']
+    deaths = predictionController.predictArimaDeaths(cumulativeDeathList,predDays)
+    confirmed = predictionController.predictArimaConfirmed(cumulativeConfirmedList, predDays)
+    recovered = predictionController.predictArimaRecovered(cumulativeRecoveredList, predDays)
+
+    return jsonify(deaths=deaths['list'],confirmed =confirmed['list'] , recovered = recovered['list'], dmae=deaths['mae'],cmae= confirmed['mae'] ,rmae=recovered['mae']);
+
 
 #Error Handling
 @app.errorhandler(404)
