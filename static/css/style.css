@@ -36,14 +36,15 @@ body {
   background-color: #f1f1f1;
 }
 
-#totalTestsDone,#testspermillion,#totalRecovered,#recoveryRate,#recoveredToday,#testDoneToday,#ageSampleSize,#ageAverage
+#totalTestsDone,#testspermillion,#totalRecovered,#recoveryRate,#recoveredToday,#testDoneToday,#ageSampleSize,#ageAverage,#enae ,
+#convae,#voae ,#cnnae,#biae,#stackedAe,#vanillaAe
 {
 font-family: serif;
 color:#8ACA2B;
 font-size: 3em;
 }
 
-#totalConfirmedCases,#confirmedToday,#activeCases
+#totalConfirmedCases,#confirmedToday,#activeCases,#predVanilla,#predCNN,#predBiDirectional,#predStacked,#predEncoded,#predVectorO,#predConv
 {
 font-family: serif;
 color:red;

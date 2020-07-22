@@ -1,5 +1,6 @@
 from dao.predictionDAO import predictionDAO as predictiondao
 from dao.arimaDAO import arimaDAO as arimaDAO
+from dao.lstmDAO import lstmDAO as lstmDAO
 class predictionController:
 
     def predictLR (cumulativeList):
@@ -69,5 +70,54 @@ class predictionController:
         response = ''
         print("inside predictArimaRecovered Controller")
         response = arimaDAO.predictArimaRecovered(cumulativeList,predDays)
+
+        return response
+
+    def predictVanillaLSTM(cumulativeList):
+        response = ''
+        print("inside predictVanillaLSTM Controller")
+        response = lstmDAO.vanillaLSTMdeaths(cumulativeList)
+
+        return response
+
+    def predictStackedLSTMdeaths(cumulativeList):
+        response = ''
+        print("inside predictStackedLSTMdeaths Controller")
+        response = lstmDAO.stackedLSTMdeaths(cumulativeList)
+
+        return response
+
+    def predictBidirectionalLSTMdeaths(cumulativeList):
+        response = ''
+        print("inside predictStackedLSTMdeaths Controller")
+        response = lstmDAO.bidirectionalLSTMdeaths(cumulativeList)
+
+        return response
+
+    def predictCNNLSTMdeaths(cumulativeList):
+        response = ''
+        print("inside predictCNNLSTMdeaths Controller")
+        response = lstmDAO.cnnLSTMdeaths(cumulativeList)
+
+        return response
+
+    def predictConvLSTMdeaths(cumulativeList):
+        response = ''
+        print("inside predictConvLSTMdeaths Controller")
+        response = lstmDAO.convLSTMdeaths(cumulativeList)
+
+        return response
+
+    def predictVectorOLSTMdeaths(cumulativeList):
+        response = ''
+        print("inside predictVectorOLSTMdeaths Controller")
+        response = lstmDAO.vectoroutputLSTMdeaths(cumulativeList)
+
+        return response
+
+    def predictEncodedLSTMdeaths(cumulativeList):
+        response = ''
+        print("inside predictEncodedLSTMdeaths Controller")
+        response = lstmDAO.encodedLSTMdeaths(cumulativeList)
 
         return response

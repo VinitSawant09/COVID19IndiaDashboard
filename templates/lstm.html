@@ -16,7 +16,7 @@
         <script src="https://code.highcharts.com/modules/exporting.js"></script>
         <script src="https://code.highcharts.com/modules/export-data.js"></script>
         <script src="https://code.highcharts.com/modules/accessibility.js"></script>
-    <script src="{{ url_for('static', filename='js/arimaPrediction.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/lstm.js') }}"></script>
 </head>
 <body onload="predict()">
 <div>
@@ -38,53 +38,107 @@
         <div id="progstat"></div>
           <img src="{{ url_for('static', filename='img/load.gif') }}" id="imgLoad" >
         <div id="progress"></div>
-      </div><!--
-<div>
-      <p class="highcharts-description">
-                     <span>
-                         Select Future Prediction Days :
-                     </span>
-      </p>
-     <select class="select-css-pred" id="selectPredDays" onChange="selectPredDays()">-- >
-                  <option value="5">5</option>
-         <option value="15">15</option>
-         <option value="30">30</option>
-     </select>
-</div>-->
+      </div>
+<div class="row">
 
+  <div class="column">
+    <div class="card">
+        <h1>Vanilla LSTM </h1>
+        <br>
+        <h2>Predicted</h2>
+        <span id="predVanilla"> </span>
+        <h2>Absolute Error </h2>
+        <span id="vanillaAe"> </span>
 
-<div>
-    <div class="predictrow">
-         <div class="predictcolumn" >
-            <figure class="highcharts-figure">
-                <div id="container"></div>
-                <p class="highcharts-description">
-                   <span id="dmae"></span>
-                </p>
-            </figure>
-         </div>
-        <div class="predictcolumn" >
-            <figure class="highcharts-figure">
-                <div id="container1"></div>
-                <p class="highcharts-description">
-                     <span id="cmae"></span>
-                </p>
-            </figure>
-         </div>
-
-        <div class="predictcolumn" >
-            <figure class="highcharts-figure">
-                <div id="container2"></div>
-                <p class="highcharts-description">
-                     <span id="rmae"></span>
-                </p>
-            </figure>
-        </div>
 
     </div>
+  </div>
+    <div class="column">
+    <div class="card">
+        <h1>Stacked LSTM </h1>
+        <br>
+        <h2>Predicted </h2>
+        <span id="predStacked"> </span>
+        <h2>Absolute Error</h2>
+        <span id="stackedAe"> </span>
+
+    </div>
+
+  </div>
+    <div class="column">
+    <div class="card">
+        <h1>Encoded LSTM </h1>
+        <br>
+        <h2>Predicted </h2>
+        <span id="predEncoded"> </span>
+        <h2>Absolute Error</h2>
+        <span id="enae"> </span>
+
+    </div>
+
+
+
+  </div>
+    <div class="column">
+    <div class="card">
+        <h1>CNN LSTM</h1>
+        <br>
+        <h2>Predicted </h2>
+        <span id="predCNN"> </span>
+        <h2>Absolute Error</h2>
+        <span id="cnnae"> </span>
+
+    </div>
+  </div>
 </div>
 
+</div>
+<br>
+<div>
+<div class="row">
 
+  <div class="column">
+    <div class="card">
+        <h1>Convolutional LSTM</h1>
+        <br>
+        <h2>Predicted</h2>
+        <span id="predConv"> </span>
+        <h2>Absolute Error </h2>
+        <span id="convae"> </span>
+
+
+    </div>
+  </div>
+    <div class="column">
+    <div class="card">
+        <h1>Vector Output LSTM </h1>
+        <br>
+        <h2>Predicted </h2>
+        <span id="predVectorO"> </span>
+        <h2>Absolute Error</h2>
+        <span id="voae"> </span>
+
+    </div>
+
+  </div>
+
+   <div class="column">
+    <div class="card">
+        <h1>Bi-directional LSTM </h1>
+        <br>
+        <h2>Predicted </h2>
+        <span id="predBiDirectional"> </span>
+        <h2>Absolute Error</h2>
+        <span id="biae"> </span>
+
+    </div>
+   </div>
+
+
+
+
+</div>
+    </div>
 <div class="footer">
   <p>&#169;Developed by Vinit Vilas Sawant</p>
 </div>
