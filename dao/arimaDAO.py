@@ -13,7 +13,7 @@ class arimaDAO:
 
     def predictArimaDeaths(listC, predDays):
 
-        base = datetime.datetime.today() - datetime.timedelta(days=1)
+        base = datetime.datetime.today() #- datetime.timedelta(days=1)
         for x in range(1, 6):
             arrObj = []
             arrObj.append((base + datetime.timedelta(days=x)).strftime("%Y-%m-%d"))
@@ -72,7 +72,7 @@ class arimaDAO:
 
     def predictArimaConfirmed(listC, predDays):
 
-        base = datetime.datetime.today() - datetime.timedelta(days=1)
+        base = datetime.datetime.today() #- datetime.timedelta(days=1)
         for x in range(1, 6):
             arrObj = []
             arrObj.append((base + datetime.timedelta(days=x)).strftime("%Y-%m-%d"))
@@ -130,7 +130,7 @@ class arimaDAO:
 
     def predictArimaRecovered(listC, predDays):
 
-        base = datetime.datetime.today() - datetime.timedelta(days=1)
+        base = datetime.datetime.today() #- datetime.timedelta(days=1)
         for x in range(1, 6):
             arrObj = []
             arrObj.append((base + datetime.timedelta(days=x)).strftime("%Y-%m-%d"))

@@ -88,12 +88,12 @@ x.style.display = "block";
 
                             $.ajax({
                                           type: 'POST',
-                                          url: "/predictARIMA",
+                                          url: "/predictARIMAdeaths",
                                           data: JSON.stringify(
                                           {
                                           "listC" : cumulativeCounts,
-                                          "listConfirmed": cumulativeCases,
-                                          "listRecovered":cumulativeRecovered,
+                                         /* "listConfirmed": cumulativeCases,
+                                          "listRecovered":cumulativeRecovered,*/
                                           "predDays": selectedPredDays
 
                                           }
@@ -103,11 +103,13 @@ x.style.display = "block";
                                           {
                                             console.log(data);
                                             var listData = data['deaths'];
-                                            var listConfirmed = data['confirmed'];
-                                            var listRecovered = data['recovered'];
                                             var maeDeath = Math.round((data['dmae'] + Number.EPSILON) * 100) / 100;
+                                            /*
+                                            var listConfirmed = data['confirmed'];
                                             var maeConfirmed = Math.round((data['cmae'] + Number.EPSILON) * 100) / 100;
+                                            var listRecovered = data['recovered'];
                                             var maeRecovered = Math.round((data['rmae'] + Number.EPSILON) * 100) / 100;
+                                            */
 
 
                                             for(var i=0;i<listData.length;i++)
@@ -125,7 +127,7 @@ x.style.display = "block";
 
 
                                             }
-
+                                            /*
                                             for(var i=0;i<listConfirmed.length;i++)
                                             {
                                                var arr= [] ;
@@ -155,7 +157,7 @@ x.style.display = "block";
                                                predictedRecovered.push(arr);
 
                                             }
-
+                                           */
 
                                         Highcharts.chart('container', {
                                         chart: {
@@ -198,6 +200,53 @@ x.style.display = "block";
 
                                                     ]
                                                 });
+
+                                              document.getElementById('dmae').innerHTML = "Mean Absolute Error (MAE) = "+maeDeath;
+                                              /*
+                                              document.getElementById('cmae').innerHTML = "Mean Absolute Error (MAE) = "+maeConfirmed;
+                                              document.getElementById('rmae').innerHTML = "Mean Absolute Error (MAE) = "+maeRecovered;
+                                               */
+                                            var x = document.getElementById("overlay");
+                                            if (x.style.display === "none") {
+                                                x.style.display = "block";
+                                              } else {
+                                                x.style.display = "none";
+                                              }
+
+
+                                         $.ajax({
+                                          type: 'POST',
+                                          url: "/predictARIMAconfirmed",
+                                          data: JSON.stringify(
+                                          {
+
+                                          "listConfirmed": cumulativeCases,
+
+                                          "predDays": selectedPredDays
+
+                                          }
+                                          ),
+                                          contentType: 'application/json; charset=utf-8',
+                                          success: function(data)
+                                      {
+                                            console.log(data);
+
+
+                                            var listConfirmed = data['confirmed'];
+                                            var maeConfirmed = Math.round((data['cmae'] + Number.EPSILON) * 100) / 100;
+                                            for(var i=0;i<listConfirmed.length;i++)
+                                            {
+                                               var arr= [] ;
+                                               var myDate = listConfirmed[i][0];
+
+                                               dateObj = new Date(myDate);
+                                               dateObj = dateObj.getTime() + (5.5*60*60*1000)
+
+                                               arr.push(dateObj);
+                                               arr.push(Math.round((listConfirmed[i][1] + Number.EPSILON) * 100) / 100);
+                                               predictedConfirmed.push(arr);
+
+                                            }
 
 
                                         Highcharts.chart('container1', {
@@ -242,6 +291,41 @@ x.style.display = "block";
                                                     ]
                                                 });
 
+
+                                                document.getElementById('cmae').innerHTML = "Mean Absolute Error (MAE) = "+maeConfirmed;
+                                      $.ajax({
+                                          type: 'POST',
+                                          url: "/predictARIMArecovered",
+                                          data: JSON.stringify(
+                                          {
+
+                                          "listRecovered":cumulativeRecovered,
+
+                                          "predDays": selectedPredDays
+
+                                          }
+                                          ),
+                                          contentType: 'application/json; charset=utf-8',
+                                          success: function(data)
+                                      {
+                                            var listRecovered = data['recovered'];
+                                            var maeRecovered = Math.round((data['rmae'] + Number.EPSILON) * 100) / 100;
+
+                                            for(var i=0;i<listRecovered.length;i++)
+                                            {
+                                               var arr= [] ;
+                                               var myDate = listRecovered[i][0];
+
+                                               dateObj = new Date(myDate);
+                                               dateObj = dateObj.getTime() + (5.5*60*60*1000)
+
+                                               arr.push(dateObj);
+                                               arr.push(Math.round((listRecovered[i][1] + Number.EPSILON) * 100) / 100);
+                                               predictedRecovered.push(arr);
+
+                                            }
+
+
                                              Highcharts.chart('container2', {
                                         chart: {
                                             zoomType: 'x'
@@ -284,16 +368,14 @@ x.style.display = "block";
                                                     ]
                                                 });
 
-                                              document.getElementById('dmae').innerHTML = "Mean Absolute Error (MAE) = "+maeDeath;
-                                              document.getElementById('cmae').innerHTML = "Mean Absolute Error (MAE) = "+maeConfirmed;
-                                              document.getElementById('rmae').innerHTML = "Mean Absolute Error (MAE) = "+maeRecovered;
+                                                 document.getElementById('rmae').innerHTML = "Mean Absolute Error (MAE) = "+maeRecovered;
 
-                                            var x = document.getElementById("overlay");
-                                            if (x.style.display === "none") {
-                                                x.style.display = "block";
-                                              } else {
-                                                x.style.display = "none";
+
                                               }
+                                          });
+
+                                             }
+                                          });
                                           }
                                           });
 

@@ -57,19 +57,46 @@ def arima():
     return render_template("predictionArima.html")
 
 
-@app.route('/predictARIMA', methods=['GET', 'POST'])
-def predictARIMA():
+@app.route('/predictARIMAdeaths', methods=['GET', 'POST'])
+def predictARIMAdeaths():
     search = request.get_json()
-    # new_search = json.dumps(scrape(data))
+
     cumulativeDeathList = search['listC']
-    cumulativeConfirmedList = search['listConfirmed']
-    cumulativeRecoveredList = search['listRecovered']
+
+    #cumulativeConfirmedList = search['listConfirmed']
+    #cumulativeRecoveredList = search['listRecovered']
     predDays = search['predDays']
     deaths = predictionController.predictArimaDeaths(cumulativeDeathList,predDays)
+    #confirmed = predictionController.predictArimaConfirmed(cumulativeConfirmedList, predDays)
+    #recovered = predictionController.predictArimaRecovered(cumulativeRecoveredList, predDays)
+
+    return jsonify(deaths=deaths['list'], dmae=deaths['mae']);
+
+@app.route('/predictARIMAconfirmed', methods=['GET', 'POST'])
+def predictARIMAconfirmed():
+    search = request.get_json()
+
+    cumulativeConfirmedList = search['listConfirmed']
+
+    predDays = search['predDays']
+
     confirmed = predictionController.predictArimaConfirmed(cumulativeConfirmedList, predDays)
+
+
+    return jsonify(confirmed =confirmed['list'] , cmae= confirmed['mae']);
+
+
+@app.route('/predictARIMArecovered', methods=['GET', 'POST'])
+def predictARIMArecovered():
+    search = request.get_json()
+
+
+    cumulativeRecoveredList = search['listRecovered']
+    predDays = search['predDays']
+
     recovered = predictionController.predictArimaRecovered(cumulativeRecoveredList, predDays)
 
-    return jsonify(deaths=deaths['list'],confirmed =confirmed['list'] , recovered = recovered['list'], dmae=deaths['mae'],cmae= confirmed['mae'] ,rmae=recovered['mae']);
+    return jsonify(recovered=recovered['list'], rmae=recovered['mae']);
 
 
 #Error Handling
