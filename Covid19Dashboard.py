@@ -76,7 +76,7 @@ def predictARIMAdeaths():
 def predictARIMAconfirmed():
     search = request.get_json()
 
-    cumulativeConfirmedList = search['listC']
+    cumulativeConfirmedList = search['listConfirmed']
 
     predDays = search['predDays']
 
