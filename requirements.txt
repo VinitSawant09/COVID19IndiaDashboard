@@ -1,3 +1,4 @@
+tensorflow
 keras
 matplotlib
 fbprophet
@@ -14,4 +15,3 @@ pmdarima
 six
 joblib
 statsmodels
-tensorflow
