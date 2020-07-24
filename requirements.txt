@@ -1,4 +1,4 @@
-keras
+keras == 2.3.1
 matplotlib
 fbprophet
 scikit-learn
@@ -14,3 +14,4 @@ pmdarima
 six
 joblib
 statsmodels
+tensorflow == 1.13.1

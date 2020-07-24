@@ -4,14 +4,15 @@
 #os.environ['CUDA_VISIBLE_DEVICES']='-1'
 #os.environ['TF_CUDNN_USE_AUTOTUNE'] ='0'
 import numpy as np
-import random as rn
+#import random as rn
 #import tensorflow as tf
 #rn.seed(1)
 #np.random.seed(1)
 #from tensorflow import set_random_seed
 #set_random_seed(1)
 from numpy import array
-import keras
+
+#import keras
 #from keras import backend as k
 #config = tf.ConfigProto(intra_op_parallelism_threads=1, inter_op_parallelism_threads=1,
 #allow_soft_placement=True, device_count = {'CPU': 1})
@@ -20,8 +21,16 @@ import keras
 from keras.models import Sequential
 from keras.layers import LSTM, Bidirectional, TimeDistributed, Conv1D, MaxPooling1D, Flatten, ConvLSTM2D, RepeatVector
 from keras.layers import Dense
+
+
 #keras.optimizers.Adam(lr=0.01)
 # split a univariate sequence into samples
+import tensorflow
+print('tensorflow: %s' % tensorflow.__version__)
+# keras
+import keras
+print('keras: %s' % keras.__version__)
+
 
 class lstmDAO:
 
@@ -130,37 +139,38 @@ class lstmDAO:
 
         def bidirectionalLSTMdeaths(deaths):
 
-            # keras.optimizers.Adam(lr=0.01)
-            raw_seq = []
-            deaths = deaths[6:]
 
-            for i in range(0, len(deaths)):
-                raw_seq.append(deaths[i][1])
 
-            print(raw_seq)
+                    raw_seq = []
+                    deaths = deaths[6:]
 
-            n_steps = 3
-            n_features = 1
-            X, y = lstmDAO.split_sequence(raw_seq, n_steps)
-            X = X.reshape((X.shape[0], X.shape[1], n_features))
-            model = Sequential()
-            model.add(Bidirectional(LSTM(50, activation='relu'), input_shape=(n_steps, n_features)))
-            model.add(Dense(1))
-            model.compile(optimizer='adam', loss='mse')
-            # fit model
-            model.fit(X, y, epochs=200, verbose=0)
-            # demonstrate prediction
-            x_input = array([raw_seq[-3], raw_seq[-2], raw_seq[-1]])
-            x_input = x_input.reshape((1, n_steps, n_features))
-            yhat = 0
-            #for j in range(0, 10):
-                #yhat =yhat +  model.predict(x_input, verbose=0)
-            #print(yhat/10)
-            yhat = model.predict(x_input, verbose=0)
-            response = {}
-            response["list"] = yhat.tolist()
-            response["mae"] = 0
-            return response
+                    for i in range(0, len(deaths)):
+                        raw_seq.append(deaths[i][1])
+
+                    print(raw_seq)
+
+                    n_steps = 3
+                    n_features = 1
+                    X, y = lstmDAO.split_sequence(raw_seq, n_steps)
+                    X = X.reshape((X.shape[0], X.shape[1], n_features))
+                    model = Sequential()
+                    model.add(Bidirectional(LSTM(50, activation='relu'), input_shape=(n_steps, n_features)))
+                    model.add(Dense(1))
+                    model.compile(optimizer='adam', loss='mse')
+                    # fit model
+                    model.fit(X, y, epochs=200, verbose=0)
+                    # demonstrate prediction
+                    x_input = array([raw_seq[-3], raw_seq[-2], raw_seq[-1]])
+                    x_input = x_input.reshape((1, n_steps, n_features))
+                    yhat = 0
+                    #for j in range(0, 10):
+                        #yhat =yhat +  model.predict(x_input, verbose=0)
+                    #print(yhat/10)
+                    yhat = model.predict(x_input, verbose=0)
+                    response = {}
+                    response["list"] = yhat.tolist()
+                    response["mae"] = 0
+                    return response
 
 
         def cnnLSTMdeaths(deaths):
