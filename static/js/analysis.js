@@ -1776,6 +1776,358 @@ function myFunction()
              }
 
 
+
+          $.ajax(
+       {
+        url  : "https://api.covid19india.org/raw_data11.json",
+        contentType: "application/json",
+        type : 'GET',
+        contentType: false,
+        cache: false,
+        processData: false,
+        success: function(response){
+             var totalRecords = response.raw_data;
+             for(var i=0;i<totalRecords.length;i++)
+             {
+
+                if(totalRecords[i].agebracket!="" && !isNaN(totalRecords[i].agebracket) && totalRecords[i].currentstatus=='Deceased')
+               {
+
+                 if(totalRecords[i].gender=='F')
+                  {
+                  deathFemaleCount++;
+                  deathGenderCount++;
+                  var genderage = parseInt(totalRecords[i].agebracket);
+                  if(genderage>=0 && genderage <=17)
+                  {
+                   var count = deathAgeFemaleDistribution[0];
+                   count= count + 1;
+                   deathAgeFemaleDistribution[0]=count;
+                  }
+                  else if(genderage>=18 && genderage <=44)
+                  {
+                   var count = deathAgeFemaleDistribution[1];
+                   count= count + 1;
+                   deathAgeFemaleDistribution[1]=count;
+                  }
+                  else if(genderage>=45 && genderage <=64)
+                  {
+                   var count = deathAgeFemaleDistribution[2];
+                   count= count + 1;
+                   deathAgeFemaleDistribution[2]=count;
+                  }
+                  else if(genderage>=65 && genderage <=74)
+                  {
+                   var count = deathAgeFemaleDistribution[3];
+                   count= count + 1;
+                   deathAgeFemaleDistribution[3]=count;
+                  }
+                  else if(genderage>=75)
+                  {
+                   var count = deathAgeFemaleDistribution[4];
+                   count= count + 1;
+                   deathAgeFemaleDistribution[4]=count;
+                  }
+                  }
+                  else if (totalRecords[i].gender=='M')
+                  {
+                  deathMaleCount++;
+                  deathGenderCount++;
+                  var genderage = parseInt(totalRecords[i].agebracket);
+                  if(genderage>=0 && genderage <=17)
+                  {
+                   var count = deathAgeMaleDistribution[0];
+                   count= count + 1;
+                   deathAgeMaleDistribution[0]=count;
+                  }
+                  else if(genderage>=18 && genderage <=44)
+                  {
+                   var count = deathAgeMaleDistribution[1];
+                   count= count + 1;
+                   deathAgeMaleDistribution[1]=count;
+                  }
+                  else if(genderage>=45 && genderage <=64)
+                  {
+                   var count = deathAgeMaleDistribution[2];
+                   count= count + 1;
+                   deathAgeMaleDistribution[2]=count;
+                  }
+                  else if(genderage>=65 && genderage <=74)
+                  {
+                   var count = deathAgeMaleDistribution[3];
+                   count= count + 1;
+                   deathAgeMaleDistribution[3]=count;
+                  }
+                  else if(genderage>=75)
+                  {
+                   var count = deathAgeMaleDistribution[4];
+                   count= count + 1;
+                   deathAgeMaleDistribution[4]=count;
+                  }
+                  }
+
+               var age = parseInt(totalRecords[i].agebracket);
+                  if(age>=0 && age <=17)
+                  {
+                   var count = deceasedAgeDistribution[0];
+                   count= count + 1;
+                   deceasedAgeDistribution[0]=count;
+                  }
+                  else if(age>=18 && age <=44)
+                  {
+                   var count = deceasedAgeDistribution[1];
+                   count= count + 1;
+                   deceasedAgeDistribution[1]=count;
+                  }
+                  else if(age>=45 && age <=64)
+                  {
+                   var count = deceasedAgeDistribution[2];
+                   count= count + 1;
+                   deceasedAgeDistribution[2]=count;
+                  }
+                  else if(age>=65 && age <=74)
+                  {
+                   var count = deceasedAgeDistribution[3];
+                   count= count + 1;
+                   deceasedAgeDistribution[3]=count;
+                  }
+                  else if(age>=75)
+                  {
+                   var count = deceasedAgeDistribution[4];
+                   count= count + 1;
+                   deceasedAgeDistribution[4]=count;
+                  }
+               deathPatientsCount++;
+               summationOfDeathAges=summationOfDeathAges+parseInt(totalRecords[i].agebracket);
+               }
+
+               if(totalRecords[i].agebracket!="" && !isNaN(totalRecords[i].agebracket))
+               {
+               var age = parseInt(totalRecords[i].agebracket)
+                  if(age>=0 && age <=17)
+                  {
+                   var count = confirmedAgeDistribution[0];
+                   count= count + 1;
+                   confirmedAgeDistribution[0]=count;
+                  }
+                  else if(age>=18 && age <=44)
+                  {
+                   var count = confirmedAgeDistribution[1];
+                   count= count + 1;
+                   confirmedAgeDistribution[1]=count;
+                  }
+                  else if(age>=45 && age <=64)
+                  {
+                   var count = confirmedAgeDistribution[2];
+                   count= count + 1;
+                   confirmedAgeDistribution[2]=count;
+                  }
+                  else if(age>=65 && age <=74)
+                  {
+                   var count = confirmedAgeDistribution[3];
+                   count= count + 1;
+                   confirmedAgeDistribution[3]=count;
+                  }
+                  else if(age>=75)
+                  {
+                   var count = confirmedAgeDistribution[4];
+                   count= count + 1;
+                   confirmedAgeDistribution[4]=count;
+                  }
+               ageIndividuals++;
+               summationOfAges=summationOfAges+parseInt(totalRecords[i].agebracket);
+               }
+               if(totalRecords[i].gender!="")
+               {
+                  if(totalRecords[i].gender=='F')
+                  {
+                  femaleCount++;
+                  totalCount++;
+                  }
+                  else if (totalRecords[i].gender=='M')
+                  {
+                  maleCount++;
+                  totalCount++;
+                  }
+               }
+             }
+
+         $.ajax(
+       {
+        url  : "https://api.covid19india.org/raw_data12.json",
+        contentType: "application/json",
+        type : 'GET',
+        contentType: false,
+        cache: false,
+        processData: false,
+        success: function(response){
+             var totalRecords = response.raw_data;
+             for(var i=0;i<totalRecords.length;i++)
+             {
+
+                if(totalRecords[i].agebracket!="" && !isNaN(totalRecords[i].agebracket) && totalRecords[i].currentstatus=='Deceased')
+               {
+
+                 if(totalRecords[i].gender=='F')
+                  {
+                  deathFemaleCount++;
+                  deathGenderCount++;
+                  var genderage = parseInt(totalRecords[i].agebracket);
+                  if(genderage>=0 && genderage <=17)
+                  {
+                   var count = deathAgeFemaleDistribution[0];
+                   count= count + 1;
+                   deathAgeFemaleDistribution[0]=count;
+                  }
+                  else if(genderage>=18 && genderage <=44)
+                  {
+                   var count = deathAgeFemaleDistribution[1];
+                   count= count + 1;
+                   deathAgeFemaleDistribution[1]=count;
+                  }
+                  else if(genderage>=45 && genderage <=64)
+                  {
+                   var count = deathAgeFemaleDistribution[2];
+                   count= count + 1;
+                   deathAgeFemaleDistribution[2]=count;
+                  }
+                  else if(genderage>=65 && genderage <=74)
+                  {
+                   var count = deathAgeFemaleDistribution[3];
+                   count= count + 1;
+                   deathAgeFemaleDistribution[3]=count;
+                  }
+                  else if(genderage>=75)
+                  {
+                   var count = deathAgeFemaleDistribution[4];
+                   count= count + 1;
+                   deathAgeFemaleDistribution[4]=count;
+                  }
+                  }
+                  else if (totalRecords[i].gender=='M')
+                  {
+                  deathMaleCount++;
+                  deathGenderCount++;
+                  var genderage = parseInt(totalRecords[i].agebracket);
+                  if(genderage>=0 && genderage <=17)
+                  {
+                   var count = deathAgeMaleDistribution[0];
+                   count= count + 1;
+                   deathAgeMaleDistribution[0]=count;
+                  }
+                  else if(genderage>=18 && genderage <=44)
+                  {
+                   var count = deathAgeMaleDistribution[1];
+                   count= count + 1;
+                   deathAgeMaleDistribution[1]=count;
+                  }
+                  else if(genderage>=45 && genderage <=64)
+                  {
+                   var count = deathAgeMaleDistribution[2];
+                   count= count + 1;
+                   deathAgeMaleDistribution[2]=count;
+                  }
+                  else if(genderage>=65 && genderage <=74)
+                  {
+                   var count = deathAgeMaleDistribution[3];
+                   count= count + 1;
+                   deathAgeMaleDistribution[3]=count;
+                  }
+                  else if(genderage>=75)
+                  {
+                   var count = deathAgeMaleDistribution[4];
+                   count= count + 1;
+                   deathAgeMaleDistribution[4]=count;
+                  }
+                  }
+
+               var age = parseInt(totalRecords[i].agebracket);
+                  if(age>=0 && age <=17)
+                  {
+                   var count = deceasedAgeDistribution[0];
+                   count= count + 1;
+                   deceasedAgeDistribution[0]=count;
+                  }
+                  else if(age>=18 && age <=44)
+                  {
+                   var count = deceasedAgeDistribution[1];
+                   count= count + 1;
+                   deceasedAgeDistribution[1]=count;
+                  }
+                  else if(age>=45 && age <=64)
+                  {
+                   var count = deceasedAgeDistribution[2];
+                   count= count + 1;
+                   deceasedAgeDistribution[2]=count;
+                  }
+                  else if(age>=65 && age <=74)
+                  {
+                   var count = deceasedAgeDistribution[3];
+                   count= count + 1;
+                   deceasedAgeDistribution[3]=count;
+                  }
+                  else if(age>=75)
+                  {
+                   var count = deceasedAgeDistribution[4];
+                   count= count + 1;
+                   deceasedAgeDistribution[4]=count;
+                  }
+               deathPatientsCount++;
+               summationOfDeathAges=summationOfDeathAges+parseInt(totalRecords[i].agebracket);
+               }
+
+               if(totalRecords[i].agebracket!="" && !isNaN(totalRecords[i].agebracket))
+               {
+               var age = parseInt(totalRecords[i].agebracket)
+                  if(age>=0 && age <=17)
+                  {
+                   var count = confirmedAgeDistribution[0];
+                   count= count + 1;
+                   confirmedAgeDistribution[0]=count;
+                  }
+                  else if(age>=18 && age <=44)
+                  {
+                   var count = confirmedAgeDistribution[1];
+                   count= count + 1;
+                   confirmedAgeDistribution[1]=count;
+                  }
+                  else if(age>=45 && age <=64)
+                  {
+                   var count = confirmedAgeDistribution[2];
+                   count= count + 1;
+                   confirmedAgeDistribution[2]=count;
+                  }
+                  else if(age>=65 && age <=74)
+                  {
+                   var count = confirmedAgeDistribution[3];
+                   count= count + 1;
+                   confirmedAgeDistribution[3]=count;
+                  }
+                  else if(age>=75)
+                  {
+                   var count = confirmedAgeDistribution[4];
+                   count= count + 1;
+                   confirmedAgeDistribution[4]=count;
+                  }
+               ageIndividuals++;
+               summationOfAges=summationOfAges+parseInt(totalRecords[i].agebracket);
+               }
+               if(totalRecords[i].gender!="")
+               {
+                  if(totalRecords[i].gender=='F')
+                  {
+                  femaleCount++;
+                  totalCount++;
+                  }
+                  else if (totalRecords[i].gender=='M')
+                  {
+                  maleCount++;
+                  totalCount++;
+                  }
+               }
+             }
+
+
              //PieChart
 
                                  Highcharts.chart('container', {
@@ -2113,6 +2465,11 @@ function myFunction()
 
                     }, 10);
 
+        }
+       });
+
+       }
+       });
 
        }
        });

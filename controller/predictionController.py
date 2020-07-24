@@ -73,7 +73,7 @@ class predictionController:
 
         return response
 
-    def predictVanillaLSTM(cumulativeList):
+    def predictVanillaLSTMdeaths(cumulativeList):
         response = ''
         print("inside predictVanillaLSTM Controller")
         response = lstmDAO.vanillaLSTMdeaths(cumulativeList)
@@ -119,5 +119,112 @@ class predictionController:
         response = ''
         print("inside predictEncodedLSTMdeaths Controller")
         response = lstmDAO.encodedLSTMdeaths(cumulativeList)
+
+        return response
+
+
+
+
+
+    def predictVanillaLSTMconfirmed(cumulativeList):
+        response = ''
+        print("inside predictVanillaLSTMconfirmed Controller")
+        response = lstmDAO.vanillaLSTMconfirmed(cumulativeList)
+
+        return response
+
+    def predictStackedLSTMconfirmed(cumulativeList):
+        response = ''
+        print("inside predictStackedLSTMconfirmed Controller")
+        response = lstmDAO.stackedLSTMconfirmed(cumulativeList)
+
+        return response
+
+    def predictBidirectionalLSTMconfirmed(cumulativeList):
+        response = ''
+        print("inside predictStackedLSTMconfirmeds Controller")
+        response = lstmDAO.bidirectionalLSTMconfirmed(cumulativeList)
+
+        return response
+
+    def predictCNNLSTMconfirmed(cumulativeList):
+        response = ''
+        print("inside predictCNNLSTMconfirmed Controller")
+        response = lstmDAO.cnnLSTMconfirmed(cumulativeList)
+
+        return response
+
+    def predictConvLSTMconfirmed(cumulativeList):
+        response = ''
+        print("inside predictConvLSTMconfirmed Controller")
+        response = lstmDAO.convLSTMconfirmed(cumulativeList)
+
+        return response
+
+    def predictVectorOLSTMconfirmed(cumulativeList):
+        response = ''
+        print("inside predictVectorOLSTMconfirmed Controller")
+        response = lstmDAO.vectoroutputLSTMconfirmed(cumulativeList)
+
+        return response
+
+    def predictEncodedLSTMconfirmed(cumulativeList):
+        response = ''
+        print("inside predictEncodedLSTMconfirmed Controller")
+        response = lstmDAO.encodedLSTMconfirmed(cumulativeList)
+
+        return response
+
+
+
+
+
+
+    def predictVanillaLSTMrecovered(cumulativeList):
+        response = ''
+        print("inside predictVanillaLSTMrecovered Controller")
+        response = lstmDAO.vanillaLSTMrecovered(cumulativeList)
+
+        return response
+
+    def predictStackedLSTMrecovered(cumulativeList):
+        response = ''
+        print("inside predictStackedLSTMrecovered Controller")
+        response = lstmDAO.stackedLSTMrecovered(cumulativeList)
+
+        return response
+
+    def predictBidirectionalLSTMrecovered(cumulativeList):
+        response = ''
+        print("inside predictBidirectionalLSTMrecovered Controller")
+        response = lstmDAO.bidirectionalLSTMrecovered(cumulativeList)
+
+        return response
+
+    def predictCNNLSTMrecovered(cumulativeList):
+        response = ''
+        print("inside predictCNNLSTMrecovered Controller")
+        response = lstmDAO.cnnLSTMrecovered(cumulativeList)
+
+        return response
+
+    def predictConvLSTMrecovered(cumulativeList):
+        response = ''
+        print("inside predictConvLSTMrecovered Controller")
+        response = lstmDAO.convLSTMrecovered(cumulativeList)
+
+        return response
+
+    def predictVectorOLSTMrecovered(cumulativeList):
+        response = ''
+        print("inside predictVectorOLSTMrecovered Controller")
+        response = lstmDAO.vectoroutputLSTMrecovered(cumulativeList)
+
+        return response
+
+    def predictEncodedLSTMrecovered(cumulativeList):
+        response = ''
+        print("inside predictEncodedLSTMrecovered Controller")
+        response = lstmDAO.encodedLSTMrecovered(cumulativeList)
 
         return response

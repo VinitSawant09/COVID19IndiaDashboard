@@ -102,18 +102,18 @@ def predictARIMArecovered():
 def lstm():
     return render_template("lstm.html")
 
-@app.route('/predictVanillaLSTM', methods=['GET', 'POST'])
-def predictVanillaLSTM():
+@app.route('/predictVanillaLSTMdeaths', methods=['GET', 'POST'])
+def predictVanillaLSTMdeaths():
     search = request.get_json()
 
     cumulativeDeathList = search['listC']
 
-    deaths = predictionController.predictVanillaLSTM(cumulativeDeathList)
+    deaths = predictionController.predictVanillaLSTMdeaths(cumulativeDeathList)
 
     return jsonify(deaths=deaths['list'], dmae=deaths['mae']);
 
-@app.route('/predictStackedLSTM', methods=['GET', 'POST'])
-def predictStackedLSTM():
+@app.route('/predictStackedLSTMdeaths', methods=['GET', 'POST'])
+def predictStackedLSTMdeaths():
     search = request.get_json()
 
     cumulativeDeathList = search['listC']
@@ -122,8 +122,8 @@ def predictStackedLSTM():
 
     return jsonify(deaths=deaths['list'], dmae=deaths['mae']);
 
-@app.route('/predictBiDirectionalLSTM', methods=['GET', 'POST'])
-def predictBiDirectionalLSTM():
+@app.route('/predictBiDirectionalLSTMdeaths', methods=['GET', 'POST'])
+def predictBiDirectionalLSTMdeaths():
     search = request.get_json()
 
     cumulativeDeathList = search['listC']
@@ -132,8 +132,8 @@ def predictBiDirectionalLSTM():
 
     return jsonify(deaths=deaths['list'], dmae=deaths['mae']);
 
-@app.route('/predictCNNLSTM', methods=['GET', 'POST'])
-def predictCNNLSTM():
+@app.route('/predictCNNLSTMdeaths', methods=['GET', 'POST'])
+def predictCNNLSTMdeaths():
     search = request.get_json()
 
     cumulativeDeathList = search['listC']
@@ -143,8 +143,8 @@ def predictCNNLSTM():
     return jsonify(deaths=deaths['list'], dmae=deaths['mae']);
 
 
-@app.route('/predictConvLSTM', methods=['GET', 'POST'])
-def predictConvLSTM():
+@app.route('/predictConvLSTMdeaths', methods=['GET', 'POST'])
+def predictConvLSTMdeaths():
     search = request.get_json()
 
     cumulativeDeathList = search['listC']
@@ -154,8 +154,8 @@ def predictConvLSTM():
     return jsonify(deaths=deaths['list'], dmae=deaths['mae']);
 
 
-@app.route('/predictVectorOLSTM', methods=['GET', 'POST'])
-def predictVectorOLSTM():
+@app.route('/predictVectorOLSTMdeaths', methods=['GET', 'POST'])
+def predictVectorOLSTMdeaths():
     search = request.get_json()
 
     cumulativeDeathList = search['listC']
@@ -164,8 +164,8 @@ def predictVectorOLSTM():
 
     return jsonify(deaths=deaths['list'], dmae=deaths['mae']);
 
-@app.route('/predictEncodedLSTM', methods=['GET', 'POST'])
-def predictEncodedLSTM():
+@app.route('/predictEncodedLSTMdeaths', methods=['GET', 'POST'])
+def predictEncodedLSTMdeaths():
     search = request.get_json()
 
     cumulativeDeathList = search['listC']
@@ -173,6 +173,160 @@ def predictEncodedLSTM():
     deaths = predictionController.predictEncodedLSTMdeaths(cumulativeDeathList)
 
     return jsonify(deaths=deaths['list'], dmae=deaths['mae']);
+
+
+
+
+@app.route('/predictVanillaLSTMconfirmed', methods=['GET', 'POST'])
+def predictVanillaLSTMconfirmed():
+    search = request.get_json()
+
+    cumulativeConfirmedList = search['listConfirmed']
+
+    confirmed = predictionController.predictVanillaLSTMconfirmed(cumulativeConfirmedList)
+
+    return jsonify(confirmed=confirmed['list'], dmae=confirmed['mae']);
+
+@app.route('/predictStackedLSTMconfirmed', methods=['GET', 'POST'])
+def predictStackedLSTMconfirmed():
+    search = request.get_json()
+
+    cumulativeConfirmedList = search['listConfirmed']
+
+    confirmed = predictionController.predictStackedLSTMconfirmed(cumulativeConfirmedList)
+
+    return jsonify(confirmed=confirmed['list'], dmae=confirmed['mae']);
+
+@app.route('/predictBiDirectionalLSTMconfirmed', methods=['GET', 'POST'])
+def predictBiDirectionalLSTMconfirmed():
+    search = request.get_json()
+
+    cumulativeConfirmedList = search['listConfirmed']
+
+    confirmed = predictionController.predictBidirectionalLSTMconfirmed(cumulativeConfirmedList)
+
+    return jsonify(confirmed=confirmed['list'], dmae=confirmed['mae']);
+
+@app.route('/predictCNNLSTMconfirmed', methods=['GET', 'POST'])
+def predictCNNLSTMconfirmed():
+    search = request.get_json()
+
+    cumulativeConfirmedList = search['listConfirmed']
+
+    confirmed = predictionController.predictCNNLSTMconfirmed(cumulativeConfirmedList)
+
+    return jsonify(confirmed=confirmed['list'], dmae=confirmed['mae']);
+
+
+@app.route('/predictConvLSTMconfirmed', methods=['GET', 'POST'])
+def predictConvLSTMconfirmed():
+    search = request.get_json()
+
+    cumulativeConfirmedList = search['listConfirmed']
+
+    confirmed = predictionController.predictConvLSTMconfirmed(cumulativeConfirmedList)
+
+    return jsonify(confirmed=confirmed['list'], dmae=confirmed['mae']);
+
+
+@app.route('/predictVectorOLSTMconfirmed', methods=['GET', 'POST'])
+def predictVectorOLSTMconfirmed():
+    search = request.get_json()
+
+    cumulativeConfirmedList = search['listConfirmed']
+
+    confirmed = predictionController.predictVectorOLSTMconfirmed(cumulativeConfirmedList)
+
+    return jsonify(confirmed=confirmed['list'], dmae=confirmed['mae']);
+
+@app.route('/predictEncodedLSTMconfirmed', methods=['GET', 'POST'])
+def predictEncodedLSTMconfirmed():
+    search = request.get_json()
+
+    cumulativeConfirmedList = search['listConfirmed']
+
+    confirmed = predictionController.predictEncodedLSTMconfirmed(cumulativeConfirmedList)
+
+    return jsonify(confirmed=confirmed['list'], dmae=confirmed['mae']);
+
+
+
+
+
+
+
+
+@app.route('/predictVanillaLSTMrecovered', methods=['GET', 'POST'])
+def predictVanillaLSTMrecovered():
+    search = request.get_json()
+
+    cumulativeRecoveredList = search['listRecovered']
+
+    recovered = predictionController.predictVanillaLSTMrecovered(cumulativeRecoveredList)
+
+    return jsonify(recovered=recovered['list'], dmae=recovered['mae']);
+
+@app.route('/predictStackedLSTMrecovered', methods=['GET', 'POST'])
+def predictStackedLSTMrecovered():
+    search = request.get_json()
+
+    cumulativeRecoveredList = search['listRecovered']
+
+    recovered = predictionController.predictStackedLSTMrecovered(cumulativeRecoveredList)
+
+    return jsonify(recovered=recovered['list'], dmae=recovered['mae']);
+
+@app.route('/predictBiDirectionalLSTMrecovered', methods=['GET', 'POST'])
+def predictBiDirectionalLSTMrecovered():
+    search = request.get_json()
+
+    cumulativeRecoveredList = search['listRecovered']
+
+    recovered = predictionController.predictBidirectionalLSTMrecovered(cumulativeRecoveredList)
+
+    return jsonify(recovered=recovered['list'], dmae=recovered['mae']);
+
+@app.route('/predictCNNLSTMrecovered', methods=['GET', 'POST'])
+def predictCNNLSTMrecovered():
+    search = request.get_json()
+
+    cumulativeRecoveredList = search['listRecovered']
+
+    recovered = predictionController.predictCNNLSTMrecovered(cumulativeRecoveredList)
+
+    return jsonify(recovered=recovered['list'], dmae=recovered['mae']);
+
+
+@app.route('/predictConvLSTMrecovered', methods=['GET', 'POST'])
+def predictConvLSTMrecovered():
+    search = request.get_json()
+
+    cumulativeRecoveredList = search['listRecovered']
+
+    recovered = predictionController.predictConvLSTMrecovered(cumulativeRecoveredList)
+
+    return jsonify(recovered=recovered['list'], dmae=recovered['mae']);
+
+
+@app.route('/predictVectorOLSTMrecovered', methods=['GET', 'POST'])
+def predictVectorOLSTMrecovered():
+    search = request.get_json()
+
+    cumulativeRecoveredList = search['listRecovered']
+
+    recovered = predictionController.predictVectorOLSTMrecovered(cumulativeRecoveredList)
+
+    return jsonify(recovered=recovered['list'], dmae=recovered['mae']);
+
+@app.route('/predictEncodedLSTMrecovered', methods=['GET', 'POST'])
+def predictEncodedLSTMrecovered():
+    search = request.get_json()
+
+    cumulativeRecoveredList = search['listRecovered']
+
+    recovered = predictionController.predictEncodedLSTMrecovered(cumulativeRecoveredList)
+
+    return jsonify(recovered=recovered['list'], dmae=recovered['mae']);
 
 
 #Error Handling

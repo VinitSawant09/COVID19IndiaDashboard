@@ -39,6 +39,13 @@
           <img src="{{ url_for('static', filename='img/load.gif') }}" id="imgLoad" >
         <div id="progress"></div>
       </div>
+
+<select class="select-css-pred" id="selectType" onChange="selectType()">
+                  <option value="deaths">Deaths</option>
+         <option value="Confirmed">Confirmed</option>
+         <option value="Recovered">Recovered</option>
+     </select>
+<br>
 <div class="row">
 
   <div class="column">

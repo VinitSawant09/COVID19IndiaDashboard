@@ -1,4 +1,4 @@
-function predict()
+function predict(selectType)
 {
 var actualDeaths = [];
 var actualRecovered = [];
@@ -6,8 +6,13 @@ var actualConfirmed = [];
 var predictedDeaths = [];
 var predictedConfirmed = [];
 var predictedRecovered = [];
-var x = document.getElementById("overlay");
 
+
+if (selectType == null)
+{
+selectType= 'deaths'
+console.log(selectType);
+}
 
  $.ajax(
        {
@@ -78,7 +83,8 @@ var x = document.getElementById("overlay");
                                         cache: false,
                                         processData: false,
                                         success: function(response){
-
+                                 if (selectType == 'deaths')
+                                 {
                                         if (response!=null)
                                         {
                                           var entireData = response.data;
@@ -88,7 +94,7 @@ var x = document.getElementById("overlay");
 
                              $.ajax({
                                           type: 'POST',
-                                          url: "/predictVanillaLSTM",
+                                          url: "/predictVanillaLSTMdeaths",
                                           data: JSON.stringify(
                                           {
                                           "listC" : cumulativeCounts,
@@ -110,7 +116,7 @@ var x = document.getElementById("overlay");
 
                                  $.ajax({
                                           type: 'POST',
-                                          url: "/predictStackedLSTM",
+                                          url: "/predictStackedLSTMdeaths",
                                           data: JSON.stringify(
                                           {
                                           "listC" : cumulativeCounts,
@@ -126,7 +132,7 @@ var x = document.getElementById("overlay");
                                              document.getElementById('stackedAe').innerHTML =Math.abs(totalDeaths -  Math.round(data['deaths'][0]));
                                   $.ajax({
                                           type: 'POST',
-                                          url: "/predictBiDirectionalLSTM",
+                                          url: "/predictBiDirectionalLSTMdeaths",
                                           data: JSON.stringify(
                                           {
                                           "listC" : cumulativeCounts,
@@ -142,7 +148,7 @@ var x = document.getElementById("overlay");
                                               document.getElementById('biae').innerHTML =Math.abs(totalDeaths -  Math.round(data['deaths'][0]));
                                  $.ajax({
                                           type: 'POST',
-                                          url: "/predictCNNLSTM",
+                                          url: "/predictCNNLSTMdeaths",
                                           data: JSON.stringify(
                                           {
                                           "listC" : cumulativeCounts,
@@ -158,7 +164,7 @@ var x = document.getElementById("overlay");
                                               document.getElementById('cnnae').innerHTML =Math.abs(totalDeaths -  Math.round(data['deaths'][0]));
                                    $.ajax({
                                           type: 'POST',
-                                          url: "/predictConvLSTM",
+                                          url: "/predictConvLSTMdeaths",
                                           data: JSON.stringify(
                                           {
                                           "listC" : cumulativeCounts,
@@ -174,7 +180,7 @@ var x = document.getElementById("overlay");
                                              document.getElementById('convae').innerHTML =Math.abs(totalDeaths -  Math.round(data['deaths'][0]));
                                    $.ajax({
                                           type: 'POST',
-                                          url: "/predictVectorOLSTM",
+                                          url: "/predictVectorOLSTMdeaths",
                                           data: JSON.stringify(
                                           {
                                           "listC" : cumulativeCounts,
@@ -191,7 +197,7 @@ var x = document.getElementById("overlay");
                                              document.getElementById('voae').innerHTML =Math.abs(totalDeaths -  Math.round(data['deaths'][0][0]));
                                    $.ajax({
                                           type: 'POST',
-                                          url: "/predictEncodedLSTM",
+                                          url: "/predictEncodedLSTMdeaths",
                                           data: JSON.stringify(
                                           {
                                           "listC" : cumulativeCounts,
@@ -208,33 +214,362 @@ var x = document.getElementById("overlay");
 
 
 
-                                          }
-                                   });
+                                                                      }
+                                                               });
 
 
-                                          }
-                                   });
+                                                                      }
+                                                               });
 
 
-                                          }
-                                   });
+                                                                      }
+                                                               });
 
 
-                                          }
-                                   });
+                                                                      }
+                                                               });
 
 
-                                          }
-                                   });
+                                                                      }
+                                                               });
 
 
-                                          }
-                                   });
+                                                                      }
+                                                               });
+                                                               }
+                                                          });
+
+                                                        //console.log(actualDeaths);
+                                                }
+
                                    }
-                              });
 
-                            //console.log(actualDeaths);
-                    }
+                                   else if (selectType == 'Confirmed')
+                                   {
+                                    if (response!=null)
+                                        {
+                                          var entireData = response.data;
+
+                                          var liveStats= entireData["unofficial-summary"];
+                                          var totalConfirmed = liveStats[0].total;
+
+                             $.ajax({
+                                          type: 'POST',
+                                          url: "/predictVanillaLSTMconfirmed",
+                                          data: JSON.stringify(
+                                          {
+                                          "listConfirmed" : cumulativeCases,
+
+                                          }
+                                          ),
+                                          contentType: 'application/json; charset=utf-8',
+                                          success: function(data)
+                                          {
+                                           console.log(data);
+                                           document.getElementById('predVanilla').innerHTML = Math.round(data['confirmed'][0]);
+                                           document.getElementById('vanillaAe').innerHTML =Math.abs(totalConfirmed -  Math.round(data['confirmed'][0]));
+                                            var x = document.getElementById("overlay");
+                                            if (x.style.display === "none") {
+                                                x.style.display = "block";
+                                              } else {
+                                                x.style.display = "none";
+                                              }
+
+                                 $.ajax({
+                                          type: 'POST',
+                                          url: "/predictStackedLSTMconfirmed",
+                                          data: JSON.stringify(
+                                          {
+                                          "listConfirmed" : cumulativeCases,
+
+                                          }
+                                          ),
+                                          contentType: 'application/json; charset=utf-8',
+                                          success: function(data)
+                                          {
+
+                                             console.log(data);
+                                             document.getElementById('predStacked').innerHTML = Math.round(data['confirmed'][0]);
+                                             document.getElementById('stackedAe').innerHTML =Math.abs(totalConfirmed -  Math.round(data['confirmed'][0]));
+                                  $.ajax({
+                                          type: 'POST',
+                                          url: "/predictBiDirectionalLSTMconfirmed",
+                                          data: JSON.stringify(
+                                          {
+                                          "listConfirmed" : cumulativeCases,
+
+                                          }
+                                          ),
+                                          contentType: 'application/json; charset=utf-8',
+                                          success: function(data)
+                                          {
+
+                                             console.log(data);
+                                              document.getElementById('predBiDirectional').innerHTML = Math.round(data['confirmed'][0]);
+                                              document.getElementById('biae').innerHTML =Math.abs(totalConfirmed -  Math.round(data['confirmed'][0]));
+                                 $.ajax({
+                                          type: 'POST',
+                                          url: "/predictCNNLSTMconfirmed",
+                                          data: JSON.stringify(
+                                          {
+                                          "listConfirmed" : cumulativeCases,
+
+                                          }
+                                          ),
+                                          contentType: 'application/json; charset=utf-8',
+                                          success: function(data)
+                                          {
+
+                                             console.log(data);
+                                              document.getElementById('predCNN').innerHTML = Math.round(data['confirmed'][0]);
+                                              document.getElementById('cnnae').innerHTML =Math.abs(totalConfirmed -  Math.round(data['confirmed'][0]));
+                                   $.ajax({
+                                          type: 'POST',
+                                          url: "/predictConvLSTMconfirmed",
+                                          data: JSON.stringify(
+                                          {
+                                          "listConfirmed" : cumulativeCases,
+
+                                          }
+                                          ),
+                                          contentType: 'application/json; charset=utf-8',
+                                          success: function(data)
+                                          {
+
+                                             console.log(data);
+                                             document.getElementById('predConv').innerHTML = Math.round(data['confirmed'][0]);
+                                             document.getElementById('convae').innerHTML =Math.abs(totalConfirmed -  Math.round(data['confirmed'][0]));
+                                   $.ajax({
+                                          type: 'POST',
+                                          url: "/predictVectorOLSTMconfirmed",
+                                          data: JSON.stringify(
+                                          {
+                                          "listConfirmed" : cumulativeCases,
+
+                                          }
+                                          ),
+                                          contentType: 'application/json; charset=utf-8',
+                                          success: function(data)
+                                          {
+
+                                             console.log(data);
+                                             //console.log(data['deaths'][0]);
+                                             document.getElementById('predVectorO').innerHTML = Math.round(data['confirmed'][0][0]);
+                                             document.getElementById('voae').innerHTML =Math.abs(totalConfirmed -  Math.round(data['confirmed'][0][0]));
+                                   $.ajax({
+                                          type: 'POST',
+                                          url: "/predictEncodedLSTMconfirmed",
+                                          data: JSON.stringify(
+                                          {
+                                          "listConfirmed" : cumulativeCases,
+
+                                          }
+                                          ),
+                                          contentType: 'application/json; charset=utf-8',
+                                          success: function(data)
+                                          {
+
+                                             console.log(data);
+                                             document.getElementById('predEncoded').innerHTML = Math.round(data['confirmed'][0][0]);
+                                             document.getElementById('enae').innerHTML =Math.abs(totalConfirmed -  Math.round(data['confirmed'][0][0]));
+
+
+
+                                                                      }
+                                                               });
+
+
+                                                                      }
+                                                               });
+
+
+                                                                      }
+                                                               });
+
+
+                                                                      }
+                                                               });
+
+
+                                                                      }
+                                                               });
+
+
+                                                                      }
+                                                               });
+                                                               }
+                                                          });
+
+                                                        //console.log(actualDeaths);
+                                                }
+
+                                   }
+                                   else if (selectType == 'Recovered')
+                                   {
+                                        if (response!=null)
+                                        {
+                                          var entireData = response.data;
+
+                                          var liveStats= entireData["unofficial-summary"];
+                                          var totalRecovered = liveStats[0].recovered;
+
+                             $.ajax({
+                                          type: 'POST',
+                                          url: "/predictVanillaLSTMrecovered",
+                                          data: JSON.stringify(
+                                          {
+                                          "listRecovered" : cumulativeRecovered,
+
+                                          }
+                                          ),
+                                          contentType: 'application/json; charset=utf-8',
+                                          success: function(data)
+                                          {
+                                           console.log(data);
+                                           document.getElementById('predVanilla').innerHTML = Math.round(data['recovered'][0]);
+                                           document.getElementById('vanillaAe').innerHTML =Math.abs(totalRecovered -  Math.round(data['recovered'][0]));
+                                            var x = document.getElementById("overlay");
+                                            if (x.style.display === "none") {
+                                                x.style.display = "block";
+                                              } else {
+                                                x.style.display = "none";
+                                              }
+
+                                 $.ajax({
+                                          type: 'POST',
+                                          url: "/predictStackedLSTMrecovered",
+                                          data: JSON.stringify(
+                                          {
+                                          "listRecovered" : cumulativeRecovered,
+
+                                          }
+                                          ),
+                                          contentType: 'application/json; charset=utf-8',
+                                          success: function(data)
+                                          {
+
+                                             console.log(data);
+                                             document.getElementById('predStacked').innerHTML = Math.round(data['recovered'][0]);
+                                             document.getElementById('stackedAe').innerHTML =Math.abs(totalRecovered -  Math.round(data['recovered'][0]));
+                                  $.ajax({
+                                          type: 'POST',
+                                          url: "/predictBiDirectionalLSTMrecovered",
+                                          data: JSON.stringify(
+                                          {
+                                          "listRecovered" : cumulativeRecovered,
+
+                                          }
+                                          ),
+                                          contentType: 'application/json; charset=utf-8',
+                                          success: function(data)
+                                          {
+
+                                             console.log(data);
+                                              document.getElementById('predBiDirectional').innerHTML = Math.round(data['recovered'][0]);
+                                              document.getElementById('biae').innerHTML =Math.abs(totalRecovered -  Math.round(data['recovered'][0]));
+                                 $.ajax({
+                                          type: 'POST',
+                                          url: "/predictCNNLSTMrecovered",
+                                          data: JSON.stringify(
+                                          {
+                                          "listRecovered" : cumulativeRecovered,
+
+                                          }
+                                          ),
+                                          contentType: 'application/json; charset=utf-8',
+                                          success: function(data)
+                                          {
+
+                                             console.log(data);
+                                              document.getElementById('predCNN').innerHTML = Math.round(data['recovered'][0]);
+                                              document.getElementById('cnnae').innerHTML =Math.abs(totalRecovered -  Math.round(data['recovered'][0]));
+                                   $.ajax({
+                                          type: 'POST',
+                                          url: "/predictConvLSTMrecovered",
+                                          data: JSON.stringify(
+                                          {
+                                          "listRecovered" : cumulativeRecovered,
+
+                                          }
+                                          ),
+                                          contentType: 'application/json; charset=utf-8',
+                                          success: function(data)
+                                          {
+
+                                             console.log(data);
+                                             document.getElementById('predConv').innerHTML = Math.round(data['recovered'][0]);
+                                             document.getElementById('convae').innerHTML =Math.abs(totalRecovered -  Math.round(data['recovered'][0]));
+                                   $.ajax({
+                                          type: 'POST',
+                                          url: "/predictVectorOLSTMrecovered",
+                                          data: JSON.stringify(
+                                          {
+                                          "listRecovered" : cumulativeRecovered,
+
+                                          }
+                                          ),
+                                          contentType: 'application/json; charset=utf-8',
+                                          success: function(data)
+                                          {
+
+                                             console.log(data);
+                                             //console.log(data['deaths'][0]);
+                                             document.getElementById('predVectorO').innerHTML = Math.round(data['recovered'][0][0]);
+                                             document.getElementById('voae').innerHTML =Math.abs(totalRecovered -  Math.round(data['recovered'][0][0]));
+                                   $.ajax({
+                                          type: 'POST',
+                                          url: "/predictEncodedLSTMrecovered",
+                                          data: JSON.stringify(
+                                          {
+                                          "listRecovered" : cumulativeRecovered,
+
+                                          }
+                                          ),
+                                          contentType: 'application/json; charset=utf-8',
+                                          success: function(data)
+                                          {
+
+                                             console.log(data);
+                                             document.getElementById('predEncoded').innerHTML = Math.round(data['recovered'][0][0]);
+                                             document.getElementById('enae').innerHTML =Math.abs(totalRecovered -  Math.round(data['recovered'][0][0]));
+
+
+
+                                                                      }
+                                                               });
+
+
+                                                                      }
+                                                               });
+
+
+                                                                      }
+                                                               });
+
+
+                                                                      }
+                                                               });
+
+
+                                                                      }
+                                                               });
+
+
+                                                                      }
+                                                               });
+                                                               }
+                                                          });
+
+                                                        //console.log(actualDeaths);
+                                                }
+
+
+
+
+                                   }
+
+
+
              }
          });
 
@@ -249,4 +584,16 @@ var x = document.getElementById("overlay");
 
 function w3_close() {
   document.getElementById("mySidebar").style.display = "none";
+}
+
+
+function selectType()
+{
+ var selectBox = document.getElementById("selectType");
+ var selectType = selectBox.options[selectBox.selectedIndex].value;
+  var x = document.getElementById("overlay");
+                                            if (x.style.display === "none") {
+                                                x.style.display = "block";
+                                              }
+ predict(selectType);
 }
