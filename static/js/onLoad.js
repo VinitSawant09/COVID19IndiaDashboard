@@ -2,6 +2,9 @@ var regionalStats = null;
 var totalDailyCount = null;
 var testHistory= null;
 var responseF= null;
+var states = null;
+var nationalSeries = null;
+var statewise = null;
 function myFunction()
 {
  var confirmedCasesCountTill2Day = null;
@@ -9,6 +12,7 @@ function myFunction()
  var recoveryCountTill2Day = null;
 
  var $tableId = $("#dtBasicExample")
+ /*
   $.ajax(
        {
         url  : "https://api.rootnet.in/covid19-in/stats/latest",
@@ -27,31 +31,31 @@ function myFunction()
           //console.log(regionalStats);
           var lastRefreshed =response.lastRefreshed;
           var date = moment(lastRefreshed);
-          document.getElementById("lastUpdatedLive1").innerHTML="Last Updated : "+date.format('llll');
-          document.getElementById("lastUpdatedLive2").innerHTML="Last Updated : "+date.format('llll');
-          document.getElementById("lastUpdatedLive3").innerHTML="Last Updated : "+date.format('llll');
+        //  document.getElementById("lastUpdatedLive1").innerHTML="Last Updated : "+date.format('llll');
+       //   document.getElementById("lastUpdatedLive2").innerHTML="Last Updated : "+date.format('llll');
+        //  document.getElementById("lastUpdatedLive3").innerHTML="Last Updated : "+date.format('llll');
 
           var liveStats= entireData["unofficial-summary"];
-          //console.log(liveStats);
+
           var totalConfirmedCases = liveStats[0].total;
           confirmedCasesCountTill2Day=totalConfirmedCases;
-          document.getElementById("totalConfirmedCases").innerHTML=numberWithCommas(totalConfirmedCases);
+         // document.getElementById("totalConfirmedCases").innerHTML=numberWithCommas(totalConfirmedCases);
 
           var totalDeaths = liveStats[0].deaths;
           deathCountTill2Day=totalDeaths;
-          document.getElementById("totalDeaths").innerHTML=numberWithCommas(totalDeaths);
+         // document.getElementById("totalDeaths").innerHTML=numberWithCommas(totalDeaths);
           var mortalityRate = (Math.round((totalDeaths + Number.EPSILON) * 100) / totalConfirmedCases).toFixed(2) ;
-          document.getElementById("mortalityRate").innerHTML=mortalityRate + "%";
+         // document.getElementById("mortalityRate").innerHTML=mortalityRate + "%";
 
           var totalRecovered = liveStats[0].recovered;
           recoveryCountTill2Day=totalRecovered;
-          document.getElementById("totalRecovered").innerHTML=numberWithCommas(totalRecovered);
+         // document.getElementById("totalRecovered").innerHTML=numberWithCommas(totalRecovered);
           var recoveryRate = (Math.round((totalRecovered + Number.EPSILON) * 100) / totalConfirmedCases).toFixed(2) ;
-          document.getElementById("recoveryRate").innerHTML=recoveryRate+ "%";
+         // document.getElementById("recoveryRate").innerHTML=recoveryRate+ "%";
 
 
           var activeCases = liveStats[0].active;
-          document.getElementById("activeCases").innerHTML=activeCases;
+          //document.getElementById("activeCases").innerHTML=activeCases;
 
           for (var i=0;i < regionalStats.length; i++)
          {
@@ -70,6 +74,7 @@ function myFunction()
         {
             console.log("Error while fetching testing api..!!!");
         }
+          /*
            $(document).ready(function () {
               $('#dtBasicExample').DataTable({
                   "order": [[ 1, "desc" ]],
@@ -103,10 +108,11 @@ function myFunction()
               $('.dataTables_length').addClass('bs-select');
 
             });
-          showConfirmedOnMap();
+
+        //   showConfirmedOnMap();
 
         }
-       });
+       });*/
 
    $.ajax(
        {
@@ -121,6 +127,7 @@ function myFunction()
         if (response!=null)
         {
           //console.log(response);
+
           var newdata= response.data;
           totalDailyCount = response.data;
           responseF=response;
@@ -131,7 +138,7 @@ function myFunction()
           {
           deathsToday = 0;
           }
-          document.getElementById("deathsToday").innerHTML="+"+deathsToday;
+        //  document.getElementById("deathsToday").innerHTML="+"+deathsToday;
 
 
           var recoveredToday= recoveryCountTill2Day - newdata[numberOfDays-1].summary.discharged;
@@ -140,7 +147,7 @@ function myFunction()
           recoveredToday = 0;
          // alert("zero");
           }
-          document.getElementById("recoveredToday").innerHTML="+"+recoveredToday;
+         // document.getElementById("recoveredToday").innerHTML="+"+recoveredToday;
 
 
 
@@ -149,7 +156,7 @@ function myFunction()
           {
           confirmedToday = 0;
           }
-          document.getElementById("confirmedToday").innerHTML="+"+confirmedToday;
+         // document.getElementById("confirmedToday").innerHTML="+"+confirmedToday;
 
          }
          else
@@ -157,7 +164,7 @@ function myFunction()
             console.log("Error while fetching testing api..!!!");
         }
 
-        splineConfirmed();
+        //splineConfirmed();
 
         //console.log(totalDailyCount);
         var historyCases = [];
@@ -551,6 +558,8 @@ function toogleDataSeries(e){
 
        });
 
+       //redundant
+/*
    $.ajax(
        {
         url  : "https://api.rootnet.in/covid19-in/stats/testing/history",
@@ -563,6 +572,7 @@ function toogleDataSeries(e){
 
         if (response!=null)
         {
+
           var lastRefreshed= response.lastRefreshed;
           var date = moment(lastRefreshed);
           var arrLength=response.data.length;
@@ -584,8 +594,192 @@ function toogleDataSeries(e){
         }
 
         }
+       });*/
+//////////////////////////////////newly added///////////////////////////////////////
+        $.ajax(
+       {
+        url  : "https://api.covid19india.org/data.json",
+        contentType: "application/json",
+        type : 'GET',
+        contentType: false,
+        cache: false,
+        processData: false,
+        success: function(response){
+
+        if (response!=null)
+        {
+            //console.log(response);
+
+           var totalStats = response.statewise[0];
+           var testLength = response.tested.length;
+           var testStats = response.tested[testLength-1];
+           var newlyTested = testStats.samplereportedtoday;
+           var totalTested = testStats.totalsamplestested;
+           var testpermillion = testStats.testspermillion;
+           document.getElementById("totalTestsDone").innerHTML=numberWithCommas(totalTested);
+           document.getElementById("testDoneToday").innerHTML=numberWithCommas(newlyTested);
+           document.getElementById("testspermillion").innerHTML=numberWithCommas(testpermillion);
+           document.getElementById("lastUpdated").innerHTML="Last Updated : "+testStats.updatetimestamp;
+           document.getElementById("lastUpdatedLive1").innerHTML="Last Updated : "+testStats.updatetimestamp;
+           document.getElementById("lastUpdatedLive2").innerHTML="Last Updated : "+testStats.updatetimestamp;
+           document.getElementById("lastUpdatedLive3").innerHTML="Last Updated : "+testStats.updatetimestamp;
+
+           var activeCases = totalStats.active;
+           var confirmedCases = totalStats.confirmed;
+           var recoveredCases = totalStats.recovered;
+           var deaths = totalStats.deaths;
+
+           var newConfirmed = totalStats.deltaconfirmed;
+           var newDeaths = totalStats.deltadeaths;
+           var newRecovered = totalStats.deltarecovered;
+
+          document.getElementById("totalConfirmedCases").innerHTML=numberWithCommas(confirmedCases);
+
+          document.getElementById("totalDeaths").innerHTML=numberWithCommas(deaths);
+
+
+          var mortalityRate = ((deaths * 100) / confirmedCases).toFixed(2) ;
+
+          document.getElementById("mortalityRate").innerHTML=mortalityRate + "%";
+
+          var totalRecovered = recoveredCases;
+          recoveryCountTill2Day=totalRecovered;
+          document.getElementById("totalRecovered").innerHTML=numberWithCommas(totalRecovered);
+          var recoveryRate = ((recoveredCases * 100) / confirmedCases).toFixed(2) ;
+          document.getElementById("recoveryRate").innerHTML=recoveryRate+ "%";
+
+
+          document.getElementById("activeCases").innerHTML=activeCases;
+
+          document.getElementById("deathsToday").innerHTML="+"+newDeaths;
+
+          document.getElementById("recoveredToday").innerHTML="+"+newRecovered;
+
+          document.getElementById("confirmedToday").innerHTML="+"+newConfirmed;
+
+          states = response.statewise;
+          nationalSeries = response.cases_time_series;
+         // console.log(nationalSeries);
+
+           for (var i=0;i < states.length; i++)
+        {
+              if(states[i].state != "Total" && states[i].state != "Lakshadweep" && states[i].state != "State Unassigned")
+              {
+                      $tableId.append(
+                      $("<tr>").append($("<td>").html(states[i].state))
+                      .append($("<td>").html(states[i].confirmed))
+                      .append($("<td>").html(states[i].deaths))
+                      .append($("<td>").html(states[i].recovered))
+                      .append($("<td>").html(states[i].active))
+                     );
+              }
+         }
+
+
+        $(document).ready(function () {
+              $('#dtBasicExample').DataTable({
+                  "order": [[ 1, "desc" ]],
+                  "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull)
+                            {
+
+                                     $('td', nRow).css('background-color', 'Black').css('color','White');
+                             },
+                   'columnDefs': [
+                                {
+                              "targets": 1,
+                              "className": 'dt-body-right',
+                                    },
+                                 {
+                              "targets": 2,
+                              "className": 'dt-body-right',
+                                     },
+                                     {
+                              "targets": 3,
+                              "className": 'dt-body-right',
+                                    },
+                                    {
+                              "targets": 4,
+                              "className": 'dt-body-right',
+                                    }
+
+
+                                     ]
+
+                   });
+              $('.dataTables_length').addClass('bs-select');
+
+            });
+            showConfirmedOnMap();
+
+            var dataConfirmed = [];
+            var dataDeaths = [];
+            var dataRecovered = [];
+            var dataActive = [];
+            for (var i =0 ; i<nationalSeries.length ; i++)
+            {
+
+                    var x = new Date(nationalSeries[i].date+ " 2020");
+                    var y = nationalSeries[i].totalconfirmed;
+                    var objA= {x,y}
+                    dataConfirmed.push(objA);
+
+                    var x = new Date(nationalSeries[i].date+ " 2020");
+                    var y = nationalSeries[i].totaldeceased;
+                    var objA= {x,y}
+                    dataDeaths.push(objA);
+
+                    var x = new Date(nationalSeries[i].date+ " 2020");
+                    var y = nationalSeries[i].totalrecovered;
+                    var objA= {x,y}
+                    dataRecovered.push(objA);
+
+                    var x = new Date(nationalSeries[i].date+ " 2020");
+                    var y = nationalSeries[i].totalconfirmed - nationalSeries[i].totalrecovered - nationalSeries[i].totaldeceased;
+                    var objA= {x,y}
+                    dataActive.push(objA);
+
+
+
+            }
+
+            splineConfirmed();
+
+             $.ajax(
+                   {
+                    url  : "https://api.covid19india.org/states_daily.json",
+                    contentType: "application/json",
+                    type : 'GET',
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    success: function(response){
+                       //console.log(response);
+                       statewise =response.states_daily;
+                    }});
+
+
+           // console.log(dataConfirmed);
+
+
+
+        }
+        else
+        {
+            console.log("Error while fetching testing api..!!!");
+        }
+
+
+
+
+        }
        });
 
+
+////////////////////////////////////////////////////////////////////
+
+
+
+//Sorted
     $.ajax(
        {
         url  : "https://api.covid19india.org/state_test_data.json",
@@ -672,7 +866,8 @@ function numberWithCommas(x) {
 
 function showDeathsOnMap()
 {
-
+var deathsStatesData = [];
+/*
 var deathsStatesData = [
     ['madhya pradesh', regionalStats[18].deaths],
     ['uttar pradesh', regionalStats[33].deaths],
@@ -710,7 +905,261 @@ var deathsStatesData = [
     ['jammu and kashmir',  regionalStats[13].deaths +  regionalStats[17].deaths],
     ['sikkim', regionalStats[28].deaths],
     ['uttarakhand', regionalStats[32].deaths]
-];
+];*/
+for (var i = 0 ; i < states.length; i++)
+ {
+ if(states[i].state != "Total" && states[i].state != "State Unassigned")
+              {
+                   var arr = [];
+                   var arr1 = [];
+                   if (states[i].state == "Maharashtra")
+                   {
+
+                      arr.push('maharashtra');
+                      arr.push(parseInt(states[i].deaths));
+
+                   }
+                   else if (states[i].state == "Uttar Pradesh")
+                   {
+
+                      arr.push('uttar pradesh');
+                      arr.push(parseInt(states[i].deaths));
+
+                   }
+                   else if (states[i].state == "Madhya Pradesh")
+                   {
+
+                      arr.push('madhya pradesh');
+                      arr.push(parseInt(states[i].deaths));
+
+
+                   }
+                   else if (states[i].state == "Delhi")
+                   {
+
+                       arr.push('nct of delhi');
+                      arr.push(parseInt(states[i].deaths));
+
+                   }
+                    else if (states[i].state == "Gujarat")
+                   {
+
+                       arr.push('gujarat');
+                      arr.push(parseInt(states[i].deaths));
+
+                   }
+                   else if (states[i].state == "Odisha")
+                   {
+
+                       arr.push('odisha');
+                      arr.push(parseInt(states[i].deaths));
+
+                   }
+                   else if (states[i].state == "Karnataka")
+                   {
+
+                       arr.push('karnataka');
+                      arr.push(parseInt(states[i].deaths));
+
+                   }
+                   else if (states[i].state == "Nagaland")
+                   {
+
+                      arr.push('nagaland');
+                      arr.push(parseInt(states[i].deaths));
+
+                   }else if (states[i].state == "Bihar")
+                   {
+
+                       arr.push('bihar');
+                      arr.push(parseInt(states[i].deaths));
+
+
+                   }
+                   else if (states[i].state == "Andaman and Nicobar Islands")
+                   {
+
+                      arr.push('andaman and nicobar');
+                      arr.push(parseInt(states[i].deaths));
+
+                   }else if (states[i].state == "Assam")
+                   {
+
+                       arr.push('assam');
+                      arr.push(parseInt(states[i].deaths));
+
+                   }
+                   else if (states[i].state == "Rajasthan")
+                   {
+
+                      arr.push('rajasthan');
+                      arr.push(parseInt(states[i].deaths));
+                   }
+                   else if (states[i].state == "West Bengal")
+                   {
+
+                       arr.push('west bengal');
+                      arr.push(parseInt(states[i].deaths));
+
+                   }
+                   else if (states[i].state == "Puducherry")
+                   {
+
+                        arr.push('puducherry');
+                      arr.push(parseInt(states[i].deaths));
+
+                   }
+                   else if (states[i].state == "Haryana")
+                   {
+
+                       arr.push('haryana');
+                      arr.push(parseInt(states[i].deaths));
+
+                   }
+                   else if (states[i].state == "Dadra and Nagar Haveli and Daman and Diu")
+                   {
+
+
+                        arr1.push('dadara and nagar havelli');
+                      arr1.push(parseInt(states[i].deaths));
+                       deathsStatesData.push(arr1);
+
+
+                        arr.push('daman and diu');
+                      arr.push(parseInt(states[i].deaths));
+
+
+                   }
+                   else if (states[i].state == "Chhattisgarh")
+                   {
+
+                          arr.push('chhattisgarh');
+                      arr.push(parseInt(states[i].deaths));
+
+                   }
+                   else if (states[i].state == "Tamil Nadu")
+                   {
+
+                       arr.push('tamil nadu');
+                      arr.push(parseInt(states[i].deaths));
+
+                   }
+                   else if (states[i].state == "Chandigarh")
+                   {
+
+                      arr.push('chandigarh');
+                      arr.push(parseInt(states[i].deaths));
+                   }
+                   else if (states[i].state == "Punjab")
+                   {
+
+                        arr.push('punjab');
+                      arr.push(parseInt(states[i].deaths));
+                   }
+
+                   else if (states[i].state == "Andhra Pradesh")
+                   {
+
+                        arr.push('andhra pradesh');
+                      arr.push(parseInt(states[i].deaths));
+                   }
+                   else if (states[i].state == "Himachal Pradesh")
+                   {
+
+                       arr.push('himachal pradesh');
+                      arr.push(parseInt(states[i].deaths));
+                   }
+                   else if (states[i].state == "Meghalaya")
+                   {
+                       arr.push('meghalaya');
+                      arr.push(parseInt(states[i].deaths));
+
+                   }
+                   else if (states[i].state == "Kerala")
+                   {
+                      arr.push('kerala');
+                      arr.push(parseInt(states[i].deaths));
+
+
+                   }
+                   else if (states[i].state == "Telangana")
+                   {
+
+                      arr.push('telangana');
+                      arr.push(parseInt(states[i].deaths));
+                   }
+                    else if (states[i].state == "Mizoram")
+                   {
+
+                      arr.push('mizoram');
+                      arr.push(parseInt(states[i].deaths));
+                   }
+                    else if (states[i].state == "Tripura")
+                   {
+
+                      arr.push('tripura');
+                      arr.push(parseInt(states[i].deaths));
+                   }
+                    else if (states[i].state == "Manipur")
+                   {
+
+                      arr.push('manipur');
+                      arr.push(parseInt(states[i].deaths));
+                   }
+                   else if (states[i].state == "Arunachal Pradesh")
+                   {
+                      arr.push('arunanchal pradesh');
+                      arr.push(parseInt(states[i].deaths));
+                   }
+                   else if (states[i].state == "Jharkhand")
+                   {
+
+                       arr.push('jharkhand');
+                      arr.push(parseInt(states[i].deaths));
+
+                   }
+                   else if (states[i].state == "Goa")
+                   {
+
+                       arr.push('goa');
+                      arr.push((states[i].deaths));
+
+                   }
+                    else if (states[i].state == "Jammu and Kashmir")
+                   {
+
+                      arr.push('jammu and kashmir');
+                      arr.push(parseInt(states[i].deaths));
+
+                   }
+                    else if (states[i].state == "Sikkim")
+                   {
+
+                      arr.push('sikkim');
+                      arr.push(parseInt(states[i].deaths));
+
+                   }
+                    else if (states[i].state == "Uttarakhand")
+                   {
+
+                       arr.push('uttarakhand');
+                      arr.push(parseInt(states[i].deaths));
+                   }
+                   else if (states[i].state == "Lakshadweep")
+                   {
+
+                       arr.push('lakshadweep');
+                      arr.push(parseInt(states[i].deaths));
+                   }
+
+
+                   if (arr.length!=0)
+                   {
+                   deathsStatesData.push(arr);
+                   }
+
+              }
+}
 // Create the chart
 Highcharts.mapChart('container', {
     chart: {
@@ -756,7 +1205,8 @@ Highcharts.mapChart('container', {
 
 function showRecoveriesOnMap()
 {
-
+var recoveriesStatesData=[];
+/*
 var recoveriesStatesData = [
     ['madhya pradesh', regionalStats[18].discharged],
     ['uttar pradesh', regionalStats[33].discharged],
@@ -794,7 +1244,262 @@ var recoveriesStatesData = [
     ['jammu and kashmir',  regionalStats[13].discharged +  regionalStats[17].discharged],
     ['sikkim', regionalStats[28].discharged],
     ['uttarakhand', regionalStats[32].discharged]
-];
+];*/
+
+for (var i = 0 ; i < states.length; i++)
+ {
+ if(states[i].state != "Total" && states[i].state != "State Unassigned")
+              {
+                   var arr = [];
+                   var arr1 = [];
+                   if (states[i].state == "Maharashtra")
+                   {
+
+                      arr.push('maharashtra');
+                      arr.push(parseInt(states[i].recovered));
+
+                   }
+                   else if (states[i].state == "Uttar Pradesh")
+                   {
+
+                      arr.push('uttar pradesh');
+                      arr.push(parseInt(states[i].recovered));
+
+                   }
+                   else if (states[i].state == "Madhya Pradesh")
+                   {
+
+                      arr.push('madhya pradesh');
+                      arr.push(parseInt(states[i].recovered));
+
+
+                   }
+                   else if (states[i].state == "Delhi")
+                   {
+
+                       arr.push('nct of delhi');
+                      arr.push(parseInt(states[i].recovered));
+
+                   }
+                    else if (states[i].state == "Gujarat")
+                   {
+
+                       arr.push('gujarat');
+                      arr.push(parseInt(states[i].recovered));
+
+                   }
+                   else if (states[i].state == "Odisha")
+                   {
+
+                       arr.push('odisha');
+                      arr.push(parseInt(states[i].recovered));
+
+                   }
+                   else if (states[i].state == "Karnataka")
+                   {
+
+                       arr.push('karnataka');
+                      arr.push(parseInt(states[i].recovered));
+
+                   }
+                   else if (states[i].state == "Nagaland")
+                   {
+
+                      arr.push('nagaland');
+                      arr.push(parseInt(states[i].recovered));
+
+                   }else if (states[i].state == "Bihar")
+                   {
+
+                       arr.push('bihar');
+                      arr.push(parseInt(states[i].recovered));
+
+
+                   }
+                   else if (states[i].state == "Andaman and Nicobar Islands")
+                   {
+
+                      arr.push('andaman and nicobar');
+                      arr.push(parseInt(states[i].recovered));
+
+                   }else if (states[i].state == "Assam")
+                   {
+
+                       arr.push('assam');
+                      arr.push(parseInt(states[i].recovered));
+
+                   }
+                   else if (states[i].state == "Rajasthan")
+                   {
+
+                      arr.push('rajasthan');
+                      arr.push(parseInt(states[i].recovered));
+                   }
+                   else if (states[i].state == "West Bengal")
+                   {
+
+                       arr.push('west bengal');
+                      arr.push(parseInt(states[i].recovered));
+
+                   }
+                   else if (states[i].state == "Puducherry")
+                   {
+
+                        arr.push('puducherry');
+                      arr.push(parseInt(states[i].recovered));
+
+                   }
+                   else if (states[i].state == "Haryana")
+                   {
+
+                       arr.push('haryana');
+                      arr.push(parseInt(states[i].recovered));
+
+                   }
+                   else if (states[i].state == "Dadra and Nagar Haveli and Daman and Diu")
+                   {
+
+
+                        arr1.push('dadara and nagar havelli');
+                      arr1.push(parseInt(states[i].recovered));
+                       recoveriesStatesData.push(arr1);
+
+
+                        arr.push('daman and diu');
+                      arr.push(parseInt(states[i].recovered));
+
+
+                   }
+                   else if (states[i].state == "Chhattisgarh")
+                   {
+
+                          arr.push('chhattisgarh');
+                      arr.push(parseInt(states[i].recovered));
+
+                   }
+                   else if (states[i].state == "Tamil Nadu")
+                   {
+
+                       arr.push('tamil nadu');
+                      arr.push(parseInt(states[i].recovered));
+
+                   }
+                   else if (states[i].state == "Chandigarh")
+                   {
+
+                      arr.push('chandigarh');
+                      arr.push(parseInt(states[i].recovered));
+                   }
+                   else if (states[i].state == "Punjab")
+                   {
+
+                        arr.push('punjab');
+                      arr.push(parseInt(states[i].recovered));
+                   }
+
+                   else if (states[i].state == "Andhra Pradesh")
+                   {
+
+                        arr.push('andhra pradesh');
+                      arr.push(parseInt(states[i].recovered));
+                   }
+                   else if (states[i].state == "Himachal Pradesh")
+                   {
+
+                       arr.push('himachal pradesh');
+                      arr.push(parseInt(states[i].recovered));
+                   }
+                   else if (states[i].state == "Meghalaya")
+                   {
+                       arr.push('meghalaya');
+                      arr.push(parseInt(states[i].recovered));
+
+                   }
+                   else if (states[i].state == "Kerala")
+                   {
+                      arr.push('kerala');
+                      arr.push(parseInt(states[i].recovered));
+
+
+                   }
+                   else if (states[i].state == "Telangana")
+                   {
+
+                      arr.push('telangana');
+                      arr.push(parseInt(states[i].recovered));
+                   }
+                    else if (states[i].state == "Mizoram")
+                   {
+
+                      arr.push('mizoram');
+                      arr.push(parseInt(states[i].recovered));
+                   }
+                    else if (states[i].state == "Tripura")
+                   {
+
+                      arr.push('tripura');
+                      arr.push(parseInt(states[i].recovered));
+                   }
+                    else if (states[i].state == "Manipur")
+                   {
+
+                      arr.push('manipur');
+                      arr.push(parseInt(states[i].recovered));
+                   }
+                   else if (states[i].state == "Arunachal Pradesh")
+                   {
+                      arr.push('arunanchal pradesh');
+                      arr.push(parseInt(states[i].recovered));
+                   }
+                   else if (states[i].state == "Jharkhand")
+                   {
+
+                       arr.push('jharkhand');
+                      arr.push(parseInt(states[i].recovered));
+
+                   }
+                   else if (states[i].state == "Goa")
+                   {
+
+                       arr.push('goa');
+                      arr.push((states[i].recovered));
+
+                   }
+                    else if (states[i].state == "Jammu and Kashmir")
+                   {
+
+                      arr.push('jammu and kashmir');
+                      arr.push(parseInt(states[i].recovered));
+
+                   }
+                    else if (states[i].state == "Sikkim")
+                   {
+
+                      arr.push('sikkim');
+                      arr.push(parseInt(states[i].recovered));
+
+                   }
+                    else if (states[i].state == "Uttarakhand")
+                   {
+
+                       arr.push('uttarakhand');
+                      arr.push(parseInt(states[i].recovered));
+                   }
+                   else if (states[i].state == "Lakshadweep")
+                   {
+
+                       arr.push('lakshadweep');
+                      arr.push(parseInt(states[i].recovered));
+                   }
+
+
+                   if (arr.length!=0)
+                   {
+                   recoveriesStatesData.push(arr);
+                   }
+
+              }
+  }
 // Create the chart
 Highcharts.mapChart('container', {
     chart: {
@@ -840,7 +1545,8 @@ Highcharts.mapChart('container', {
 
 function showConfirmedOnMap()
 {
-
+var confirmedStatesData = [];
+/*
 var confirmedStatesData = [
     ['madhya pradesh', regionalStats[18].totalConfirmed],
     ['uttar pradesh', regionalStats[33].totalConfirmed],
@@ -878,7 +1584,264 @@ var confirmedStatesData = [
     ['jammu and kashmir',  regionalStats[13].totalConfirmed +  regionalStats[17].totalConfirmed],
     ['sikkim', regionalStats[28].totalConfirmed],
     ['uttarakhand', regionalStats[32].totalConfirmed]
-];
+];*/
+ for (var i = 0 ; i < states.length; i++)
+ {
+
+ if(states[i].state != "Total" && states[i].state != "State Unassigned")
+              {
+                   var arr = [];
+                   var arr1 = [];
+                   if (states[i].state == "Maharashtra")
+                   {
+
+                      arr.push('maharashtra');
+                      arr.push(parseInt(states[i].confirmed));
+
+                   }
+                   else if (states[i].state == "Uttar Pradesh")
+                   {
+
+                      arr.push('uttar pradesh');
+                      arr.push(parseInt(states[i].confirmed));
+
+                   }
+                   else if (states[i].state == "Madhya Pradesh")
+                   {
+
+                      arr.push('madhya pradesh');
+                      arr.push(parseInt(states[i].confirmed));
+
+
+                   }
+                   else if (states[i].state == "Delhi")
+                   {
+
+                       arr.push('nct of delhi');
+                      arr.push(parseInt(states[i].confirmed));
+
+                   }
+                    else if (states[i].state == "Gujarat")
+                   {
+
+                       arr.push('gujarat');
+                      arr.push(parseInt(states[i].confirmed));
+
+                   }
+                   else if (states[i].state == "Odisha")
+                   {
+
+                       arr.push('odisha');
+                      arr.push(parseInt(states[i].confirmed));
+
+                   }
+                   else if (states[i].state == "Karnataka")
+                   {
+
+                       arr.push('karnataka');
+                      arr.push(parseInt(states[i].confirmed));
+
+                   }
+                   else if (states[i].state == "Nagaland")
+                   {
+
+                      arr.push('nagaland');
+                      arr.push(parseInt(states[i].confirmed));
+
+                   }else if (states[i].state == "Bihar")
+                   {
+
+                       arr.push('bihar');
+                      arr.push(parseInt(states[i].confirmed));
+
+
+                   }
+                   else if (states[i].state == "Andaman and Nicobar Islands")
+                   {
+
+                      arr.push('andaman and nicobar');
+                      arr.push(parseInt(states[i].confirmed));
+
+                   }else if (states[i].state == "Assam")
+                   {
+
+                       arr.push('assam');
+                      arr.push(parseInt(states[i].confirmed));
+
+                   }
+                   else if (states[i].state == "Rajasthan")
+                   {
+
+                      arr.push('rajasthan');
+                      arr.push(parseInt(states[i].confirmed));
+                   }
+                   else if (states[i].state == "West Bengal")
+                   {
+
+                       arr.push('west bengal');
+                      arr.push(parseInt(states[i].confirmed));
+
+                   }
+                   else if (states[i].state == "Puducherry")
+                   {
+
+                        arr.push('puducherry');
+                      arr.push(parseInt(states[i].confirmed));
+
+                   }
+                   else if (states[i].state == "Haryana")
+                   {
+
+                       arr.push('haryana');
+                      arr.push(parseInt(states[i].confirmed));
+
+                   }
+                   else if (states[i].state == "Dadra and Nagar Haveli and Daman and Diu")
+                   {
+
+
+                        arr1.push('dadara and nagar havelli');
+                      arr1.push(parseInt(states[i].confirmed));
+                       confirmedStatesData.push(arr1);
+
+
+                        arr.push('daman and diu');
+                      arr.push(parseInt(states[i].confirmed));
+
+
+                   }
+                   else if (states[i].state == "Chhattisgarh")
+                   {
+
+                          arr.push('chhattisgarh');
+                      arr.push(parseInt(states[i].confirmed));
+
+                   }
+                   else if (states[i].state == "Tamil Nadu")
+                   {
+
+                       arr.push('tamil nadu');
+                      arr.push(parseInt(states[i].confirmed));
+
+                   }
+                   else if (states[i].state == "Chandigarh")
+                   {
+
+                      arr.push('chandigarh');
+                      arr.push(parseInt(states[i].confirmed));
+                   }
+                   else if (states[i].state == "Punjab")
+                   {
+
+                        arr.push('punjab');
+                      arr.push(parseInt(states[i].confirmed));
+                   }
+
+                   else if (states[i].state == "Andhra Pradesh")
+                   {
+
+                        arr.push('andhra pradesh');
+                      arr.push(parseInt(states[i].confirmed));
+                   }
+                   else if (states[i].state == "Himachal Pradesh")
+                   {
+
+                       arr.push('himachal pradesh');
+                      arr.push(parseInt(states[i].confirmed));
+                   }
+                   else if (states[i].state == "Meghalaya")
+                   {
+                       arr.push('meghalaya');
+                      arr.push(parseInt(states[i].confirmed));
+
+                   }
+                   else if (states[i].state == "Kerala")
+                   {
+                      arr.push('kerala');
+                      arr.push(parseInt(states[i].confirmed));
+
+
+                   }
+                   else if (states[i].state == "Telangana")
+                   {
+
+                      arr.push('telangana');
+                      arr.push(parseInt(states[i].confirmed));
+                   }
+                    else if (states[i].state == "Mizoram")
+                   {
+
+                      arr.push('mizoram');
+                      arr.push(parseInt(states[i].confirmed));
+                   }
+                    else if (states[i].state == "Tripura")
+                   {
+
+                      arr.push('tripura');
+                      arr.push(parseInt(states[i].confirmed));
+                   }
+                    else if (states[i].state == "Manipur")
+                   {
+
+                      arr.push('manipur');
+                      arr.push(parseInt(states[i].confirmed));
+                   }
+                   else if (states[i].state == "Arunachal Pradesh")
+                   {
+                      arr.push('arunanchal pradesh');
+                      arr.push(parseInt(states[i].confirmed));
+                   }
+                   else if (states[i].state == "Jharkhand")
+                   {
+
+                       arr.push('jharkhand');
+                      arr.push(parseInt(states[i].confirmed));
+
+                   }
+                   else if (states[i].state == "Goa")
+                   {
+
+                       arr.push('goa');
+                      arr.push((states[i].confirmed));
+
+                   }
+                    else if (states[i].state == "Jammu and Kashmir")
+                   {
+
+                      arr.push('jammu and kashmir');
+                      arr.push(parseInt(states[i].confirmed));
+
+                   }
+                    else if (states[i].state == "Sikkim")
+                   {
+
+                      arr.push('sikkim');
+                      arr.push(parseInt(states[i].confirmed));
+
+                   }
+                    else if (states[i].state == "Uttarakhand")
+                   {
+
+                       arr.push('uttarakhand');
+                      arr.push(parseInt(states[i].confirmed));
+                   }
+                   else if (states[i].state == "Lakshadweep")
+                   {
+
+                       arr.push('lakshadweep');
+                      arr.push(parseInt(states[i].confirmed));
+                   }
+
+
+                   if (arr.length!=0)
+                   {
+                   confirmedStatesData.push(arr);
+                   }
+
+              }
+
+ }
+
 // Create the chart
 Highcharts.mapChart('container', {
     chart: {
@@ -924,8 +1887,8 @@ Highcharts.mapChart('container', {
 
 function showActiveOnMap()
 {
-
-var activeStatesData = [
+var activeStatesData = [];
+/*var activeStatesData = [
     ['madhya pradesh', regionalStats[18].totalConfirmed-regionalStats[18].discharged-regionalStats[18].deaths],
     ['uttar pradesh', regionalStats[33].totalConfirmed-regionalStats[33].discharged-regionalStats[33].deaths],
     ['karnataka', regionalStats[15].totalConfirmed-regionalStats[15].discharged-regionalStats[15].deaths],
@@ -962,7 +1925,266 @@ var activeStatesData = [
     ['jammu and kashmir',  (regionalStats[13].totalConfirmed +  regionalStats[13].totalConfirmed)-(regionalStats[13].discharged +  regionalStats[13].discharged)-(regionalStats[13].deaths +  regionalStats[13].deaths)],
     ['sikkim', regionalStats[28].totalConfirmed-regionalStats[28].discharged-regionalStats[28].deaths],
     ['uttarakhand', regionalStats[32].totalConfirmed-regionalStats[32].discharged-regionalStats[32].deaths]
-];
+];*/
+    for (var i = 0 ; i < states.length; i++)
+ {
+
+ if(states[i].state != "Total" && states[i].state != "State Unassigned")
+              {
+                   var arr = [];
+                   var arr1 = [];
+                   if (states[i].state == "Maharashtra")
+                   {
+
+                      arr.push('maharashtra');
+                      arr.push(parseInt(states[i].active));
+
+                   }
+                   else if (states[i].state == "Uttar Pradesh")
+                   {
+
+                      arr.push('uttar pradesh');
+                      arr.push(parseInt(states[i].active));
+
+                   }
+                   else if (states[i].state == "Madhya Pradesh")
+                   {
+
+                      arr.push('madhya pradesh');
+                      arr.push(parseInt(states[i].active));
+
+
+                   }
+                   else if (states[i].state == "Delhi")
+                   {
+
+                       arr.push('nct of delhi');
+                      arr.push(parseInt(states[i].active));
+
+                   }
+                    else if (states[i].state == "Gujarat")
+                   {
+
+                       arr.push('gujarat');
+                      arr.push(parseInt(states[i].active));
+
+                   }
+                   else if (states[i].state == "Odisha")
+                   {
+
+                       arr.push('odisha');
+                      arr.push(parseInt(states[i].active));
+
+                   }
+                   else if (states[i].state == "Karnataka")
+                   {
+
+                       arr.push('karnataka');
+                      arr.push(parseInt(states[i].active));
+
+                   }
+                   else if (states[i].state == "Nagaland")
+                   {
+
+                      arr.push('nagaland');
+                      arr.push(parseInt(states[i].active));
+
+                   }else if (states[i].state == "Bihar")
+                   {
+
+                       arr.push('bihar');
+                      arr.push(parseInt(states[i].active));
+
+
+                   }
+                   else if (states[i].state == "Andaman and Nicobar Islands")
+                   {
+
+                      arr.push('andaman and nicobar');
+                      arr.push(parseInt(states[i].active));
+
+                   }else if (states[i].state == "Assam")
+                   {
+
+                       arr.push('assam');
+                      arr.push(parseInt(states[i].active));
+
+                   }
+                   else if (states[i].state == "Rajasthan")
+                   {
+
+                      arr.push('rajasthan');
+                      arr.push(parseInt(states[i].active));
+                   }
+                   else if (states[i].state == "West Bengal")
+                   {
+
+                       arr.push('west bengal');
+                      arr.push(parseInt(states[i].active));
+
+                   }
+                   else if (states[i].state == "Puducherry")
+                   {
+
+                        arr.push('puducherry');
+                      arr.push(parseInt(states[i].active));
+
+                   }
+                   else if (states[i].state == "Haryana")
+                   {
+
+                       arr.push('haryana');
+                      arr.push(parseInt(states[i].active));
+
+                   }
+                   else if (states[i].state == "Dadra and Nagar Haveli and Daman and Diu")
+                   {
+
+
+                        arr1.push('dadara and nagar havelli');
+                      arr1.push(parseInt(states[i].active));
+                       activeStatesData.push(arr1);
+
+
+                        arr.push('daman and diu');
+                      arr.push(parseInt(states[i].active));
+
+
+                   }
+                   else if (states[i].state == "Chhattisgarh")
+                   {
+
+                          arr.push('chhattisgarh');
+                      arr.push(parseInt(states[i].active));
+
+                   }
+                   else if (states[i].state == "Tamil Nadu")
+                   {
+
+                       arr.push('tamil nadu');
+                      arr.push(parseInt(states[i].active));
+
+                   }
+                   else if (states[i].state == "Chandigarh")
+                   {
+
+                      arr.push('chandigarh');
+                      arr.push(parseInt(states[i].active));
+                   }
+                   else if (states[i].state == "Punjab")
+                   {
+
+                        arr.push('punjab');
+                      arr.push(parseInt(states[i].active));
+                   }
+
+                   else if (states[i].state == "Andhra Pradesh")
+                   {
+
+                        arr.push('andhra pradesh');
+                      arr.push(parseInt(states[i].active));
+                   }
+                   else if (states[i].state == "Himachal Pradesh")
+                   {
+
+                       arr.push('himachal pradesh');
+                      arr.push(parseInt(states[i].active));
+                   }
+                   else if (states[i].state == "Meghalaya")
+                   {
+                       arr.push('meghalaya');
+                      arr.push(parseInt(states[i].active));
+
+                   }
+                   else if (states[i].state == "Kerala")
+                   {
+                      arr.push('kerala');
+                      arr.push(parseInt(states[i].active));
+
+
+                   }
+                   else if (states[i].state == "Telangana")
+                   {
+
+                      arr.push('telangana');
+                      arr.push(parseInt(states[i].active));
+                   }
+                    else if (states[i].state == "Mizoram")
+                   {
+
+                      arr.push('mizoram');
+                      arr.push(parseInt(states[i].active));
+                   }
+                    else if (states[i].state == "Tripura")
+                   {
+
+                      arr.push('tripura');
+                      arr.push(parseInt(states[i].active));
+                   }
+                    else if (states[i].state == "Manipur")
+                   {
+
+                      arr.push('manipur');
+                      arr.push(parseInt(states[i].active));
+                   }
+                   else if (states[i].state == "Arunachal Pradesh")
+                   {
+                      arr.push('arunanchal pradesh');
+                      arr.push(parseInt(states[i].active));
+                   }
+                   else if (states[i].state == "Jharkhand")
+                   {
+
+                       arr.push('jharkhand');
+                      arr.push(parseInt(states[i].active));
+
+                   }
+                   else if (states[i].state == "Goa")
+                   {
+
+                       arr.push('goa');
+                      arr.push((states[i].active));
+
+                   }
+                    else if (states[i].state == "Jammu and Kashmir")
+                   {
+
+                      arr.push('jammu and kashmir');
+                      arr.push(parseInt(states[i].active));
+
+                   }
+                    else if (states[i].state == "Sikkim")
+                   {
+
+                      arr.push('sikkim');
+                      arr.push(parseInt(states[i].active));
+
+                   }
+                    else if (states[i].state == "Uttarakhand")
+                   {
+
+                       arr.push('uttarakhand');
+                      arr.push(parseInt(states[i].active));
+                   }
+                   else if (states[i].state == "Lakshadweep")
+                   {
+
+                       arr.push('lakshadweep');
+                      arr.push(parseInt(states[i].active));
+                   }
+
+
+                   if (arr.length!=0)
+                   {
+                   activeStatesData.push(arr);
+                   }
+
+              }
+
+ }
+
+
+console.log(activeStatesData);
 // Create the chart
 Highcharts.mapChart('container', {
     chart: {
@@ -1013,6 +2235,8 @@ var  stateName = selectState.options[selectState.selectedIndex].value;
 var selectType = document.getElementById("selectType");
 var  graphType = selectType.options[selectType.selectedIndex].value;
 var data=[];
+
+
 if (graphType == 'Linear')
 {
 if(stateName == 'All States')
@@ -1021,6 +2245,7 @@ var selectBox = document.getElementById("selectDays");
 var days = selectBox.options[selectBox.selectedIndex].value;
 
 var startDay = 0
+/*
 if(days!=0)
 {
    startDay= totalDailyCount.length- days;
@@ -1031,16 +2256,33 @@ var x = new Date(totalDailyCount[i].day);
 var y = totalDailyCount[i].summary.total;
 var objA= {x,y}
 data.push(objA);
+}*/
+if(days!=0)
+{
+   startDay= nationalSeries.length- days;
 }
+for (var i =startDay ; i<nationalSeries.length ; i++)
+            {
+
+                    var x = new Date(formatDate(nationalSeries[i].date+ " 2020"));
+                    var y = parseInt(nationalSeries[i].totalconfirmed);
+                    var objA= {x,y}
+                    data.push(objA);
+
+            }
+
 }
 
 else
    {
 
+        var stateCode = getCodeName(stateName);
+        var type = 'Confirmed';
+        var timeSeriesState = getTimeSeries(stateCode,type);
         var selectBox = document.getElementById("selectDays");
         var days = selectBox.options[selectBox.selectedIndex].value;
-
-        var startDay = 0
+        //console.log(timeSeriesState);
+        var startDay = 0/*
         if(days!=0)
         {
            startDay= totalDailyCount.length- days;
@@ -1059,9 +2301,26 @@ else
                   }
 
                 }
+            }*/
+
+
+            if(days!=0)
+        {
+           startDay= timeSeriesState.length- days;
+        }
+            for (var i=startDay; i<timeSeriesState.length ;i++)
+            {
+
+                   var x = new Date(timeSeriesState[i][0]);
+                   var y = parseInt(timeSeriesState[i][1]);
+                   var objA= {x,y}
+                   data.push(objA);
+
             }
 
    }
+
+   //console.log(data);
 
 var chart = new CanvasJS.Chart("chartContainer", {
 	animationEnabled: true,
@@ -1099,6 +2358,7 @@ var selectBox = document.getElementById("selectDays");
 var days = selectBox.options[selectBox.selectedIndex].value;
 
 var startDay = 0
+/*
 if(days!=0)
 {
    startDay= totalDailyCount.length- days;
@@ -1109,7 +2369,23 @@ var x = new Date(totalDailyCount[i].day);
 var y = totalDailyCount[i].summary.total;
 dataDates.push(x);
 dataCount.push(y);
+}*/
+if(days!=0)
+{
+   startDay= nationalSeries.length- days;
 }
+for (var i =startDay ; i<nationalSeries.length ; i++)
+            {
+
+                    var x = new Date(formatDate(nationalSeries[i].date+ " 2020"));
+                    var y = parseInt(nationalSeries[i].totalconfirmed);
+
+                    dataCount.push(y);
+                    dataDates.push(x);
+
+            }
+
+
 }
 
 else
@@ -1119,6 +2395,7 @@ else
         var days = selectBox.options[selectBox.selectedIndex].value;
 
         var startDay = 0
+        /*
         if(days!=0)
         {
            startDay= totalDailyCount.length- days;
@@ -1137,9 +2414,33 @@ else
                   }
 
                 }
+            }*/
+
+
+          var stateCode = getCodeName(stateName);
+        var type = 'Confirmed';
+        var timeSeriesState = getTimeSeries(stateCode,type);
+
+          if(days!=0)
+        {
+           startDay= timeSeriesState.length- days;
+        }
+            for (var i=startDay; i<timeSeriesState.length ;i++)
+            {
+
+                   var x = new Date(timeSeriesState[i][0]);
+                   var y = parseInt(timeSeriesState[i][1]);
+                   dataDates.push(x);
+                   dataCount.push(y);
+
             }
 
+
+
    }
+
+   console.log(dataDates);
+   console.log(dataCount);
 
 Highcharts.chart("chartContainer", {
 	animationEnabled: true,
@@ -1174,6 +2475,7 @@ Highcharts.chart("chartContainer", {
 
 }
 
+
 function splineDeaths()
 {
 
@@ -1188,7 +2490,7 @@ if(stateName == 'All States')
 {
  var selectBox = document.getElementById("selectDays");
         var days = selectBox.options[selectBox.selectedIndex].value;
-var startDay = 0
+var startDay = 0/*
 if(days!=0)
 {
    startDay= totalDailyCount.length- days;
@@ -1199,15 +2501,32 @@ var x = new Date(totalDailyCount[i].day);
 var y = totalDailyCount[i].summary.deaths;
 var objA= {x,y}
 data.push(objA);
+}*/
+
+if(days!=0)
+{
+   startDay= nationalSeries.length- days;
 }
+for (var i =startDay ; i<nationalSeries.length ; i++)
+            {
+
+                    var x = new Date(formatDate(nationalSeries[i].date+ " 2020"));
+                    var y = parseInt(nationalSeries[i].totaldeceased);
+                    var objA= {x,y}
+                    data.push(objA);
+
+            }
 }
 else
 {
-
+  var stateCode = getCodeName(stateName);
+        var type = 'Deceased';
+        var timeSeriesState = getTimeSeries(stateCode,type);
  var selectBox = document.getElementById("selectDays");
         var days = selectBox.options[selectBox.selectedIndex].value;
 
         var startDay = 0
+        /*
         if(days!=0)
         {
            startDay= totalDailyCount.length- days;
@@ -1226,6 +2545,22 @@ else
                   }
 
                 }
+            }*/
+
+
+
+            if(days!=0)
+        {
+           startDay= timeSeriesState.length- days;
+        }
+            for (var i=startDay; i<timeSeriesState.length ;i++)
+            {
+
+                   var x = new Date(timeSeriesState[i][0]);
+                   var y = parseInt(timeSeriesState[i][1]);
+                   var objA= {x,y}
+                   data.push(objA);
+
             }
 }
 
@@ -1264,7 +2599,7 @@ if(stateName == 'All States')
 var selectBox = document.getElementById("selectDays");
 var days = selectBox.options[selectBox.selectedIndex].value;
 
-var startDay = 0
+var startDay = 0/*
 if(days!=0)
 {
    startDay= totalDailyCount.length- days;
@@ -1275,7 +2610,24 @@ var x = new Date(totalDailyCount[i].day);
 var y = totalDailyCount[i].summary.deaths;
 dataDates.push(x);
 dataCount.push(y);
+}*/
+if(days!=0)
+{
+   startDay= nationalSeries.length- days;
 }
+for (var i =startDay ; i<nationalSeries.length ; i++)
+            {
+
+                    var x = new Date(formatDate(nationalSeries[i].date+ " 2020"));
+                    var y = parseInt(nationalSeries[i].totaldeceased);
+
+                    dataCount.push(y);
+                    dataDates.push(x);
+
+            }
+
+
+
 }
 
 else
@@ -1285,6 +2637,7 @@ else
         var days = selectBox.options[selectBox.selectedIndex].value;
 
         var startDay = 0
+        /*
         if(days!=0)
         {
            startDay= totalDailyCount.length- days;
@@ -1303,6 +2656,24 @@ else
                   }
 
                 }
+            }*/
+
+             var stateCode = getCodeName(stateName);
+        var type = 'Deceased';
+        var timeSeriesState = getTimeSeries(stateCode,type);
+
+          if(days!=0)
+        {
+           startDay= timeSeriesState.length- days;
+        }
+            for (var i=startDay; i<timeSeriesState.length ;i++)
+            {
+
+                   var x = new Date(timeSeriesState[i][0]);
+                   var y = parseInt(timeSeriesState[i][1]);
+                   dataDates.push(x);
+                   dataCount.push(y);
+
             }
 
    }
@@ -1355,7 +2726,7 @@ if(stateName == 'All States')
 {
         var selectBox = document.getElementById("selectDays");
         var days = selectBox.options[selectBox.selectedIndex].value;
-       var startDay = 0
+       var startDay = 0;/*
      if(days!=0)
     {
    startDay= totalDailyCount.length- days;
@@ -1366,17 +2737,32 @@ var x = new Date(totalDailyCount[i].day);
 
 var y = totalDailyCount[i].summary.discharged;
 var objA= {x,y}
-data.push(objA);
+data.push(objA);*/
+if(days!=0)
+{
+   startDay= nationalSeries.length- days;
+}
+for (var i =startDay ; i<nationalSeries.length ; i++)
+            {
+
+                    var x = new Date(formatDate(nationalSeries[i].date+ " 2020"));
+                    var y = parseInt(nationalSeries[i].totalrecovered);
+                    var objA= {x,y}
+                    data.push(objA);
+
+            }
 }
 
-}
 else
 {
-
+         var stateCode = getCodeName(stateName);
+        var type = 'Recovered';
+        var timeSeriesState = getTimeSeries(stateCode,type);
         var selectBox = document.getElementById("selectDays");
         var days = selectBox.options[selectBox.selectedIndex].value;
 
         var startDay = 0
+        /*
         if(days!=0)
         {
            startDay= totalDailyCount.length- days;
@@ -1395,6 +2781,21 @@ else
                   }
 
                 }
+            }*/
+
+
+            if(days!=0)
+        {
+           startDay= timeSeriesState.length- days;
+        }
+            for (var i=startDay; i<timeSeriesState.length ;i++)
+            {
+
+                   var x = new Date(timeSeriesState[i][0]);
+                   var y = parseInt(timeSeriesState[i][1]);
+                   var objA= {x,y}
+                   data.push(objA);
+
             }
 
 }
@@ -1420,7 +2821,8 @@ var chart = new CanvasJS.Chart("chartContainer", {
 		dataPoints: data
 	}]
 });
-chart.render();}
+chart.render();
+}
 
 else
 {
@@ -1434,7 +2836,7 @@ if(stateName == 'All States')
 var selectBox = document.getElementById("selectDays");
 var days = selectBox.options[selectBox.selectedIndex].value;
 
-var startDay = 0
+var startDay = 0/*
 if(days!=0)
 {
    startDay= totalDailyCount.length- days;
@@ -1445,7 +2847,22 @@ var x = new Date(totalDailyCount[i].day);
 var y = totalDailyCount[i].summary.discharged;
 dataDates.push(x);
 dataCount.push(y);
+}*/
+if(days!=0)
+{
+   startDay= nationalSeries.length- days;
 }
+for (var i =startDay ; i<nationalSeries.length ; i++)
+            {
+
+                    var x = new Date(formatDate(nationalSeries[i].date+ " 2020"));
+                    var y = parseInt(nationalSeries[i].totalrecovered);
+
+                    dataCount.push(y);
+                    dataDates.push(x);
+
+            }
+
 }
 
 else
@@ -1455,6 +2872,7 @@ else
         var days = selectBox.options[selectBox.selectedIndex].value;
 
         var startDay = 0
+        /*
         if(days!=0)
         {
            startDay= totalDailyCount.length- days;
@@ -1473,6 +2891,24 @@ else
                   }
 
                 }
+            }*/
+
+             var stateCode = getCodeName(stateName);
+        var type = 'Recovered';
+        var timeSeriesState = getTimeSeries(stateCode,type);
+
+          if(days!=0)
+        {
+           startDay= timeSeriesState.length- days;
+        }
+            for (var i=startDay; i<timeSeriesState.length ;i++)
+            {
+
+                   var x = new Date(timeSeriesState[i][0]);
+                   var y = parseInt(timeSeriesState[i][1]);
+                   dataDates.push(x);
+                   dataCount.push(y);
+
             }
 
    }
@@ -1502,7 +2938,7 @@ Highcharts.chart("chartContainer", {
 }
 
 }
- function splineActive()
+function splineActive()
 {
 
 
@@ -1517,7 +2953,7 @@ if(stateName == 'All States')
 {
  var selectBox = document.getElementById("selectDays");
         var days = selectBox.options[selectBox.selectedIndex].value;
-var startDay = 0
+var startDay = 0; /*
 if(days!=0)
 {
    startDay= totalDailyCount.length- days;
@@ -1529,13 +2965,31 @@ var x = new Date(totalDailyCount[i].day);
 var y = totalDailyCount[i].summary.total - totalDailyCount[i].summary.discharged -totalDailyCount[i].summary.deaths;
 var objA= {x,y}
 data.push(objA);
-}
-}
+}*/
+
+if(days!=0)
 {
+   startDay= nationalSeries.length- days;
+}
+for (var i =startDay ; i<nationalSeries.length ; i++)
+            {
+
+                    var x = new Date(formatDate(nationalSeries[i].date+ " 2020"));
+                    var y = parseInt(nationalSeries[i].totalconfirmed)- parseInt(nationalSeries[i].totaldeceased)- parseInt(nationalSeries[i].totalrecovered);
+                    var objA= {x,y}
+                    data.push(objA);
+
+            }
+}
+else {
+        var stateCode = getCodeName(stateName);
+        var type = 'Active';
+        var timeSeriesState = getTimeSeries(stateCode,type);
    var selectBox = document.getElementById("selectDays");
         var days = selectBox.options[selectBox.selectedIndex].value;
 
         var startDay = 0
+        /*
         if(days!=0)
         {
            startDay= totalDailyCount.length- days;
@@ -1554,6 +3008,20 @@ data.push(objA);
                   }
 
                 }
+            }*/
+
+            if(days!=0)
+        {
+           startDay= timeSeriesState.length- days;
+        }
+            for (var i=startDay; i<timeSeriesState.length ;i++)
+            {
+
+                   var x = new Date(timeSeriesState[i][0]);
+                   var y = parseInt(timeSeriesState[i][1]);
+                   var objA= {x,y}
+                   data.push(objA);
+
             }
 
 
@@ -1597,7 +3065,7 @@ if(stateName == 'All States')
 var selectBox = document.getElementById("selectDays");
 var days = selectBox.options[selectBox.selectedIndex].value;
 
-var startDay = 0
+var startDay = 0/*
         if(days!=0)
         {
            startDay= totalDailyCount.length- days;
@@ -1609,6 +3077,22 @@ var startDay = 0
         dataDates.push(x);
         dataCount.push(y);
         }
+        */
+        if(days!=0)
+{
+   startDay= nationalSeries.length- days;
+}
+for (var i =startDay ; i<nationalSeries.length ; i++)
+            {
+
+                    var x = new Date(formatDate(nationalSeries[i].date+ " 2020"));
+                    var y = parseInt(nationalSeries[i].totalconfirmed)- parseInt(nationalSeries[i].totaldeceased)-parseInt(nationalSeries[i].totalrecovered);
+
+                    dataCount.push(y);
+                    dataDates.push(x);
+
+            }
+
         }
 
    else
@@ -1623,6 +3107,7 @@ var startDay = 0
           var dataCount=[];
 
         var startDay = 0
+        /*
         if(days!=0)
         {
            startDay= totalDailyCount.length- days;
@@ -1642,6 +3127,24 @@ var startDay = 0
                   }
 
                 }
+            }*/
+
+            var stateCode = getCodeName(stateName);
+        var type = 'Active';
+        var timeSeriesState = getTimeSeries(stateCode,type);
+
+          if(days!=0)
+        {
+           startDay= timeSeriesState.length- days;
+        }
+            for (var i=startDay; i<timeSeriesState.length ;i++)
+            {
+
+                   var x = new Date(timeSeriesState[i][0]);
+                   var y = parseInt(timeSeriesState[i][1]);
+                   dataDates.push(x);
+                   dataCount.push(y);
+
             }
 
 }
@@ -1729,4 +3232,282 @@ function w3_open() {
 
 function w3_close() {
   document.getElementById("mySidebar").style.display = "none";
+}
+
+function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2)
+        month = '0' + month;
+    if (day.length < 2)
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+}
+
+function  getCodeName(stateName)
+{
+var statecode = '';
+if (stateName == 'Andaman and Nicobar Islands')
+{
+   statecode = 'an'
+}
+else if (stateName == 'Andhra Pradesh')
+{
+ statecode = 'ap'
+
+}
+else if (stateName == 'Arunachal Pradesh')
+{
+ statecode = 'ar'
+
+}
+else if (stateName == 'Bihar')
+{
+ statecode = 'br'
+
+}else if (stateName == 'Chandigarh')
+{
+ statecode = 'ch'
+
+}
+else if (stateName == 'Chattisgarh')
+{
+ statecode = 'ct'
+
+}
+
+else if (stateName == 'Delhi')
+{
+ statecode = 'dl'
+
+}
+else if (stateName == 'Dadra and Nagar Haveli and Daman and Diu')
+{
+ statecode = 'dn'
+
+}
+else if (stateName == 'Goa')
+{
+ statecode = 'ga'
+
+}
+else if (stateName == 'Gujarat')
+{
+ statecode = 'gj'
+
+}
+else if (stateName == 'Himachal Pradesh')
+{
+ statecode = 'hp'
+
+}
+else if (stateName == 'Haryana')
+{
+ statecode = 'hr'
+
+}
+else if (stateName == 'Jharkhand')
+{
+ statecode = 'jh'
+
+}
+else if (stateName == 'Jammu and Kashmir')
+{
+ statecode = 'jk'
+
+}
+else if (stateName == 'Karnataka')
+{
+ statecode = 'ka'
+
+}
+else if (stateName == 'Kerala')
+{
+ statecode = 'kl'
+
+}else if (stateName == 'Ladakh')
+{
+ statecode = 'la'
+
+}
+
+else if (stateName == 'Maharashtra')
+{
+ statecode = 'mh'
+
+}
+else if (stateName == 'Meghalaya')
+{
+ statecode = 'ml'
+
+}
+else if (stateName == 'Manipur')
+{
+ statecode = 'mn'
+
+}
+else if (stateName == 'Madhya Pradesh')
+{
+ statecode = 'mp'
+
+}
+else if (stateName == 'Mizoram')
+{
+ statecode = 'mz'
+
+}
+else if (stateName == 'Nagaland')
+{
+ statecode = 'nl'
+
+}
+else if (stateName == 'Odisha')
+{
+ statecode = 'or'
+
+}
+else if (stateName == 'Punjab')
+{
+ statecode = 'pb'
+
+}
+else if (stateName == 'Puducherry')
+{
+ statecode = 'py'
+
+}else if (stateName == 'Rajasthan')
+{
+ statecode = 'rj'
+
+}
+else if (stateName == 'Sikkim')
+{
+ statecode = 'sk'
+
+}
+else if (stateName == 'Telangana')
+{
+ statecode = 'tg'
+
+}
+else if (stateName == 'Tamil Nadu')
+{
+ statecode = 'tn'
+
+}
+else if (stateName == 'Tripura')
+{
+ statecode = 'tr'
+
+}
+else if (stateName == 'Uttar Pradesh')
+{
+ statecode = 'up'
+
+}
+else if (stateName == 'Uttarakhand')
+{
+ statecode = 'ut'
+
+}
+else if (stateName == 'West Bengal')
+{
+ statecode = 'wb'
+
+}
+
+return statecode;
+
+}
+
+function getTimeSeries(statecode, type)
+{
+    var sum = 0;
+    var arr= [];
+    if (type !='Active')
+    {
+    for (var i =0 ; i<statewise.length; i++)
+    {
+
+          if  (statewise[i].status == type)
+          {
+             var obj = [];
+             sum = sum + parseInt(statewise[i][statecode+""]);
+
+             var date = statewise[i].date+"20";
+             obj.push(date);
+             obj.push(sum);
+             arr.push(obj);
+
+          }
+
+
+    }
+    }
+     else if (type == 'Active')
+          {
+            var conf= [];
+            var det = [];
+            var rec = [];
+            var obj = [];
+            var confSum = 0;
+            var detSum = 0;
+            var recSum = 0;
+
+            for (var i =0 ; i<statewise.length; i++)
+                {
+
+                      if  (statewise[i].status == 'Confirmed')
+                      {
+                         var obj = [];
+                         var count = parseInt(statewise[i][statecode+""]);
+                         confSum = confSum+ count;
+                         var date = statewise[i].date+"20";
+                         obj.push(date);
+                         obj.push(confSum);
+                         conf.push(obj);
+                      }
+                      if  (statewise[i].status == 'Deceased')
+                      {
+                         var obj = [];
+                         var count = parseInt(statewise[i][statecode+""]);
+                         detSum = detSum+ count;
+                         var date = statewise[i].date+"20";
+                         obj.push(date);
+                         obj.push(detSum);
+                         det.push(obj);
+                      }
+                      if  (statewise[i].status == 'Recovered')
+                      {
+                         var obj = [];
+                         var count = parseInt(statewise[i][statecode+""]);
+                         recSum = recSum + count;
+                         var date = statewise[i].date+"20";
+                         obj.push(date);
+                         obj.push(recSum);
+                         rec.push(obj);
+                      }
+
+
+                }
+
+                for (var i= 0; i< conf.length; i++)
+                {
+                     var obj =[];
+                     obj.push(conf[i][0]);
+                     obj.push(conf[i][1]- det[i][1]-rec[i][1]);
+                     arr.push(obj);
+
+
+                }
+
+
+          }
+    return arr;
+
+
 }

@@ -6,6 +6,7 @@ var actualConfirmed = [];
 var predictedDeaths = [];
 var predictedConfirmed = [];
 var predictedRecovered = [];
+var nationalSeries = null;
  var x = document.getElementById("overlay");
 if(predDays == null)
 {
@@ -24,7 +25,8 @@ x.style.display = "block";
 
  $.ajax(
        {
-        url  : "https://api.rootnet.in/covid19-in/stats/history",
+       // url  : "https://api.rootnet.in/covid19-in/stats/history",
+        url  : "https://api.covid19india.org/data.json",
         contentType: "application/json",
         type : 'GET',
         contentType: false,
@@ -34,7 +36,7 @@ x.style.display = "block";
             {
                     //console.log(response);
                     if (response!=null)
-                    {
+                    {       /*
                             var cumulativeCounts =[];
                             var cumulativeCases =[];
                             var cumulativeRecovered =[];
@@ -80,11 +82,105 @@ x.style.display = "block";
                                 arr.push(response.data[i].summary.discharged);
                                 actualRecovered.push(arr);
 
-                            }
+                            }*/
 
-                            //console.log(actualDeaths);
+                            //console.log(actualDeaths);/*
+                           /*  $.ajax(
+                                       {
+                                        url  : "https://api.rootnet.in/covid19-in/stats/latest",
+                                        contentType: "application/json",
+                                        type : 'GET',
+                                        contentType: false,
+                                        cache: false,
+                                        processData: false,
+                                        success: function(response)
+                                        {
+
+                                          var entireData = response.data;
+
+                                          var liveStats= entireData["unofficial-summary"];
+                                          var totalDeaths = liveStats[0].deaths;
+                                          var totalConfirmed = liveStats[0].total;
+                                          var totalRecovered = liveStats[0].recovered;*/
+                                            nationalSeries = response.cases_time_series;
+                                            var cumulativeCounts = [];
+                                            var cumulativeCases = [];
+                                            var cumulativeRecovered = [];
+
+                                            for (var i =0 ; i<nationalSeries.length ; i++)
+                                            {
+                                                    var arr = [];
+
+                                                    var x = formatDate(new Date(nationalSeries[i].date+ " 2020"));
+
+                                                    var y = parseInt(nationalSeries[i].totalconfirmed);
+                                                    arr.push(x);
+                                                    arr.push(y);
+                                                    cumulativeCases.push(arr);
+
+                                                    var arr = [];
+
+                                                    var x = formatDate(new Date(nationalSeries[i].date+ " 2020"));
+                                                    var y = parseInt(nationalSeries[i].totaldeceased);
+                                                    arr.push(x);
+                                                    arr.push(y);
+                                                    cumulativeCounts.push(arr);
+
+                                                   var arr = [];
+
+                                                    var x = formatDate(new Date(nationalSeries[i].date+ " 2020"));
+                                                    var y = parseInt(nationalSeries[i].totalrecovered);
+                                                    arr.push(x);
+                                                    arr.push(y);
+                                                    cumulativeRecovered.push(arr);
+
+                                            }
+
+                                           // console.log(cumulativeCases);
 
 
+                                            for (var i=0;i<nationalSeries.length;i++)
+                                            {
+                                                var arr = [];
+
+                                                arr.push(new Date(nationalSeries[i].date+ " 2020").getTime());
+                                                arr.push(parseInt(nationalSeries[i].totaldeceased));
+                                                actualDeaths.push(arr);
+
+                                                 var arr = [];
+
+                                                arr.push(new Date(nationalSeries[i].date+ " 2020").getTime());
+                                                arr.push(parseInt(nationalSeries[i].totalconfirmed));
+                                                actualConfirmed.push(arr);
+
+                                                 var arr = [];
+
+                                                arr.push(new Date(nationalSeries[i].date+ " 2020").getTime());
+                                                arr.push(parseInt(nationalSeries[i].totalrecovered));
+                                                actualRecovered.push(arr);
+
+                                            }
+                                             console.log(actualDeaths);
+
+
+
+                             $.ajax(
+                                       {
+                                        url  : "https://api.covid19india.org/data.json",
+                                        contentType: "application/json",
+                                        type : 'GET',
+                                        contentType: false,
+                                        cache: false,
+                                        processData: false,
+                                        success: function(response){
+
+                                           console.log(response);
+
+
+                                           var totalStats = response.statewise[0];
+                                           var totalDeaths = totalStats.deaths;
+                                           var totalConfirmed = totalStats.confirmed;
+                                           var totalRecovered = totalStats.recovered;
 
                             $.ajax({
                                           type: 'POST',
@@ -104,6 +200,7 @@ x.style.display = "block";
                                             console.log(data);
                                             var listData = data['deaths'];
                                             var maeDeath = Math.round((data['dmae'] + Number.EPSILON) * 100) / 100;
+
                                             /*
                                             var listConfirmed = data['confirmed'];
                                             var maeConfirmed = Math.round((data['cmae'] + Number.EPSILON) * 100) / 100;
@@ -127,37 +224,10 @@ x.style.display = "block";
 
 
                                             }
-                                            /*
-                                            for(var i=0;i<listConfirmed.length;i++)
-                                            {
-                                               var arr= [] ;
-                                               var myDate = listConfirmed[i][0];
 
-                                               dateObj = new Date(myDate);
-                                               dateObj = dateObj.getTime() + (5.5*60*60*1000)
-
-                                               arr.push(dateObj);
-                                               arr.push(Math.round((listConfirmed[i][1] + Number.EPSILON) * 100) / 100);
-                                               predictedConfirmed.push(arr);
+                                             var aeDeath = Math.abs(predictedDeaths[0][1]-totalDeaths);
 
 
-
-                                            }
-
-                                            for(var i=0;i<listRecovered.length;i++)
-                                            {
-                                               var arr= [] ;
-                                               var myDate = listRecovered[i][0];
-
-                                               dateObj = new Date(myDate);
-                                               dateObj = dateObj.getTime() + (5.5*60*60*1000)
-
-                                               arr.push(dateObj);
-                                               arr.push(Math.round((listRecovered[i][1] + Number.EPSILON) * 100) / 100);
-                                               predictedRecovered.push(arr);
-
-                                            }
-                                           */
 
                                         Highcharts.chart('container', {
                                         chart: {
@@ -202,6 +272,7 @@ x.style.display = "block";
                                                 });
 
                                               document.getElementById('dmae').innerHTML = "Mean Absolute Error (MAE) = "+maeDeath;
+                                              document.getElementById('dae').innerHTML = "Absolute Error (AE) = "+aeDeath;
                                               /*
                                               document.getElementById('cmae').innerHTML = "Mean Absolute Error (MAE) = "+maeConfirmed;
                                               document.getElementById('rmae').innerHTML = "Mean Absolute Error (MAE) = "+maeRecovered;
@@ -247,7 +318,7 @@ x.style.display = "block";
                                                predictedConfirmed.push(arr);
 
                                             }
-
+                                          var aeConfirmed = Math.abs(predictedConfirmed[0][1]-totalConfirmed);
 
                                         Highcharts.chart('container1', {
                                         chart: {
@@ -293,6 +364,7 @@ x.style.display = "block";
 
 
                                                 document.getElementById('cmae').innerHTML = "Mean Absolute Error (MAE) = "+maeConfirmed;
+                                                 document.getElementById('cae').innerHTML = "Absolute Error (AE) = "+aeConfirmed;
                                       $.ajax({
                                           type: 'POST',
                                           url: "/predictARIMArecovered",
@@ -324,6 +396,7 @@ x.style.display = "block";
                                                predictedRecovered.push(arr);
 
                                             }
+                                            var aeRecovered = Math.abs(predictedRecovered[0][1]-totalRecovered);
 
 
                                              Highcharts.chart('container2', {
@@ -369,7 +442,9 @@ x.style.display = "block";
                                                 });
 
                                                  document.getElementById('rmae').innerHTML = "Mean Absolute Error (MAE) = "+maeRecovered;
-
+                                                  document.getElementById('rae').innerHTML = "Absolute Error (AE) = "+aeRecovered;
+                                              }
+                                          });
 
                                               }
                                           });
@@ -384,6 +459,19 @@ x.style.display = "block";
         });
 }
 
+function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2)
+        month = '0' + month;
+    if (day.length < 2)
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+}
 function w3_open() {
   document.getElementById("mySidebar").style.display = "block";
 }

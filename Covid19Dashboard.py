@@ -66,7 +66,7 @@ def predictARIMAdeaths():
     #cumulativeConfirmedList = search['listConfirmed']
     #cumulativeRecoveredList = search['listRecovered']
     predDays = search['predDays']
-    deaths = predictionController.predictArimaDeaths(cumulativeDeathList,predDays)
+    deaths = predictionController.predictArimaDeaths(cumulativeDeathList[46:],predDays)
     #confirmed = predictionController.predictArimaConfirmed(cumulativeConfirmedList, predDays)
     #recovered = predictionController.predictArimaRecovered(cumulativeRecoveredList, predDays)
 
@@ -80,7 +80,7 @@ def predictARIMAconfirmed():
 
     predDays = search['predDays']
 
-    confirmed = predictionController.predictArimaConfirmed(cumulativeConfirmedList, predDays)
+    confirmed = predictionController.predictArimaConfirmed(cumulativeConfirmedList[35:], predDays)
 
 
     return jsonify(confirmed =confirmed['list'] , cmae= confirmed['mae']);
@@ -94,7 +94,7 @@ def predictARIMArecovered():
     cumulativeRecoveredList = search['listRecovered']
     predDays = search['predDays']
 
-    recovered = predictionController.predictArimaRecovered(cumulativeRecoveredList, predDays)
+    recovered = predictionController.predictArimaRecovered(cumulativeRecoveredList[46:], predDays)
 
     return jsonify(recovered=recovered['list'], rmae=recovered['mae']);
 

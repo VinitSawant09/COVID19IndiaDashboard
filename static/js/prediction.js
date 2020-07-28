@@ -23,7 +23,7 @@ var predictedRecoveredLog = [];
 var predictedMaxRecoveredLog = [];
 var predictedMinRecoveredLog=[];
 var selectedPredDays = 5;
-
+var nationalSeries = null;
 
  var x = document.getElementById("overlay");
 
@@ -44,7 +44,8 @@ selectedPredDays = predDays;
 
  $.ajax(
        {
-        url  : "https://api.rootnet.in/covid19-in/stats/history",
+        //url  : "https://api.rootnet.in/covid19-in/stats/history",
+         url  : "https://api.covid19india.org/data.json",
         contentType: "application/json",
         type : 'GET',
         contentType: false,
@@ -53,8 +54,9 @@ selectedPredDays = predDays;
         success: function(response)
             {
                     //console.log(response);
+
                     if (response!=null)
-                    {
+                    {       /*
                             var cumulativeCounts =[];
                             var cumulativeCases =[];
                             var cumulativeRecovered =[];
@@ -102,7 +104,67 @@ selectedPredDays = predDays;
 
                             }
 
-                            //console.log(actualDeaths);
+                            //console.log(actualDeaths);*/
+
+                            nationalSeries = response.cases_time_series;
+                                            var cumulativeCounts = [];
+                                            var cumulativeCases = [];
+                                            var cumulativeRecovered = [];
+
+                                            for (var i =0 ; i<nationalSeries.length ; i++)
+                                            {
+                                                    var arr = [];
+
+                                                    var x = formatDate(new Date(nationalSeries[i].date+ " 2020"));
+
+                                                    var y = parseInt(nationalSeries[i].totalconfirmed);
+                                                    arr.push(x);
+                                                    arr.push(y);
+                                                    cumulativeCases.push(arr);
+
+                                                    var arr = [];
+
+                                                    var x = formatDate(new Date(nationalSeries[i].date+ " 2020"));
+                                                    var y = parseInt(nationalSeries[i].totaldeceased);
+                                                    arr.push(x);
+                                                    arr.push(y);
+                                                    cumulativeCounts.push(arr);
+
+                                                   var arr = [];
+
+                                                    var x = formatDate(new Date(nationalSeries[i].date+ " 2020"));
+                                                    var y = parseInt(nationalSeries[i].totalrecovered);
+                                                    arr.push(x);
+                                                    arr.push(y);
+                                                    cumulativeRecovered.push(arr);
+
+                                            }
+
+                                           // console.log(cumulativeCases);
+
+
+                                            for (var i=0;i<nationalSeries.length;i++)
+                                            {
+                                                var arr = [];
+
+                                                arr.push(new Date(nationalSeries[i].date+ " 2020").getTime());
+                                                arr.push(parseInt(nationalSeries[i].totaldeceased));
+                                                actualDeaths.push(arr);
+
+                                                 var arr = [];
+
+                                                arr.push(new Date(nationalSeries[i].date+ " 2020").getTime());
+                                                arr.push(parseInt(nationalSeries[i].totalconfirmed));
+                                                actualConfirmed.push(arr);
+
+                                                 var arr = [];
+
+                                                arr.push(new Date(nationalSeries[i].date+ " 2020").getTime());
+                                                arr.push(parseInt(nationalSeries[i].totalrecovered));
+                                                actualRecovered.push(arr);
+
+                                            }
+                                             console.log(actualDeaths);
 
 
 
@@ -676,6 +738,7 @@ selectedPredDays = predDays;
                                         }
 
                                });
+
                                }}
         });
 
@@ -685,6 +748,19 @@ selectedPredDays = predDays;
 function toTimestamp(strDate){
  var datum = Date.parse(strDate);
  return datum/1000;
+}
+function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2)
+        month = '0' + month;
+    if (day.length < 2)
+        day = '0' + day;
+
+    return [year, month, day].join('-');
 }
 
 function w3_open() {

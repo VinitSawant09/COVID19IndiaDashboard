@@ -67,9 +67,10 @@ class lstmDAO:
 
         def vanillaLSTMdeaths(deaths):
             # define input sequence
+            print(deaths)
             #deaths = [ [7, 2], [8, 3], [9, 3], [10, 4], [11, 4], [12, 4], [13, 7], [14, 8], [15, 10], [16, 10], [17, 15], [18, 17], [19, 19], [20, 27], [21, 31], [22, 35], [23, 41], [24, 53], [25, 62], [26, 75], [27, 83], [28, 111], [29, 124], [30, 149], [31, 169], [32, 206], [33, 242], [34, 273], [35, 324], [36, 353], [37, 392], [38, 420], [39, 452], [40, 488], [41, 519], [42, 559], [43, 603], [44, 652], [45, 686], [46, 723], [47, 779], [48, 826], [49, 886], [50, 937], [51, 1008], [52, 1075], [53, 1152], [54, 1223], [55, 1306], [56, 1389], [57, 1583], [58, 1694], [59, 1783], [60, 1886], [61, 1981], [62, 2109], [63, 2206], [64, 2293], [65, 2415], [66, 2549], [67, 2649], [68, 2752], [69, 2872], [70, 3029], [71, 3163], [72, 3303], [73, 3435], [74, 3583], [75, 3720], [76, 3867], [77, 4021], [78, 4167], [79, 4337], [80, 4531], [81, 4706], [82, 4971], [83, 5164], [84, 5394], [85, 5598], [86, 5815], [87, 6075], [88, 6348], [89, 6642], [90, 6929], [91, 7200], [92, 7471], [93, 7745], [94, 8102], [95, 8498], [96, 8884], [97, 9195], [98, 9520], [99, 9900], [100, 11903], [101, 12237], [102, 12573], [103, 12948], [104, 13254], [105, 13699], [106, 14011], [107, 14476], [108, 14894], [109, 15301], [110, 15685], [111, 16095], [112, 16475], [113, 16893], [114, 17400], [115, 17834], [116, 18213], [117, 18655], [118, 19268], [119, 19693], [120, 20160], [121, 20642], [122, 21129], [123, 21604], [124, 22123], [125, 22674], [126, 23174], [127, 23727],[128, 24309], [129, 24915], [130, 25602], [131, 26273], [132, 26816], [133, 27497]]
             raw_seq = []
-            deaths = deaths[6:]
+            deaths = deaths[46:]
 
             for i in range(0, len(deaths)):
                 raw_seq.append(deaths[i][1])
@@ -78,6 +79,7 @@ class lstmDAO:
             # choose a number of time steps
             n_steps = 3
             # split into samples
+
             X, y = lstmDAO.split_sequence(raw_seq, n_steps)
             # reshape from [samples, timesteps] into [samples, timesteps, features]
             n_features = 1
@@ -106,7 +108,7 @@ class lstmDAO:
             #keras.optimizers.Adam(lr=0.01)
 
             raw_seq = []
-            deaths = deaths[6:]
+            deaths = deaths[46:]
 
             for i in range(0, len(deaths)):
                 raw_seq.append(deaths[i][1])
@@ -142,7 +144,7 @@ class lstmDAO:
 
 
                     raw_seq = []
-                    deaths = deaths[6:]
+                    deaths = deaths[46:]
 
                     for i in range(0, len(deaths)):
                         raw_seq.append(deaths[i][1])
@@ -177,7 +179,7 @@ class lstmDAO:
 
             # keras.optimizers.Adam(lr=0.01)
             raw_seq = []
-            deaths = deaths[6:]
+            deaths = deaths[46:]
 
             for i in range(0, len(deaths)):
                 raw_seq.append(deaths[i][1])
@@ -222,7 +224,7 @@ class lstmDAO:
 
             #keras.optimizers.Adam(lr=0.01)
             raw_seq = []
-            deaths = deaths[6:]
+            deaths = deaths[46:]
 
             for i in range(0, len(deaths)):
                 raw_seq.append(deaths[i][1])
@@ -263,7 +265,7 @@ class lstmDAO:
 
             #keras.optimizers.Adam(lr=0.01)
             raw_seq = []
-            deaths = deaths[6:]
+            deaths = deaths[46:]
 
             for i in range(0, len(deaths)):
                 raw_seq.append(deaths[i][1])
@@ -300,7 +302,7 @@ class lstmDAO:
 
             #Encoded
             raw_seq = []
-            deaths = deaths[6:]
+            deaths = deaths[46:]
 
             for i in range(0, len(deaths)):
                 raw_seq.append(deaths[i][1])
@@ -342,7 +344,7 @@ class lstmDAO:
             # define input sequence
             #deaths = [ [7, 2], [8, 3], [9, 3], [10, 4], [11, 4], [12, 4], [13, 7], [14, 8], [15, 10], [16, 10], [17, 15], [18, 17], [19, 19], [20, 27], [21, 31], [22, 35], [23, 41], [24, 53], [25, 62], [26, 75], [27, 83], [28, 111], [29, 124], [30, 149], [31, 169], [32, 206], [33, 242], [34, 273], [35, 324], [36, 353], [37, 392], [38, 420], [39, 452], [40, 488], [41, 519], [42, 559], [43, 603], [44, 652], [45, 686], [46, 723], [47, 779], [48, 826], [49, 886], [50, 937], [51, 1008], [52, 1075], [53, 1152], [54, 1223], [55, 1306], [56, 1389], [57, 1583], [58, 1694], [59, 1783], [60, 1886], [61, 1981], [62, 2109], [63, 2206], [64, 2293], [65, 2415], [66, 2549], [67, 2649], [68, 2752], [69, 2872], [70, 3029], [71, 3163], [72, 3303], [73, 3435], [74, 3583], [75, 3720], [76, 3867], [77, 4021], [78, 4167], [79, 4337], [80, 4531], [81, 4706], [82, 4971], [83, 5164], [84, 5394], [85, 5598], [86, 5815], [87, 6075], [88, 6348], [89, 6642], [90, 6929], [91, 7200], [92, 7471], [93, 7745], [94, 8102], [95, 8498], [96, 8884], [97, 9195], [98, 9520], [99, 9900], [100, 11903], [101, 12237], [102, 12573], [103, 12948], [104, 13254], [105, 13699], [106, 14011], [107, 14476], [108, 14894], [109, 15301], [110, 15685], [111, 16095], [112, 16475], [113, 16893], [114, 17400], [115, 17834], [116, 18213], [117, 18655], [118, 19268], [119, 19693], [120, 20160], [121, 20642], [122, 21129], [123, 21604], [124, 22123], [125, 22674], [126, 23174], [127, 23727],[128, 24309], [129, 24915], [130, 25602], [131, 26273], [132, 26816], [133, 27497]]
             raw_seq = []
-            confirmed = confirmed[6:]
+            confirmed = confirmed[35:]
 
             for i in range(0, len(confirmed)):
                 raw_seq.append(confirmed[i][1])
@@ -379,7 +381,7 @@ class lstmDAO:
             # keras.optimizers.Adam(lr=0.01)
 
             raw_seq = []
-            confirmed = confirmed[6:]
+            confirmed = confirmed[35:]
 
             for i in range(0, len(confirmed)):
                 raw_seq.append(confirmed[i][1])
@@ -414,7 +416,7 @@ class lstmDAO:
 
             #keras.optimizers.Adam(lr=0.01)
             raw_seq = []
-            confirmed = confirmed[6:]
+            confirmed = confirmed[35:]
 
             for i in range(0, len(confirmed)):
                 raw_seq.append(confirmed[i][1])
@@ -449,7 +451,7 @@ class lstmDAO:
 
             # keras.optimizers.Adam(lr=0.01)
             raw_seq = []
-            confirmed = confirmed[6:]
+            confirmed = confirmed[35:]
 
             for i in range(0, len(confirmed)):
                 raw_seq.append(confirmed[i][1])
@@ -494,7 +496,7 @@ class lstmDAO:
 
             # keras.optimizers.Adam(lr=0.01)
             raw_seq = []
-            confirmed = confirmed[6:]
+            confirmed = confirmed[35:]
 
             for i in range(0, len(confirmed)):
                 raw_seq.append(confirmed[i][1])
@@ -535,7 +537,7 @@ class lstmDAO:
 
             #keras.optimizers.Adam(lr=0.01)
             raw_seq = []
-            confirmed = confirmed[6:]
+            confirmed = confirmed[35:]
 
             for i in range(0, len(confirmed)):
                 raw_seq.append(confirmed[i][1])
@@ -572,7 +574,7 @@ class lstmDAO:
 
             #Encoded
             raw_seq = []
-            confirmed = confirmed[6:]
+            confirmed = confirmed[35:]
 
             for i in range(0, len(confirmed)):
                 raw_seq.append(confirmed[i][1])
@@ -617,7 +619,7 @@ class lstmDAO:
             # define input sequence
             # deaths = [ [7, 2], [8, 3], [9, 3], [10, 4], [11, 4], [12, 4], [13, 7], [14, 8], [15, 10], [16, 10], [17, 15], [18, 17], [19, 19], [20, 27], [21, 31], [22, 35], [23, 41], [24, 53], [25, 62], [26, 75], [27, 83], [28, 111], [29, 124], [30, 149], [31, 169], [32, 206], [33, 242], [34, 273], [35, 324], [36, 353], [37, 392], [38, 420], [39, 452], [40, 488], [41, 519], [42, 559], [43, 603], [44, 652], [45, 686], [46, 723], [47, 779], [48, 826], [49, 886], [50, 937], [51, 1008], [52, 1075], [53, 1152], [54, 1223], [55, 1306], [56, 1389], [57, 1583], [58, 1694], [59, 1783], [60, 1886], [61, 1981], [62, 2109], [63, 2206], [64, 2293], [65, 2415], [66, 2549], [67, 2649], [68, 2752], [69, 2872], [70, 3029], [71, 3163], [72, 3303], [73, 3435], [74, 3583], [75, 3720], [76, 3867], [77, 4021], [78, 4167], [79, 4337], [80, 4531], [81, 4706], [82, 4971], [83, 5164], [84, 5394], [85, 5598], [86, 5815], [87, 6075], [88, 6348], [89, 6642], [90, 6929], [91, 7200], [92, 7471], [93, 7745], [94, 8102], [95, 8498], [96, 8884], [97, 9195], [98, 9520], [99, 9900], [100, 11903], [101, 12237], [102, 12573], [103, 12948], [104, 13254], [105, 13699], [106, 14011], [107, 14476], [108, 14894], [109, 15301], [110, 15685], [111, 16095], [112, 16475], [113, 16893], [114, 17400], [115, 17834], [116, 18213], [117, 18655], [118, 19268], [119, 19693], [120, 20160], [121, 20642], [122, 21129], [123, 21604], [124, 22123], [125, 22674], [126, 23174], [127, 23727],[128, 24309], [129, 24915], [130, 25602], [131, 26273], [132, 26816], [133, 27497]]
             raw_seq = []
-            recovered = recovered[6:]
+            recovered = recovered[46:]
 
             for i in range(0, len(recovered)):
                 raw_seq.append(recovered[i][1])
@@ -654,7 +656,7 @@ class lstmDAO:
             # keras.optimizers.Adam(lr=0.01)
 
             raw_seq = []
-            recovered = recovered[6:]
+            recovered = recovered[46:]
 
             for i in range(0, len(recovered)):
                 raw_seq.append(recovered[i][1])
@@ -688,7 +690,7 @@ class lstmDAO:
 
             # keras.optimizers.Adam(lr=0.01)
             raw_seq = []
-            recovered = recovered[6:]
+            recovered = recovered[46:]
 
             for i in range(0, len(recovered)):
                 raw_seq.append(recovered[i][1])
@@ -722,7 +724,7 @@ class lstmDAO:
 
             # keras.optimizers.Adam(lr=0.01)
             raw_seq = []
-            recovered = recovered[6:]
+            recovered = recovered[46:]
 
             for i in range(0, len(recovered)):
                 raw_seq.append(recovered[i][1])
@@ -767,7 +769,7 @@ class lstmDAO:
 
             # keras.optimizers.Adam(lr=0.01)
             raw_seq = []
-            recovered = recovered[6:]
+            recovered = recovered[46:]
 
             for i in range(0, len(recovered)):
                 raw_seq.append(recovered[i][1])
@@ -804,7 +806,7 @@ class lstmDAO:
 
             # keras.optimizers.Adam(lr=0.01)
             raw_seq = []
-            recovered = recovered[6:]
+            recovered = recovered[46:]
 
             for i in range(0, len(recovered)):
                 raw_seq.append(recovered[i][1])
@@ -840,7 +842,7 @@ class lstmDAO:
 
             # Encoded
             raw_seq = []
-            recovered = recovered[6:]
+            recovered = recovered[46:]
 
             for i in range(0, len(recovered)):
                 raw_seq.append(recovered[i][1])

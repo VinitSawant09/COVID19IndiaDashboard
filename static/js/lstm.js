@@ -6,7 +6,7 @@ var actualConfirmed = [];
 var predictedDeaths = [];
 var predictedConfirmed = [];
 var predictedRecovered = [];
-
+var nationalSeries = null;
 
 if (selectType == null)
 {
@@ -16,7 +16,8 @@ console.log(selectType);
 
  $.ajax(
        {
-        url  : "https://api.rootnet.in/covid19-in/stats/history",
+        //url  : "https://api.rootnet.in/covid19-in/stats/history",
+        url  : "https://api.covid19india.org/data.json",
         contentType: "application/json",
         type : 'GET',
         contentType: false,
@@ -24,9 +25,9 @@ console.log(selectType);
         processData: false,
         success: function(response)
             {
-                    console.log(response);
+                   // console.log(response);
                     if (response!=null)
-                    {
+                    {       /*
                             var cumulativeCounts =[];
                             var cumulativeCases =[];
                             var cumulativeRecovered =[];
@@ -72,8 +73,8 @@ console.log(selectType);
                                 arr.push(response.data[i].summary.discharged);
                                 actualRecovered.push(arr);
 
-                            }
-
+                            }*/
+                            /*
                             $.ajax(
                                        {
                                         url  : "https://api.rootnet.in/covid19-in/stats/latest",
@@ -90,8 +91,91 @@ console.log(selectType);
                                           var entireData = response.data;
 
                                           var liveStats= entireData["unofficial-summary"];
-                                          var totalDeaths = liveStats[0].deaths;
+                                          var totalDeaths = liveStats[0].deaths;*/
+                                            nationalSeries = response.cases_time_series;
+                                            var cumulativeCounts = [];
+                                            var cumulativeCases = [];
+                                            var cumulativeRecovered = [];
 
+                                            for (var i =0 ; i<nationalSeries.length ; i++)
+                                            {
+                                                    var arr = [];
+
+                                                    var x = nationalSeries[i].date;
+                                                    var y = parseInt(nationalSeries[i].totalconfirmed);
+                                                    arr.push(x);
+                                                    arr.push(y);
+                                                    cumulativeCases.push(arr);
+
+                                                    var arr = [];
+
+                                                    var x = i+1;
+                                                    var y = parseInt(nationalSeries[i].totaldeceased);
+                                                    arr.push(x);
+                                                    arr.push(y);
+                                                    cumulativeCounts.push(arr);
+
+                                                   var arr = [];
+
+                                                    var x = i+1;
+                                                    var y = parseInt(nationalSeries[i].totalrecovered);
+                                                     arr.push(x);
+                                                    arr.push(y);
+                                                    cumulativeRecovered.push(arr);
+
+                                            }
+
+
+                                            for (var i=0;i<nationalSeries.length;i++)
+                                            {
+                                                var arr = [];
+
+                                                arr.push(new Date(nationalSeries[i].date).getTime());
+                                                arr.push(nationalSeries[i].totaldeceased);
+                                                actualDeaths.push(arr);
+
+                                                 var arr = [];
+
+                                                arr.push(new Date(nationalSeries[i].date).getTime());
+                                                arr.push(nationalSeries[i].totalconfirmed);
+                                                actualConfirmed.push(arr);
+
+                                                 var arr = [];
+
+                                                arr.push(new Date(nationalSeries[i].date).getTime());
+                                                arr.push(nationalSeries[i].totalrecovered);
+                                                actualRecovered.push(arr);
+
+                                            }
+
+                                          //  console.log(cumulativeCases);
+                                           // console.log(cumulativeCounts);
+
+
+
+
+
+
+                                $.ajax(
+                                               {
+                                                url  : "https://api.covid19india.org/data.json",
+                                                contentType: "application/json",
+                                                type : 'GET',
+                                                contentType: false,
+                                                cache: false,
+                                                processData: false,
+                                                success: function(response){
+
+                                                  // console.log(response);
+
+                                                   var totalStats = response.statewise[0];
+
+                                                   var activeCases = totalStats.active;
+                                                   var confirmedCases = totalStats.confirmed;
+                                                   var recoveredCases = totalStats.recovered;
+                                                   var totalDeaths = totalStats.deaths;
+                                              if (selectType == 'deaths')
+                                 {
                              $.ajax({
                                           type: 'POST',
                                           url: "/predictVanillaLSTMdeaths",
@@ -104,7 +188,7 @@ console.log(selectType);
                                           contentType: 'application/json; charset=utf-8',
                                           success: function(data)
                                           {
-                                           console.log(data);
+                                          // console.log(data);
                                            document.getElementById('predVanilla').innerHTML = Math.round(data['deaths'][0]);
                                            document.getElementById('vanillaAe').innerHTML =Math.abs(totalDeaths -  Math.round(data['deaths'][0]));
                                             var x = document.getElementById("overlay");
@@ -240,7 +324,7 @@ console.log(selectType);
                                                           });
 
                                                         //console.log(actualDeaths);
-                                                }
+
 
                                    }
 
@@ -250,8 +334,9 @@ console.log(selectType);
                                         {
                                           var entireData = response.data;
 
-                                          var liveStats= entireData["unofficial-summary"];
-                                          var totalConfirmed = liveStats[0].total;
+                                         // var liveStats= entireData["unofficial-summary"];
+                                         // var totalConfirmed = liveStats[0].total;
+                                             var totalConfirmed = confirmedCases;
 
                              $.ajax({
                                           type: 'POST',
@@ -410,9 +495,9 @@ console.log(selectType);
                                         {
                                           var entireData = response.data;
 
-                                          var liveStats= entireData["unofficial-summary"];
-                                          var totalRecovered = liveStats[0].recovered;
-
+                                          //var liveStats= entireData["unofficial-summary"];
+                                          //var totalRecovered = liveStats[0].recovered;
+                                            var totalRecovered = recoveredCases;
                              $.ajax({
                                           type: 'POST',
                                           url: "/predictVanillaLSTMrecovered",

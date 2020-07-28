@@ -65,6 +65,8 @@ class arimaDAO:
         for i in range(0, len(finalList)):
             finalList[i][0] = round(datetimenew.timestamp(finalList[i][0]) * 1000)
         response = {}
+
+        print(finalList)
         response["list"] = finalList
         response["mae"] = mae
         return response

@@ -10,13 +10,14 @@ var veryHighDensityLowPopulatedStates = [];
 var highDensityStates =[];
 var moderateDensityStates =[];
 var lowDensityStates =[];
-
+var states =[];
 function myFunction()
 {
 
 $.ajax(
        {
-        url  : "https://api.rootnet.in/covid19-in/stats/latest",
+        //url  : "https://api.rootnet.in/covid19-in/stats/latest",
+        url : "https://api.covid19india.org/data.json",
         contentType: "application/json",
         type : 'GET',
         contentType: false,
@@ -24,6 +25,8 @@ $.ajax(
         processData: false,
         success: function(response){
 
+
+        /*
         var arrState= response.data.regional;
         entireData = arrState;
         for (var i=0;i<arrState.length;i++)
@@ -160,8 +163,158 @@ $.ajax(
                  airportRecoveredStats[0] = airportRecoveredStats[0] + arrState[i].discharged;
 
          }
+        }*/
+
+
+         states = response.statewise;
+         arrState = states
+          for (var i=0;i<arrState.length;i++)
+        {
+
+            if(arrState[i].state != "Total" && arrState[i].state != "Lakshadweep" && arrState[i].state != "State Unassigned")
+              {
+
+            if(arrState[i].state == 'Tamil Nadu'
+                || arrState[i].state == 'Kerala'
+                || arrState[i].state == 'Karnataka'
+                || arrState[i].state == 'Puducherry'
+                || arrState[i].state == 'Andhra Pradesh'
+                || arrState[i].state == 'Telangana'
+            )
+            {
+              zoneConfirmedStats[1] = zoneConfirmedStats[1] + parseInt(arrState[i].confirmed);
+              zoneDeathStats[1] = zoneDeathStats[1] + parseInt(arrState[i].deaths);
+              zoneRecoveredStats[1] = zoneRecoveredStats[1] + parseInt(arrState[i].recovered);
+            }
+            else if(arrState[i].state == 'Gujarat'
+                || arrState[i].state == 'Maharashtra'
+                || arrState[i].state == 'Goa'
+                || arrState[i].state == 'Dadra and Nagar Haveli and Daman and Diu'
+            )
+            {
+              zoneConfirmedStats[2] = zoneConfirmedStats[2] + parseInt(arrState[i].confirmed);
+               zoneDeathStats[2] = zoneDeathStats[2] + parseInt(arrState[i].deaths);
+              zoneRecoveredStats[2] = zoneRecoveredStats[2] + parseInt(arrState[i].recovered);
+            }
+            else if(arrState[i].state == 'Andaman and Nicobar Islands'
+            )
+            {
+              zoneConfirmedStats[6] = zoneConfirmedStats[6] + parseInt(arrState[i].confirmed);
+              zoneDeathStats[6] = zoneDeathStats[6] + parseInt(arrState[i].deaths);
+              zoneRecoveredStats[6] = zoneRecoveredStats[6] + parseInt(arrState[i].recovered);
+            }
+           else if(arrState[i].state == 'Assam'
+                || arrState[i].state == 'Manipur'
+                || arrState[i].state == 'Arunachal Pradesh'
+                || arrState[i].state == 'Meghalaya'
+                || arrState[i].state == 'Mizoram'
+                || arrState[i].state == 'Nagaland'
+                || arrState[i].state == 'Sikkim'
+                || arrState[i].state == 'Tripura'
+
+            )
+            {
+             zoneConfirmedStats[5] = zoneConfirmedStats[5] + parseInt(arrState[i].confirmed);
+             zoneDeathStats[5] = zoneDeathStats[5] + parseInt(arrState[i].deaths);
+              zoneRecoveredStats[5] = zoneRecoveredStats[5] + parseInt(arrState[i].recovered);
+            }
+           else  if(arrState[i].state == 'Madhya Pradesh'
+                )
+            {
+            zoneConfirmedStats[4] = zoneConfirmedStats[4] + parseInt(arrState[i].confirmed);
+            zoneDeathStats[4] = zoneDeathStats[4] + parseInt(arrState[i].deaths);
+              zoneRecoveredStats[4] = zoneRecoveredStats[4] + parseInt(arrState[i].recovered);
+
+            }
+           else  if(arrState[i].state == 'West Bengal'
+                    || arrState[i].state == 'Odisha'
+                    || arrState[i].state == 'Tripura'
+                )
+            {
+             zoneConfirmedStats[3] = zoneConfirmedStats[3] + parseInt(arrState[i].confirmed);
+             zoneDeathStats[3] = zoneDeathStats[3] + parseInt(arrState[i].deaths);
+              zoneRecoveredStats[3] = zoneRecoveredStats[3] + parseInt(arrState[i].recovered);
+
+            }
+           else
+           {
+           zoneConfirmedStats[0] = zoneConfirmedStats[0] + parseInt(arrState[i].confirmed);
+           zoneDeathStats[0] = zoneDeathStats[0] + parseInt(arrState[i].deaths);
+              zoneRecoveredStats[0] = zoneRecoveredStats[0] + parseInt(arrState[i].recovered);
+
+           }
         }
 
+        }
+
+         for (var i=0;i<arrState.length;i++)
+        {
+         if(arrState[i].state != "Total" && arrState[i].state != "Lakshadweep" && arrState[i].state != "State Unassigned")
+              {
+
+         if(arrState[i].state == 'Tamil Nadu'
+            || arrState[i].state == 'Kerala'
+                )
+                {
+
+                 airportConfirmedStats[4] = airportConfirmedStats[4] + parseInt(arrState[i].confirmed);
+                 airportDeathStats[4] = airportDeathStats[4] + parseInt(arrState[i].deaths);
+                 airportRecoveredStats[4] = airportRecoveredStats[4] + parseInt(arrState[i].recovered);
+                }
+         else if(arrState[i].state == 'Maharashtra'
+                 || arrState[i].state == 'Andhra Pradesh'
+                )
+                {
+
+                 airportConfirmedStats[3] = airportConfirmedStats[3] + parseInt(arrState[i].confirmed);
+                 airportDeathStats[3] = airportDeathStats[3] + parseInt(arrState[i].deaths);
+                 airportRecoveredStats[3] = airportRecoveredStats[3] + parseInt(arrState[i].recovered);
+                }
+         else if(arrState[i].state == 'Bihar'
+                || arrState[i].state == 'Gujarat'
+                || arrState[i].state == 'Karnataka'
+                || arrState[i].state == 'Uttar Pradesh'
+                || arrState[i].state == 'West Bengal'
+                || arrState[i].state == 'Telangana'
+            )
+            {
+
+                 airportConfirmedStats[2] = airportConfirmedStats[2] + parseInt(arrState[i].confirmed);
+                 airportDeathStats[2] = airportDeathStats[2] + parseInt(arrState[i].deaths);
+                 airportRecoveredStats[2] = airportRecoveredStats[2] + parseInt(arrState[i].recovered);
+                }
+         else if(arrState[i].state == 'Assam'
+                || arrState[i].state == 'Delhi'
+                || arrState[i].state == 'Goa'
+                || arrState[i].state == 'Madhya Pradesh'
+                || arrState[i].state == 'Manipur'
+                || arrState[i].state == 'Telangana'
+                || arrState[i].state == 'Odisha'
+                || arrState[i].state == 'Rajasthan'
+                || arrState[i].state == 'Punjab'
+                || arrState[i].state == 'Chandigarh'
+                || arrState[i].state == 'Jammu and Kashmir'
+            )
+            {
+
+                 airportConfirmedStats[1] = airportConfirmedStats[1] + parseInt(arrState[i].confirmed);
+                 airportDeathStats[1] = airportDeathStats[1] + parseInt(arrState[i].deaths);
+                 airportRecoveredStats[1] = airportRecoveredStats[1] + parseInt(arrState[i].recovered);
+                }
+         else{
+
+                 airportConfirmedStats[0] = airportConfirmedStats[0] + parseInt(arrState[i].confirmed);
+                 airportDeathStats[0] = airportDeathStats[0] + parseInt(arrState[i].deaths);
+                 airportRecoveredStats[0] = airportRecoveredStats[0] + parseInt(arrState[i].recovered);
+
+         }
+         }
+        }
+
+
+
+
+        console.log(zoneDeathStats);
 
          //ConfirmedCases by zones
          Highcharts.chart('sectionWiseCase', {
@@ -523,8 +676,9 @@ $.ajax(
 
 
    //////////////////////////////////////////////////////Density code begins ////////////////////////////////////////////////////////////
-
+         /*
          var tempArr=[];
+
                 for (var i=0;i<entireData.length;i++)
         {
 
@@ -863,7 +1017,353 @@ $.ajax(
 
 
 
+        }*/
+
+        var tempArr=[];
+        entireData = states;
+
+                for (var i=0;i<entireData.length;i++)
+        {
+
+               if(arrState[i].state != "Total" && arrState[i].state != "Lakshadweep" && arrState[i].state != "State Unassigned")
+              {
+            if(entireData[i].state == 'Bihar')
+            {
+                 var x= 1102;
+                 var y = parseInt(entireData[i].confirmed);
+                 var z = 104099452;
+                 var stateName = entireData[i].state;
+                 var name = 'BR';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'West Bengal')
+            {
+                 var x= 1030;
+                 var y = parseInt(entireData[i].confirmed);
+                 var z = 91276115;
+                 var stateName = entireData[i].state;
+                 var name = 'WB';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Kerala')
+            {
+                 var x= 859;
+                 var y = parseInt(entireData[i].confirmed);
+                 var z = 33406061;
+                 var stateName = entireData[i].state;
+                 var name = 'KL';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Uttar Pradesh')
+            {
+                 var x= 828;
+                 var y = parseInt(entireData[i].confirmed);
+                 var z = 199812341;
+                 var stateName = entireData[i].state;
+                 var name = 'UP';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Haryana')
+            {
+                 var x= 573;
+                 var y = parseInt(entireData[i].confirmed);
+                 var z = 25351462;
+                 var stateName = entireData[i].state;
+                 var name = 'HR';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Tamil Nadu')
+            {
+                 var x= 555;
+                 var y = parseInt(entireData[i].confirmed);
+                 var z = 72147030;
+                 var stateName = entireData[i].state;
+                 var name = 'TN';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Punjab')
+            {
+                 var x= 555;
+                 var y = parseInt(entireData[i].confirmed);
+                 var z = 27743338;
+                 var stateName = entireData[i].state;
+                 var name = 'PN';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+            if(entireData[i].state == 'Jharkhand')
+            {
+                 var x= 414;
+                 var y = parseInt(entireData[i].confirmed);
+                 var z = 32988134;
+                 var stateName = entireData[i].state;
+                 var name = 'JKD';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Assam')
+            {
+                 var x= 397;
+                 var y = parseInt(entireData[i].confirmed);
+                 var z = 31205576;
+                 var stateName = entireData[i].state;
+                 var name = 'AS';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Goa')
+            {
+                 var x= 394;
+                 var y = parseInt(entireData[i].confirmed);
+                 var z = 1458545;
+                 var stateName = entireData[i].state;
+                 var name = 'GA';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Maharashtra')
+            {
+                 var x= 365;
+                 var y = parseInt(entireData[i].confirmed);
+                 var z = 112374333;
+                 var stateName = entireData[i].state;
+                 var name = 'MH';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Tripura')
+            {
+                 var x= 350;
+                 var y = parseInt(entireData[i].confirmed);
+                 var z = 3673917;
+                 var stateName = entireData[i].state;
+                 var name = 'TP';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Karnataka')
+            {
+                 var x= 319;
+                 var y = parseInt(entireData[i].confirmed);
+                 var z = 61095297;
+                 var stateName = entireData[i].state;
+                 var name = 'KA';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Gujarat')
+            {
+                 var x= 308;
+                 var y = parseInt(entireData[i].confirmed);
+                 var z = 60439692;
+                 var stateName = entireData[i].state;
+                 var name = 'GJ';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Andhra Pradesh')
+            {
+                 var x= 308;
+                 var y = parseInt(entireData[i].confirmed);
+                 var z = 49386799;
+                 var stateName = entireData[i].state;
+                 var name = 'AP';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Telangana')
+            {
+                 var x= 307;
+                 var y = parseInt(entireData[i].confirmed);
+                 var z = 35193978;
+                 var stateName = entireData[i].state;
+                 var name = 'TL';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Odisha')
+            {
+                 var x= 269;
+                 var y = parseInt(entireData[i].confirmed);
+                 var z = 41974218;
+                 var stateName = entireData[i].state;
+                 var name = 'OD';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Madhya Pradesh')
+            {
+                 var x= 236;
+                 var y = parseInt(entireData[i].confirmed);
+                 var z = 72626809;
+                 var stateName = entireData[i].state;
+                 var name = 'MP';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+             if(entireData[i].state == 'Rajasthan')
+            {
+                 var x= 201;
+                 var y = parseInt(entireData[i].confirmed);
+                 var z = 68548437;
+                 var stateName = entireData[i].state;
+                 var name = 'RJ';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+             if(entireData[i].state == 'Chhattisgarh')
+            {
+                 var x= 189;
+                 var y = parseInt(entireData[i].confirmed);
+                 var z = 25545198;
+                 var stateName = entireData[i].state;
+                 var name = 'CG';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+            if(entireData[i].state == 'Uttarakhand')
+            {
+                 var x= 189;
+                 var y = parseInt(entireData[i].confirmed);
+                 var z = 10086292;
+                 var stateName = entireData[i].state;
+                 var name = 'UK';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+            if(entireData[i].state == 'Meghalaya')
+            {
+                 var x= 132;
+                 var y = parseInt(entireData[i].confirmed);
+                 var z = 2966889;
+                 var stateName = entireData[i].state;
+                 var name = 'MG';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+            if(entireData[i].state == 'Manipur')
+            {
+                 var x= 128;
+                 var y = parseInt(entireData[i].confirmed);
+                 var z = 2855794;
+                 var stateName = entireData[i].state;
+                 var name = 'MN';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+             if(entireData[i].state == 'Himachal Pradesh')
+            {
+                 var x= 123;
+                 var y = parseInt(entireData[i].confirmed);
+                 var z = 6864602;
+                 var stateName = entireData[i].state;
+                 var name = 'HP';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+             if(entireData[i].state == 'Nagaland')
+            {
+                 var x= 119;
+                 var y = parseInt(entireData[i].confirmed);
+                 var z = 1978502;
+                 var stateName = entireData[i].state;
+                 var name = 'NG';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Sikkim')
+            {
+                 var x= 86;
+                 var y = parseInt(entireData[i].confirmed);
+                 var z = 610577;
+                 var stateName = entireData[i].state;
+                 var name = 'SK';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+
+             if(entireData[i].state == 'Mizoram')
+            {
+                 var x= 52;
+                 var y = parseInt(entireData[i].confirmed);
+                 var z = 1097206;
+                 var stateName = entireData[i].state;
+                 var name = 'MZ';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Arunachal Pradesh')
+            {
+                 var x= 17;
+                 var y = parseInt(entireData[i].confirmed);
+                 var z = 1383727;
+                 var stateName = entireData[i].state;
+                 var name = 'ANP';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+
+         }
+
         }
+
+
            //console.log(tempArr);
                             Highcharts.chart('containerDensity', {
 
@@ -939,7 +1439,7 @@ $.ajax(
 
                         });
 
-
+        /*
         var tempArrUt=[];
                 for (var i=0;i<entireData.length;i++)
         {
@@ -1021,17 +1521,91 @@ $.ajax(
                  tempArrUt.push(stateObj);
 
             }
+            } */
+
+            var tempArrUt=[];
+                for (var i=0;i<entireData.length;i++)
+        {
+             if(entireData[i].state == 'Delhi')
+            {
+                 var x= 11297;
+                 var y = parseInt(entireData[i].confirmed);
+                 var z = 16787941;
+                 var stateName = entireData[i].state;
+                 var name = 'DL';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArrUt.push(stateObj);
+
             }
 
+            if(entireData[i].state == 'Chandigarh')
+            {
+                 var x= 9252;
+                 var y = parseInt(entireData[i].confirmed);
+                 var z = 1055450;
+                 var stateName = entireData[i].state;
+                 var name = 'CD';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArrUt.push(stateObj);
 
+            }
+            if(entireData[i].state == 'Puducherry')
+            {
+                 var x= 2598;
+                var y = parseInt(entireData[i].confirmed);
 
+                 var z = 1247953;
+                 var stateName = entireData[i].state;
+                 var name = 'PD';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArrUt.push(stateObj);
 
+            }
+            if(entireData[i].state == 'Dadra and Nagar Haveli and Daman and Diu')
+            {
+                 var x= 2169;
+                 var y = parseInt(entireData[i].confirmed);
+                 var z = 243247;
+                 var stateName = 'DND';
+                 var state = entireData[i].state;
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArrUt.push(stateObj);
 
+            }
+            if(entireData[i].state == 'Jammu and Kashmir')
+            {
+                 var x= 56;
+                 var y = parseInt(entireData[i].confirmed);
+                 var z = 12541302;
+                 var stateName = entireData[i].state;
+                 var name = 'JK';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArrUt.push(stateObj);
 
+            }
+             if(entireData[i].state == 'Andaman and Nicobar Islands')
+            {
+                 var x= 46;
+                 var y = parseInt(entireData[i].confirmed);
+                 var z = 380581;
+                 var stateName = entireData[i].state;
+                 var name = 'ANI';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArrUt.push(stateObj);
 
+            }
+             if(entireData[i].state == 'Ladakh')
+            {
+                 var x= 5;
+                var y = parseInt(entireData[i].confirmed);
+                 var z = 274289;
+                 var stateName = entireData[i].state;
+                 var name = 'LDKH';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArrUt.push(stateObj);
 
-
-
+            }
+            }
 
 
 
@@ -1129,6 +1703,7 @@ function selectZone()
         var data = [];
         var data1 = [];
         var data2 =[];
+        /*
        if (zone == 'Islands')
        {
         for (var i=0; i<entireData.length; i++)
@@ -1334,6 +1909,215 @@ function selectZone()
 
                 }
              }
+              */
+              entireData = states;
+               if (zone == 'Islands')
+       {
+        for (var i=0; i<entireData.length; i++)
+        {
+            if(entireData[i].state == 'Andaman and Nicobar Islands')
+            {
+                var name = entireData[i].state;
+                 var y = parseInt(entireData[i].confirmed);
+                var objA= {name,y}
+                data.push(objA);
+
+                 var name = entireData[i].state;
+                 var y = parseInt(entireData[i].deaths);
+                var objA= {name,y}
+                data1.push(objA);
+
+                 var name = entireData[i].state;
+               var y = parseInt(entireData[i].recovered);
+                var objA= {name,y}
+                data2.push(objA);
+
+            }
+        }
+        }
+        else if (zone == 'Central')
+        {
+                 for (var i=0; i<entireData.length; i++)
+             {
+                if(entireData[i].state == 'Madhya Pradesh')
+                {
+                    var name = entireData[i].state;
+                    var y = parseInt(entireData[i].confirmed);
+                    var objA= {name,y}
+                    data.push(objA);
+
+                     var name = entireData[i].state;
+                var y = parseInt(entireData[i].deaths);
+                var objA= {name,y}
+                data1.push(objA);
+
+                 var name = entireData[i].state;
+                var y = parseInt(entireData[i].recovered);
+                var objA= {name,y}
+                data2.push(objA);
+
+                }
+             }
+        }
+        else if (zone == 'West')
+        {
+                 for (var i=0; i<entireData.length; i++)
+             {
+                if(entireData[i].state == 'Gujarat'
+                || entireData[i].state == 'Maharashtra'
+                || entireData[i].state == 'Goa'
+                || entireData[i].state == 'Dadra and Nagar Haveli and Daman and Diu' )
+                {
+                    var name = entireData[i].state;
+                    var y = parseInt(entireData[i].confirmed);
+                    var objA= {name,y}
+                    data.push(objA);
+
+                     var name = entireData[i].state;
+                var y = parseInt(entireData[i].deaths);
+                var objA= {name,y}
+                data1.push(objA);
+
+                 var name = entireData[i].state;
+               var y = parseInt(entireData[i].recovered);
+                var objA= {name,y}
+                data2.push(objA);
+
+                }
+             }
+        }
+        else if (zone == 'North East')
+        {
+                 for (var i=0; i<entireData.length; i++)
+             {
+                if(entireData[i].state == 'Assam'
+                || entireData[i].state == 'Manipur'
+                || entireData[i].state == 'Arunachal Pradesh'
+                || entireData[i].state == 'Meghalaya'
+                || entireData[i].state == 'Mizoram'
+                || entireData[i].state == 'Nagaland'
+                || entireData[i].state == 'Sikkim'
+                || entireData[i].state == 'Tripura'
+                )
+                {
+                    var name = entireData[i].state;
+                     var y = parseInt(entireData[i].confirmed);
+                    var objA= {name,y}
+                    data.push(objA);
+
+                     var name = entireData[i].state;
+                var y = parseInt(entireData[i].deaths);
+                var objA= {name,y}
+                data1.push(objA);
+
+                 var name = entireData[i].state;
+               var y = parseInt(entireData[i].recovered);
+                var objA= {name,y}
+                data2.push(objA);
+
+                }
+             }
+
+        }
+        else if (zone == 'South')
+        {
+                 for (var i=0; i<entireData.length; i++)
+             {
+                if(entireData[i].state == 'Tamil Nadu'
+                || entireData[i].state == 'Kerala'
+                || entireData[i].state == 'Karnataka'
+                || entireData[i].state == 'Puducherry'
+                || entireData[i].state == 'Andhra Pradesh'
+                || entireData[i].state == 'Telangana'
+                )
+                {
+                    var name = entireData[i].state;
+                   var y = parseInt(entireData[i].confirmed);
+                    var objA= {name,y}
+                    data.push(objA);
+
+                     var name = entireData[i].state;
+                var y = parseInt(entireData[i].deaths);
+                var objA= {name,y}
+                data1.push(objA);
+
+                 var name = entireData[i].state;
+                var y = parseInt(entireData[i].recovered);
+                var objA= {name,y}
+                data2.push(objA);
+
+                }
+             }
+
+
+        }
+         else if (zone == 'North')
+         {
+            for (var i=0; i<entireData.length; i++)
+             {
+                if(entireData[i].state == 'Delhi'
+                || entireData[i].state == 'Uttar Pradesh'
+                || entireData[i].state == 'Rajasthan'
+                || entireData[i].state == 'Himachal Pradesh'
+                || entireData[i].state == 'Jammu and Kashmir'
+                || entireData[i].state == 'Punjab'
+                 || entireData[i].state == 'Bihar'
+                || entireData[i].state == 'Uttarakhand'
+                || entireData[i].state == 'Jharkhand'
+                || entireData[i].state == 'Haryana'
+                || entireData[i].state == 'Chandigarh'
+                || entireData[i].state == 'Chhattisgarh'
+                || entireData[i].state == 'Ladakh'
+                )
+                {
+                    var name = entireData[i].state;
+                     var y = parseInt(entireData[i].confirmed);
+                    var objA= {name,y}
+                    data.push(objA);
+
+                     var name = entireData[i].state;
+                 var y = parseInt(entireData[i].deaths);
+                var objA= {name,y}
+                data1.push(objA);
+
+                 var name = entireData[i].state;
+               var y = parseInt(entireData[i].recovered);
+                var objA= {name,y}
+                data2.push(objA);
+
+                }
+             }
+
+
+
+         }
+          else if (zone == 'East')
+         {
+            for (var i=0; i<entireData.length; i++)
+             {
+                if(entireData[i].state == 'Odisha'
+                || entireData[i].state == 'West Bengal'
+                )
+                {
+                    var name = entireData[i].state;
+                    var y = parseInt(entireData[i].confirmed);
+                    var objA= {name,y}
+                    data.push(objA);
+
+                     var name = entireData[i].state;
+                var y = parseInt(entireData[i].deaths);
+
+                var objA= {name,y}
+                data1.push(objA);
+
+                 var name = entireData[i].state;
+               var y = parseInt(entireData[i].recovered);
+                var objA= {name,y}
+                data2.push(objA);
+
+                }
+             }
+
 
          }
 
@@ -1455,6 +2239,7 @@ function selectAirports()
         var data = [];
         var data1 = [];
         var data2 =[];
+        /*
        if (airports == '4')
        {
             for (var i=0; i<entireData.length; i++)
@@ -1607,8 +2392,165 @@ function selectAirports()
                  var objA= {name,y}
                  data2.push(objA);
                 }
+         }*/
+           entireData = states;
+         if (airports == '4')
+       {
+            for (var i=0; i<entireData.length; i++)
+             {
+              if(entireData[i].state == 'Tamil Nadu'
+                || entireData[i].state == 'Kerala'
+              )
+              {
+                 var name = entireData[i].state;
+                 var y = parseInt(entireData[i].confirmed);
+                 var objA= {name,y}
+                 data.push(objA);
+
+                 var name = entireData[i].state;
+                 var y = parseInt(entireData[i].deaths);
+                 var objA= {name,y}
+                 data1.push(objA);
+
+                 var name = entireData[i].state;
+                 var y = parseInt(entireData[i].recovered);
+
+                 var objA= {name,y}
+                 data2.push(objA);
+
+              }
+
+             }
+       }
+       else if (airports == '3')
+       {
+            for (var i=0; i<entireData.length; i++)
+             {
+              if(entireData[i].state == 'Maharashtra'
+              || entireData[i].state == 'Andhra Pradesh'
+
+              )
+              {
+                 var name = entireData[i].state;
+                var y = parseInt(entireData[i].confirmed);
+                 var objA= {name,y}
+                 data.push(objA);
+
+                 var name = entireData[i].state;
+                 var y = parseInt(entireData[i].deaths);
+                 var objA= {name,y}
+                 data1.push(objA);
+
+                 var name = entireData[i].state;
+                var y = parseInt(entireData[i].recovered);
+                 var objA= {name,y}
+                 data2.push(objA);
+
+              }
+
+             }
+       }
+        else if (airports == '2')
+       {
+         for (var i=0; i<entireData.length; i++)
+         {
+                if(    entireData[i].state == 'Bihar'
+                || entireData[i].state == 'Gujarat'
+                || entireData[i].state == 'Karnataka'
+                || entireData[i].state == 'Uttar Pradesh'
+                || entireData[i].state == 'West Bengal'
+                || entireData[i].state == 'Telangana')
+                {
+                var name = entireData[i].state;
+                 var y = parseInt(entireData[i].confirmed);
+                 var objA= {name,y}
+                 data.push(objA);
+
+                 var name = entireData[i].state;
+                var y = parseInt(entireData[i].deaths);
+                 var objA= {name,y}
+                 data1.push(objA);
+
+                 var name = entireData[i].state;
+                 var y = parseInt(entireData[i].recovered);
+                 var objA= {name,y}
+                 data2.push(objA);
+                }
          }
        }
+       else if (airports == '1')
+       {
+         for (var i=0; i<entireData.length; i++)
+         {
+                if(    entireData[i].state == 'Assam'
+                || entireData[i].state == 'Delhi'
+                || entireData[i].state == 'Goa'
+                || entireData[i].state == 'Madhya Pradesh'
+                || entireData[i].state == 'Manipur'
+                || entireData[i].state == 'Telangana'
+                || entireData[i].state == 'Odisha'
+                || entireData[i].state == 'Rajasthan'
+                || entireData[i].state == 'Punjab'
+                || entireData[i].state == 'Chandigarh'
+                || entireData[i].state == 'Jammu and Kashmir')
+                {
+                var name = entireData[i].state;
+                var y = parseInt(entireData[i].confirmed);
+                 var objA= {name,y}
+                 data.push(objA);
+
+                 var name = entireData[i].state;
+                var y = parseInt(entireData[i].deaths);
+                 var objA= {name,y}
+                 data1.push(objA);
+
+                 var name = entireData[i].state;
+                 var y = parseInt(entireData[i].recovered);
+                 var objA= {name,y}
+                 data2.push(objA);
+                }
+         }
+       }
+       else if (airports == '0')
+       {
+         for (var i=0; i<entireData.length; i++)
+         {
+                if(    entireData[i].state == 'Ladakh'
+                || entireData[i].state == 'Jharkhand'
+                || entireData[i].state == 'Haryana'
+                || entireData[i].state == 'Chattisgarh'
+                || entireData[i].state == 'Uttarakhand'
+                || entireData[i].state == 'Himachal Pradesh'
+                || entireData[i].state == 'Arunachal Pradesh'
+                || entireData[i].state == 'Meghalaya'
+                || entireData[i].state == 'Mizoram'
+                || entireData[i].state == 'Nagaland'
+                || entireData[i].state == 'Sikkim'
+                || entireData[i].state == 'Tripura'
+                || entireData[i].state == 'Andaman and Nicobar Islands '
+                || entireData[i].state == 'Dadra and Nagar Haveli and Daman and Diu '
+
+                )
+                {
+                var name = entireData[i].state;
+                 var y = parseInt(entireData[i].confirmed);
+                 var objA= {name,y}
+                 data.push(objA);
+
+                 var name = entireData[i].state;
+                 var y = parseInt(entireData[i].deaths);
+                 var objA= {name,y}
+                 data1.push(objA);
+
+                 var name = entireData[i].state;
+                var y = parseInt(entireData[i].recovered);
+                 var objA= {name,y}
+                 data2.push(objA);
+                }
+
+         }
+       }
+
 
 
        //Form new chart based on specific number of airports
@@ -1725,6 +2667,9 @@ function selectCase()
         var selectBox = document.getElementById("selectCase");
         var selectCase = selectBox.options[selectBox.selectedIndex].value;
         var tempArr=[];
+         if (selectCase == 'Confirmed')
+        {
+        /*
         if (selectCase == 'Confirmed')
         {
 
@@ -2076,7 +3021,361 @@ function selectCase()
 
 
 
+        }*/
+         entireData= states
+        for (var i=0;i<entireData.length;i++)
+        {
+
+
+            if(entireData[i].state == 'Bihar')
+            {
+                 var x= 1102;
+                 var y = parseInt(entireData[i].confirmed);
+                 var z = 104099452;
+                 var stateName = entireData[i].state;
+                 var name = 'BR';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'West Bengal')
+            {
+                 var x= 1030;
+                var y = parseInt(entireData[i].confirmed);
+                 var z = 91276115;
+                 var stateName = entireData[i].state;
+                 var name = 'WB';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Kerala')
+            {
+                 var x= 859;
+                 var y = parseInt(entireData[i].confirmed);
+                 var z = 33406061;
+                 var stateName = entireData[i].state;
+                 var name = 'KL';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Uttar Pradesh')
+            {
+                 var x= 828;
+                 var y = parseInt(entireData[i].confirmed);
+                 var z = 199812341;
+                 var stateName = entireData[i].state;
+                 var name = 'UP';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Haryana')
+            {
+                 var x= 573;
+                 var y = parseInt(entireData[i].confirmed);
+                 var z = 25351462;
+                 var stateName = entireData[i].state;
+                 var name = 'HR';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Tamil Nadu')
+            {
+                 var x= 555;
+                var y = parseInt(entireData[i].confirmed);
+                 var z = 72147030;
+                 var stateName = entireData[i].state;
+                 var name = 'TN';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Punjab')
+            {
+                 var x= 555;
+                 var y = parseInt(entireData[i].confirmed);
+                 var z = 27743338;
+                 var stateName = entireData[i].state;
+                 var name = 'PN';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+            if(entireData[i].state == 'Jharkhand')
+            {
+                 var x= 414;
+                var y = parseInt(entireData[i].confirmed);
+                 var z = 32988134;
+                 var stateName = entireData[i].state;
+                 var name = 'JKD';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Assam')
+            {
+                 var x= 397;
+                var y = parseInt(entireData[i].confirmed);
+                 var z = 31205576;
+                 var stateName = entireData[i].state;
+                 var name = 'AS';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Goa')
+            {
+                 var x= 394;
+                 var y = parseInt(entireData[i].confirmed);
+                 var z = 1458545;
+                 var stateName = entireData[i].state;
+                 var name = 'GA';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Maharashtra')
+            {
+                 var x= 365;
+                 var y = parseInt(entireData[i].confirmed);
+                 var z = 112374333;
+                 var stateName = entireData[i].state;
+                 var name = 'MH';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Tripura')
+            {
+                 var x= 350;
+                 var y = parseInt(entireData[i].confirmed);
+                 var z = 3673917;
+                 var stateName = entireData[i].state;
+                 var name = 'TP';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Karnataka')
+            {
+                 var x= 319;
+                 var y = parseInt(entireData[i].confirmed);
+                 var z = 61095297;
+                 var stateName = entireData[i].state;
+                 var name = 'KA';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Gujarat')
+            {
+                 var x= 308;
+                 var y = parseInt(entireData[i].confirmed);
+                 var z = 60439692;
+                 var stateName = entireData[i].state;
+                 var name = 'GJ';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Andhra Pradesh')
+            {
+                 var x= 308;
+                 var y = parseInt(entireData[i].confirmed);
+                 var z = 49386799;
+                 var stateName = entireData[i].state;
+                 var name = 'AP';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Telangana')
+            {
+                 var x= 307;
+                 var y = parseInt(entireData[i].confirmed);
+                 var z = 35193978;
+                 var stateName = entireData[i].state;
+                 var name = 'TL';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Odisha')
+            {
+                 var x= 269;
+                 var y = parseInt(entireData[i].confirmed);
+                 var z = 41974218;
+                 var stateName = entireData[i].state;
+                 var name = 'OD';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Madhya Pradesh')
+            {
+                 var x= 236;
+                 var y = parseInt(entireData[i].confirmed);
+                 var z = 72626809;
+                 var stateName = entireData[i].state;
+                 var name = 'MP';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+             if(entireData[i].state == 'Rajasthan')
+            {
+                 var x= 201;
+                var y = parseInt(entireData[i].confirmed);
+                 var z = 68548437;
+                 var stateName = entireData[i].state;
+                 var name = 'RJ';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+             if(entireData[i].state == 'Chhattisgarh')
+            {
+                 var x= 189;
+                 var y = parseInt(entireData[i].confirmed);
+                 var z = 25545198;
+                 var stateName = entireData[i].state;
+                 var name = 'CG';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+            if(entireData[i].state == 'Uttarakhand')
+            {
+                 var x= 189;
+                 var y = parseInt(entireData[i].confirmed);
+                 var z = 10086292;
+                 var stateName = entireData[i].state;
+                 var name = 'UK';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+            if(entireData[i].state == 'Meghalaya')
+            {
+                 var x= 132;
+                var y = parseInt(entireData[i].confirmed);
+                 var z = 2966889;
+                 var stateName = entireData[i].state;
+                 var name = 'MG';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+            if(entireData[i].state == 'Manipur')
+            {
+                 var x= 128;
+                 var y = parseInt(entireData[i].confirmed);
+                 var z = 2855794;
+                 var stateName = entireData[i].state;
+                 var name = 'MN';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+             if(entireData[i].state == 'Himachal Pradesh')
+            {
+                 var x= 123;
+                var y = parseInt(entireData[i].confirmed);
+                 var z = 6864602;
+                 var stateName = entireData[i].state;
+                 var name = 'HP';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+             if(entireData[i].state == 'Nagaland')
+            {
+                 var x= 119;
+                 var y = parseInt(entireData[i].confirmed);
+                 var z = 1978502;
+                 var stateName = entireData[i].state;
+                 var name = 'NG';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Sikkim')
+            {
+                 var x= 86;
+                var y = parseInt(entireData[i].confirmed);
+                 var z = 610577;
+                 var stateName = entireData[i].state;
+                 var name = 'SK';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Jammu and Kashmir')
+            {
+                 var x= 56;
+                 var y = parseInt(entireData[i].confirmed);
+                 var z = 12541302;
+                 var stateName = entireData[i].state;
+                 var name = 'JK';
+                 var stateObj= {x,y,z,name,stateName};
+                // tempArr.push(stateObj);
+
+            }
+             if(entireData[i].state == 'Mizoram')
+            {
+                 var x= 52;
+                 var y = parseInt(entireData[i].confirmed);
+                 var z = 1097206;
+                 var stateName = entireData[i].state;
+                 var name = 'MZ';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Arunachal Pradesh')
+            {
+                 var x= 17;
+                 var y = parseInt(entireData[i].confirmed);
+                 var z = 1383727;
+                 var stateName = entireData[i].state;
+                 var name = 'ANP';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+
+
+
         }
+
+
+
+
            //console.log(tempArr);
                             Highcharts.chart('containerDensity', {
 
@@ -2155,7 +3454,7 @@ function selectCase()
         }
         else if (selectCase == 'Deaths')
         {
-
+        /*
         for (var i=0;i<entireData.length;i++)
         {
 
@@ -2495,6 +3794,353 @@ function selectCase()
                  var y = entireData[i].deaths;
                  var z = 1383727;
                  var stateName = entireData[i].loc;
+                 var name = 'ANP';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }*/
+
+
+             entireData= states
+        for (var i=0;i<entireData.length;i++)
+        {
+
+
+            if(entireData[i].state == 'Bihar')
+            {
+                 var x= 1102;
+                 var y = parseInt(entireData[i].deaths);
+                 var z = 104099452;
+                 var stateName = entireData[i].state;
+                 var name = 'BR';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'West Bengal')
+            {
+                 var x= 1030;
+                var y = parseInt(entireData[i].deaths);
+                 var z = 91276115;
+                 var stateName = entireData[i].state;
+                 var name = 'WB';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Kerala')
+            {
+                 var x= 859;
+                 var y = parseInt(entireData[i].deaths);
+                 var z = 33406061;
+                 var stateName = entireData[i].state;
+                 var name = 'KL';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Uttar Pradesh')
+            {
+                 var x= 828;
+                 var y = parseInt(entireData[i].deaths);
+                 var z = 199812341;
+                 var stateName = entireData[i].state;
+                 var name = 'UP';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Haryana')
+            {
+                 var x= 573;
+                 var y = parseInt(entireData[i].deaths);
+                 var z = 25351462;
+                 var stateName = entireData[i].state;
+                 var name = 'HR';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Tamil Nadu')
+            {
+                 var x= 555;
+                var y = parseInt(entireData[i].deaths);
+                 var z = 72147030;
+                 var stateName = entireData[i].state;
+                 var name = 'TN';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Punjab')
+            {
+                 var x= 555;
+                 var y = parseInt(entireData[i].deaths);
+                 var z = 27743338;
+                 var stateName = entireData[i].state;
+                 var name = 'PN';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+            if(entireData[i].state == 'Jharkhand')
+            {
+                 var x= 414;
+                var y = parseInt(entireData[i].deaths);
+                 var z = 32988134;
+                 var stateName = entireData[i].state;
+                 var name = 'JKD';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Assam')
+            {
+                 var x= 397;
+                var y = parseInt(entireData[i].deaths);
+                 var z = 31205576;
+                 var stateName = entireData[i].state;
+                 var name = 'AS';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Goa')
+            {
+                 var x= 394;
+                 var y = parseInt(entireData[i].deaths);
+                 var z = 1458545;
+                 var stateName = entireData[i].state;
+                 var name = 'GA';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Maharashtra')
+            {
+                 var x= 365;
+                 var y = parseInt(entireData[i].deaths);
+                 var z = 112374333;
+                 var stateName = entireData[i].state;
+                 var name = 'MH';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Tripura')
+            {
+                 var x= 350;
+                 var y = parseInt(entireData[i].deaths);
+                 var z = 3673917;
+                 var stateName = entireData[i].state;
+                 var name = 'TP';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Karnataka')
+            {
+                 var x= 319;
+                 var y = parseInt(entireData[i].deaths);
+                 var z = 61095297;
+                 var stateName = entireData[i].state;
+                 var name = 'KA';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Gujarat')
+            {
+                 var x= 308;
+                 var y = parseInt(entireData[i].deaths);
+                 var z = 60439692;
+                 var stateName = entireData[i].state;
+                 var name = 'GJ';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Andhra Pradesh')
+            {
+                 var x= 308;
+                 var y = parseInt(entireData[i].deaths);
+                 var z = 49386799;
+                 var stateName = entireData[i].state;
+                 var name = 'AP';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Telangana')
+            {
+                 var x= 307;
+                 var y = parseInt(entireData[i].deaths);
+                 var z = 35193978;
+                 var stateName = entireData[i].state;
+                 var name = 'TL';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Odisha')
+            {
+                 var x= 269;
+                 var y = parseInt(entireData[i].deaths);
+                 var z = 41974218;
+                 var stateName = entireData[i].state;
+                 var name = 'OD';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Madhya Pradesh')
+            {
+                 var x= 236;
+                 var y = parseInt(entireData[i].deaths);
+                 var z = 72626809;
+                 var stateName = entireData[i].state;
+                 var name = 'MP';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+             if(entireData[i].state == 'Rajasthan')
+            {
+                 var x= 201;
+                var y = parseInt(entireData[i].deaths);
+                 var z = 68548437;
+                 var stateName = entireData[i].state;
+                 var name = 'RJ';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+             if(entireData[i].state == 'Chhattisgarh')
+            {
+                 var x= 189;
+                 var y = parseInt(entireData[i].deaths);
+                 var z = 25545198;
+                 var stateName = entireData[i].state;
+                 var name = 'CG';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+            if(entireData[i].state == 'Uttarakhand')
+            {
+                 var x= 189;
+                 var y = parseInt(entireData[i].deaths);
+                 var z = 10086292;
+                 var stateName = entireData[i].state;
+                 var name = 'UK';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+            if(entireData[i].state == 'Meghalaya')
+            {
+                 var x= 132;
+                var y = parseInt(entireData[i].deaths);
+                 var z = 2966889;
+                 var stateName = entireData[i].state;
+                 var name = 'MG';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+            if(entireData[i].state == 'Manipur')
+            {
+                 var x= 128;
+                 var y = parseInt(entireData[i].deaths);
+                 var z = 2855794;
+                 var stateName = entireData[i].state;
+                 var name = 'MN';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+             if(entireData[i].state == 'Himachal Pradesh')
+            {
+                 var x= 123;
+                var y = parseInt(entireData[i].deaths);
+                 var z = 6864602;
+                 var stateName = entireData[i].state;
+                 var name = 'HP';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+             if(entireData[i].state == 'Nagaland')
+            {
+                 var x= 119;
+                 var y = parseInt(entireData[i].deaths);
+                 var z = 1978502;
+                 var stateName = entireData[i].state;
+                 var name = 'NG';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Sikkim')
+            {
+                 var x= 86;
+                var y = parseInt(entireData[i].deaths);
+                 var z = 610577;
+                 var stateName = entireData[i].state;
+                 var name = 'SK';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Jammu and Kashmir')
+            {
+                 var x= 56;
+                 var y = parseInt(entireData[i].deaths);
+                 var z = 12541302;
+                 var stateName = entireData[i].state;
+                 var name = 'JK';
+                 var stateObj= {x,y,z,name,stateName};
+                // tempArr.push(stateObj);
+
+            }
+             if(entireData[i].state == 'Mizoram')
+            {
+                 var x= 52;
+                 var y = parseInt(entireData[i].deaths);
+                 var z = 1097206;
+                 var stateName = entireData[i].state;
+                 var name = 'MZ';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Arunachal Pradesh')
+            {
+                 var x= 17;
+                 var y = parseInt(entireData[i].deaths);
+                 var z = 1383727;
+                 var stateName = entireData[i].state;
                  var name = 'ANP';
                  var stateObj= {x,y,z,name,stateName};
                  tempArr.push(stateObj);
@@ -2586,6 +4232,7 @@ function selectCase()
         }
         else if (selectCase == 'Recovered')
         {
+          /*
            for (var i=0;i<entireData.length;i++)
         {
 
@@ -2929,6 +4576,353 @@ function selectCase()
                  var stateObj= {x,y,z,name,stateName};
                  tempArr.push(stateObj);
 
+            }*/
+
+
+             entireData= states
+        for (var i=0;i<entireData.length;i++)
+        {
+
+
+            if(entireData[i].state == 'Bihar')
+            {
+                 var x= 1102;
+                 var y = parseInt(entireData[i].recovered);
+                 var z = 104099452;
+                 var stateName = entireData[i].state;
+                 var name = 'BR';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'West Bengal')
+            {
+                 var x= 1030;
+                var y = parseInt(entireData[i].recovered);
+                 var z = 91276115;
+                 var stateName = entireData[i].state;
+                 var name = 'WB';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Kerala')
+            {
+                 var x= 859;
+                 var y = parseInt(entireData[i].recovered);
+                 var z = 33406061;
+                 var stateName = entireData[i].state;
+                 var name = 'KL';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Uttar Pradesh')
+            {
+                 var x= 828;
+                 var y = parseInt(entireData[i].recovered);
+                 var z = 199812341;
+                 var stateName = entireData[i].state;
+                 var name = 'UP';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Haryana')
+            {
+                 var x= 573;
+                 var y = parseInt(entireData[i].recovered);
+                 var z = 25351462;
+                 var stateName = entireData[i].state;
+                 var name = 'HR';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Tamil Nadu')
+            {
+                 var x= 555;
+                var y = parseInt(entireData[i].recovered);
+                 var z = 72147030;
+                 var stateName = entireData[i].state;
+                 var name = 'TN';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Punjab')
+            {
+                 var x= 555;
+                 var y = parseInt(entireData[i].recovered);
+                 var z = 27743338;
+                 var stateName = entireData[i].state;
+                 var name = 'PN';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+            if(entireData[i].state == 'Jharkhand')
+            {
+                 var x= 414;
+                var y = parseInt(entireData[i].recovered);
+                 var z = 32988134;
+                 var stateName = entireData[i].state;
+                 var name = 'JKD';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Assam')
+            {
+                 var x= 397;
+                var y = parseInt(entireData[i].recovered);
+                 var z = 31205576;
+                 var stateName = entireData[i].state;
+                 var name = 'AS';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Goa')
+            {
+                 var x= 394;
+                 var y = parseInt(entireData[i].recovered);
+                 var z = 1458545;
+                 var stateName = entireData[i].state;
+                 var name = 'GA';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Maharashtra')
+            {
+                 var x= 365;
+                 var y = parseInt(entireData[i].recovered);
+                 var z = 112374333;
+                 var stateName = entireData[i].state;
+                 var name = 'MH';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Tripura')
+            {
+                 var x= 350;
+                 var y = parseInt(entireData[i].recovered);
+                 var z = 3673917;
+                 var stateName = entireData[i].state;
+                 var name = 'TP';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Karnataka')
+            {
+                 var x= 319;
+                 var y = parseInt(entireData[i].recovered);
+                 var z = 61095297;
+                 var stateName = entireData[i].state;
+                 var name = 'KA';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Gujarat')
+            {
+                 var x= 308;
+                 var y = parseInt(entireData[i].recovered);
+                 var z = 60439692;
+                 var stateName = entireData[i].state;
+                 var name = 'GJ';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Andhra Pradesh')
+            {
+                 var x= 308;
+                 var y = parseInt(entireData[i].recovered);
+                 var z = 49386799;
+                 var stateName = entireData[i].state;
+                 var name = 'AP';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Telangana')
+            {
+                 var x= 307;
+                 var y = parseInt(entireData[i].recovered);
+                 var z = 35193978;
+                 var stateName = entireData[i].state;
+                 var name = 'TL';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Odisha')
+            {
+                 var x= 269;
+                 var y = parseInt(entireData[i].recovered);
+                 var z = 41974218;
+                 var stateName = entireData[i].state;
+                 var name = 'OD';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Madhya Pradesh')
+            {
+                 var x= 236;
+                 var y = parseInt(entireData[i].recovered);
+                 var z = 72626809;
+                 var stateName = entireData[i].state;
+                 var name = 'MP';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+             if(entireData[i].state == 'Rajasthan')
+            {
+                 var x= 201;
+                var y = parseInt(entireData[i].recovered);
+                 var z = 68548437;
+                 var stateName = entireData[i].state;
+                 var name = 'RJ';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+             if(entireData[i].state == 'Chhattisgarh')
+            {
+                 var x= 189;
+                 var y = parseInt(entireData[i].recovered);
+                 var z = 25545198;
+                 var stateName = entireData[i].state;
+                 var name = 'CG';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+            if(entireData[i].state == 'Uttarakhand')
+            {
+                 var x= 189;
+                 var y = parseInt(entireData[i].recovered);
+                 var z = 10086292;
+                 var stateName = entireData[i].state;
+                 var name = 'UK';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+            if(entireData[i].state == 'Meghalaya')
+            {
+                 var x= 132;
+                var y = parseInt(entireData[i].recovered);
+                 var z = 2966889;
+                 var stateName = entireData[i].state;
+                 var name = 'MG';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+            if(entireData[i].state == 'Manipur')
+            {
+                 var x= 128;
+                 var y = parseInt(entireData[i].recovered);
+                 var z = 2855794;
+                 var stateName = entireData[i].state;
+                 var name = 'MN';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+             if(entireData[i].state == 'Himachal Pradesh')
+            {
+                 var x= 123;
+                var y = parseInt(entireData[i].recovered);
+                 var z = 6864602;
+                 var stateName = entireData[i].state;
+                 var name = 'HP';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+             if(entireData[i].state == 'Nagaland')
+            {
+                 var x= 119;
+                 var y = parseInt(entireData[i].recovered);
+                 var z = 1978502;
+                 var stateName = entireData[i].state;
+                 var name = 'NG';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Sikkim')
+            {
+                 var x= 86;
+                var y = parseInt(entireData[i].recovered);
+                 var z = 610577;
+                 var stateName = entireData[i].state;
+                 var name = 'SK';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Jammu and Kashmir')
+            {
+                 var x= 56;
+                 var y = parseInt(entireData[i].recovered);
+                 var z = 12541302;
+                 var stateName = entireData[i].state;
+                 var name = 'JK';
+                 var stateObj= {x,y,z,name,stateName};
+                // tempArr.push(stateObj);
+
+            }
+             if(entireData[i].state == 'Mizoram')
+            {
+                 var x= 52;
+                 var y = parseInt(entireData[i].recovered);
+                 var z = 1097206;
+                 var stateName = entireData[i].state;
+                 var name = 'MZ';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Arunachal Pradesh')
+            {
+                 var x= 17;
+                 var y = parseInt(entireData[i].recovered);
+                 var z = 1383727;
+                 var stateName = entireData[i].state;
+                 var name = 'ANP';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
             }
 
 
@@ -3013,6 +5007,7 @@ function selectCase()
         }
          else if (selectCase == 'Active')
         {
+          /*
           for (var i=0;i<entireData.length;i++)
         {
 
@@ -3347,11 +5342,356 @@ function selectCase()
                  tempArr.push(stateObj);
 
             }
+             */
+
+             entireData= states
+        for (var i=0;i<entireData.length;i++)
+        {
+             if(entireData[i].state == 'Bihar')
+            {
+                 var x= 1102;
+
+                 var y = parseInt(entireData[i].confirmed )-parseInt( entireData[i].recovered) -parseInt(entireData[i].deaths);
+                 var z = 104099452;
+                 var stateName = entireData[i].state;
+                 var name = 'BR';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'West Bengal')
+            {
+                 var x= 1030;
+              var y = parseInt(entireData[i].confirmed )-parseInt( entireData[i].recovered) -parseInt(entireData[i].deaths);
+                 var z = 91276115;
+                 var stateName = entireData[i].state;
+                 var name = 'WB';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Kerala')
+            {
+                 var x= 859;
+                var y = parseInt(entireData[i].confirmed )-parseInt( entireData[i].recovered) -parseInt(entireData[i].deaths);
+                 var z = 33406061;
+                 var stateName = entireData[i].state;
+                 var name = 'KL';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Uttar Pradesh')
+            {
+                 var x= 828;
+                var y = parseInt(entireData[i].confirmed )-parseInt( entireData[i].recovered) -parseInt(entireData[i].deaths);
+                 var z = 199812341;
+                 var stateName = entireData[i].state;
+                 var name = 'UP';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Haryana')
+            {
+                 var x= 573;
+                 var y = parseInt(entireData[i].confirmed )-parseInt( entireData[i].recovered) -parseInt(entireData[i].deaths);
+                 var z = 25351462;
+                 var stateName = entireData[i].state;
+                 var name = 'HR';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Tamil Nadu')
+            {
+                 var x= 555;
+                var y = parseInt(entireData[i].confirmed )-parseInt( entireData[i].recovered) -parseInt(entireData[i].deaths);
+                 var z = 72147030;
+                 var stateName = entireData[i].state;
+                 var name = 'TN';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Punjab')
+            {
+                 var x= 555;
+                 var y = parseInt(entireData[i].confirmed )-parseInt( entireData[i].recovered) -parseInt(entireData[i].deaths);
+                 var z = 27743338;
+                 var stateName = entireData[i].state;
+                 var name = 'PN';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+            if(entireData[i].state == 'Jharkhand')
+            {
+                 var x= 414;
+               var y = parseInt(entireData[i].confirmed )-parseInt( entireData[i].recovered) -parseInt(entireData[i].deaths);
+                 var z = 32988134;
+                 var stateName = entireData[i].state;
+                 var name = 'JKD';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Assam')
+            {
+                 var x= 397;
+               var y = parseInt(entireData[i].confirmed )-parseInt( entireData[i].recovered) -parseInt(entireData[i].deaths);
+                 var z = 31205576;
+                 var stateName = entireData[i].state;
+                 var name = 'AS';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Goa')
+            {
+                 var x= 394;
+                 var y = parseInt(entireData[i].confirmed )-parseInt( entireData[i].recovered) -parseInt(entireData[i].deaths);
+                 var z = 1458545;
+                 var stateName = entireData[i].state;
+                 var name = 'GA';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Maharashtra')
+            {
+                 var x= 365;
+               var y = parseInt(entireData[i].confirmed )-parseInt( entireData[i].recovered) -parseInt(entireData[i].deaths);
+                 var z = 112374333;
+                 var stateName = entireData[i].state;
+                 var name = 'MH';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Tripura')
+            {
+                 var x= 350;
+                 var y = parseInt(entireData[i].confirmed )-parseInt( entireData[i].recovered) -parseInt(entireData[i].deaths);
+                 var z = 3673917;
+                 var stateName = entireData[i].state;
+                 var name = 'TP';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Karnataka')
+            {
+                 var x= 319;
+                 var y = parseInt(entireData[i].confirmed )-parseInt( entireData[i].recovered) -parseInt(entireData[i].deaths);
+                 var z = 61095297;
+                 var stateName = entireData[i].state;
+                 var name = 'KA';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Gujarat')
+            {
+                 var x= 308;
+               var y = parseInt(entireData[i].confirmed )-parseInt( entireData[i].recovered) -parseInt(entireData[i].deaths);
+                 var z = 60439692;
+                 var stateName = entireData[i].state;
+                 var name = 'GJ';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Andhra Pradesh')
+            {
+                 var x= 308;
+               var y = parseInt(entireData[i].confirmed )-parseInt( entireData[i].recovered) -parseInt(entireData[i].deaths);
+                 var z = 49386799;
+                 var stateName = entireData[i].state;
+                 var name = 'AP';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Telangana')
+            {
+                 var x= 307;
+                var y = parseInt(entireData[i].confirmed )-parseInt( entireData[i].recovered) -parseInt(entireData[i].deaths);
+                 var z = 35193978;
+                 var stateName = entireData[i].state;
+                 var name = 'TL';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Odisha')
+            {
+                 var x= 269;
+                var y = parseInt(entireData[i].confirmed )-parseInt( entireData[i].recovered) -parseInt(entireData[i].deaths);
+                 var z = 41974218;
+                 var stateName = entireData[i].state;
+                 var name = 'OD';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Madhya Pradesh')
+            {
+                 var x= 236;
+                var y = parseInt(entireData[i].confirmed )-parseInt( entireData[i].recovered) -parseInt(entireData[i].deaths);
+                 var z = 72626809;
+                 var stateName = entireData[i].state;
+                 var name = 'MP';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+             if(entireData[i].state == 'Rajasthan')
+            {
+                 var x= 201;
+              var y = parseInt(entireData[i].confirmed )-parseInt( entireData[i].recovered) -parseInt(entireData[i].deaths);
+                 var z = 68548437;
+                 var stateName = entireData[i].state;
+                 var name = 'RJ';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+             if(entireData[i].state == 'Chhattisgarh')
+            {
+                 var x= 189;
+                var y = parseInt(entireData[i].confirmed )-parseInt( entireData[i].recovered) -parseInt(entireData[i].deaths);
+                 var z = 25545198;
+                 var stateName = entireData[i].state;
+                 var name = 'CG';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+            if(entireData[i].state == 'Uttarakhand')
+            {
+                 var x= 189;
+                var y = parseInt(entireData[i].confirmed )-parseInt( entireData[i].recovered) -parseInt(entireData[i].deaths);
+                 var z = 10086292;
+                 var stateName = entireData[i].state;
+                 var name = 'UK';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+            if(entireData[i].state == 'Meghalaya')
+            {
+                 var x= 132;
+               var y = parseInt(entireData[i].confirmed )-parseInt( entireData[i].recovered) -parseInt(entireData[i].deaths);
+                 var z = 2966889;
+                 var stateName = entireData[i].state;
+                 var name = 'MG';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+            if(entireData[i].state == 'Manipur')
+            {
+                 var x= 128;
+                 var y = parseInt(entireData[i].confirmed )-parseInt( entireData[i].recovered) -parseInt(entireData[i].deaths);
+                 var z = 2855794;
+                 var stateName = entireData[i].state;
+                 var name = 'MN';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+             if(entireData[i].state == 'Himachal Pradesh')
+            {
+                 var x= 123;
+                var y = parseInt(entireData[i].confirmed )-parseInt( entireData[i].recovered) -parseInt(entireData[i].deaths);
+                 var z = 6864602;
+                 var stateName = entireData[i].state;
+                 var name = 'HP';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+             if(entireData[i].state == 'Nagaland')
+            {
+                 var x= 119;
+                 var y = parseInt(entireData[i].confirmed )-parseInt( entireData[i].recovered) -parseInt(entireData[i].deaths);
+                 var z = 1978502;
+                 var stateName = entireData[i].state;
+                 var name = 'NG';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Sikkim')
+            {
+                 var x= 86;
+               var y = parseInt(entireData[i].confirmed )-parseInt( entireData[i].recovered) -parseInt(entireData[i].deaths);
+                 var z = 610577;
+                 var stateName = entireData[i].state;
+                 var name = 'SK';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Jammu and Kashmir')
+            {
+                 var x= 56;
+               var y = parseInt(entireData[i].confirmed )-parseInt( entireData[i].recovered) -parseInt(entireData[i].deaths);
+                 var z = 12541302;
+                 var stateName = entireData[i].state;
+                 var name = 'JK';
+                 var stateObj= {x,y,z,name,stateName};
+                // tempArr.push(stateObj);
+
+            }
+             if(entireData[i].state == 'Mizoram')
+            {
+                 var x= 52;
+               var y = parseInt(entireData[i].confirmed )-parseInt( entireData[i].recovered) -parseInt(entireData[i].deaths);
+                 var z = 1097206;
+                 var stateName = entireData[i].state;
+                 var name = 'MZ';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+            if(entireData[i].state == 'Arunachal Pradesh')
+            {
+                 var x= 17;
+               var y = parseInt(entireData[i].confirmed )-parseInt( entireData[i].recovered) -parseInt(entireData[i].deaths);
+                 var z = 1383727;
+                 var stateName = entireData[i].state;
+                 var name = 'ANP';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArr.push(stateObj);
+
+            }
+
+         }
 
 
-
-
-        }
            //console.log(tempArr);
                             Highcharts.chart('containerDensity', {
 
@@ -3426,9 +5766,9 @@ function selectCase()
                                     }]
 
                         });
+            }
 
 
-        }
 }
 
 function selectCaseUT()
@@ -3437,9 +5777,10 @@ function selectCaseUT()
     var selectBox = document.getElementById("selectCaseUT");
         var selectCase = selectBox.options[selectBox.selectedIndex].value;
         var tempArrUt=[];
+        entireData = states;
         if (selectCase == 'Confirmed')
         {
-
+          /*
          for (var i=0;i<entireData.length;i++)
         {
 
@@ -3521,12 +5862,91 @@ function selectCaseUT()
                  var stateObj= {x,y,z,name,stateName};
                  tempArrUt.push(stateObj);
 
+            }*/
+
+              for (var i=0;i<entireData.length;i++)
+        {
+             if(entireData[i].state == 'Delhi')
+            {
+                 var x= 11297;
+                 var y = parseInt(entireData[i].confirmed);
+                 var z = 16787941;
+                 var stateName = entireData[i].state;
+                 var name = 'DL';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArrUt.push(stateObj);
+
             }
 
+            if(entireData[i].state == 'Chandigarh')
+            {
+                 var x= 9252;
+                 var y = parseInt(entireData[i].confirmed);
+                 var z = 1055450;
+                 var stateName = entireData[i].state;
+                 var name = 'CD';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArrUt.push(stateObj);
 
+            }
+            if(entireData[i].state == 'Puducherry')
+            {
+                 var x= 2598;
+                var y = parseInt(entireData[i].confirmed);
 
+                 var z = 1247953;
+                 var stateName = entireData[i].state;
+                 var name = 'PD';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArrUt.push(stateObj);
 
-        }
+            }
+            if(entireData[i].state == 'Dadra and Nagar Haveli and Daman and Diu')
+            {
+                 var x= 2169;
+                 var y = parseInt(entireData[i].confirmed);
+                 var z = 243247;
+                 var stateName = 'DND';
+                 var state = entireData[i].state;
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArrUt.push(stateObj);
+
+            }
+            if(entireData[i].state == 'Jammu and Kashmir')
+            {
+                 var x= 56;
+                 var y = parseInt(entireData[i].confirmed);
+                 var z = 12541302;
+                 var stateName = entireData[i].state;
+                 var name = 'JK';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArrUt.push(stateObj);
+
+            }
+             if(entireData[i].state == 'Andaman and Nicobar Islands')
+            {
+                 var x= 46;
+                 var y = parseInt(entireData[i].confirmed);
+                 var z = 380581;
+                 var stateName = entireData[i].state;
+                 var name = 'ANI';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArrUt.push(stateObj);
+
+            }
+             if(entireData[i].state == 'Ladakh')
+            {
+                 var x= 5;
+                var y = parseInt(entireData[i].confirmed);
+                 var z = 274289;
+                 var stateName = entireData[i].state;
+                 var name = 'LDKH';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArrUt.push(stateObj);
+
+            }
+            }
+
            //console.log(tempArr);
                             Highcharts.chart('containerDensity1', {
 
@@ -3605,7 +6025,7 @@ function selectCaseUT()
         }
         else if (selectCase == 'Deaths')
         {
-
+        /*
         for (var i=0;i<entireData.length;i++)
         {
 
@@ -3686,7 +6106,89 @@ function selectCaseUT()
                  var stateObj= {x,y,z,name,stateName};
                  tempArrUt.push(stateObj);
 
+            }*/
+             for (var i=0;i<entireData.length;i++)
+        {
+             if(entireData[i].state == 'Delhi')
+            {
+                 var x= 11297;
+                 var y = parseInt(entireData[i].deaths);
+                 var z = 16787941;
+                 var stateName = entireData[i].state;
+                 var name = 'DL';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArrUt.push(stateObj);
+
             }
+
+            if(entireData[i].state == 'Chandigarh')
+            {
+                 var x= 9252;
+                 var y = parseInt(entireData[i].deaths);
+                 var z = 1055450;
+                 var stateName = entireData[i].state;
+                 var name = 'CD';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArrUt.push(stateObj);
+
+            }
+            if(entireData[i].state == 'Puducherry')
+            {
+                 var x= 2598;
+                var y = parseInt(entireData[i].deaths);
+
+                 var z = 1247953;
+                 var stateName = entireData[i].state;
+                 var name = 'PD';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArrUt.push(stateObj);
+
+            }
+            if(entireData[i].state == 'Dadra and Nagar Haveli and Daman and Diu')
+            {
+                 var x= 2169;
+                 var y = parseInt(entireData[i].deaths);
+                 var z = 243247;
+                 var stateName = 'DND';
+                 var state = entireData[i].state;
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArrUt.push(stateObj);
+
+            }
+            if(entireData[i].state == 'Jammu and Kashmir')
+            {
+                 var x= 56;
+                 var y = parseInt(entireData[i].deaths);
+                 var z = 12541302;
+                 var stateName = entireData[i].state;
+                 var name = 'JK';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArrUt.push(stateObj);
+
+            }
+             if(entireData[i].state == 'Andaman and Nicobar Islands')
+            {
+                 var x= 46;
+                 var y = parseInt(entireData[i].deaths);
+                 var z = 380581;
+                 var stateName = entireData[i].state;
+                 var name = 'ANI';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArrUt.push(stateObj);
+
+            }
+             if(entireData[i].state == 'Ladakh')
+            {
+                 var x= 5;
+                var y = parseInt(entireData[i].deaths);
+                 var z = 274289;
+                 var stateName = entireData[i].state;
+                 var name = 'LDKH';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArrUt.push(stateObj);
+
+            }
+
 
 
 
@@ -3774,6 +6276,8 @@ function selectCaseUT()
         }
         else if (selectCase == 'Recovered')
         {
+
+          /*
            for (var i=0;i<entireData.length;i++)
         {
 
@@ -3856,11 +6360,94 @@ function selectCaseUT()
 
             }
 
+        }*/
 
+          for (var i=0;i<entireData.length;i++)
+        {
+             if(entireData[i].state == 'Delhi')
+            {
+                 var x= 11297;
+                 var y = parseInt(entireData[i].recovered);
+                 var z = 16787941;
+                 var stateName = entireData[i].state;
+                 var name = 'DL';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArrUt.push(stateObj);
 
+            }
 
+            if(entireData[i].state == 'Chandigarh')
+            {
+                 var x= 9252;
+                 var y = parseInt(entireData[i].recovered);
+                 var z = 1055450;
+                 var stateName = entireData[i].state;
+                 var name = 'CD';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArrUt.push(stateObj);
+
+            }
+            if(entireData[i].state == 'Puducherry')
+            {
+                 var x= 2598;
+                var y = parseInt(entireData[i].recovered);
+
+                 var z = 1247953;
+                 var stateName = entireData[i].state;
+                 var name = 'PD';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArrUt.push(stateObj);
+
+            }
+            if(entireData[i].state == 'Dadra and Nagar Haveli and Daman and Diu')
+            {
+                 var x= 2169;
+                 var y = parseInt(entireData[i].recovered);
+                 var z = 243247;
+                 var stateName = 'DND';
+                 var state = entireData[i].state;
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArrUt.push(stateObj);
+
+            }
+            if(entireData[i].state == 'Jammu and Kashmir')
+            {
+                 var x= 56;
+                 var y = parseInt(entireData[i].recovered);
+                 var z = 12541302;
+                 var stateName = entireData[i].state;
+                 var name = 'JK';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArrUt.push(stateObj);
+
+            }
+             if(entireData[i].state == 'Andaman and Nicobar Islands')
+            {
+                 var x= 46;
+                 var y = parseInt(entireData[i].recovered);
+                 var z = 380581;
+                 var stateName = entireData[i].state;
+                 var name = 'ANI';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArrUt.push(stateObj);
+
+            }
+             if(entireData[i].state == 'Ladakh')
+            {
+                 var x= 5;
+                var y = parseInt(entireData[i].recovered);
+                 var z = 274289;
+                 var stateName = entireData[i].state;
+                 var name = 'LDKH';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArrUt.push(stateObj);
+
+            }
 
         }
+
+
+
            //console.log(tempArr);
                             Highcharts.chart('containerDensity1', {
 
@@ -3939,6 +6526,7 @@ function selectCaseUT()
         }
          else if (selectCase == 'Active')
         {
+        /*
           for (var i=0;i<entireData.length;i++)
         {
 
@@ -4022,12 +6610,100 @@ function selectCaseUT()
 
             }
 
+        }*/
+
+        for (var i=0;i<entireData.length;i++)
+        {
 
 
+             if(entireData[i].state == 'Delhi')
+            {
+                 var x= 11297;
+               var y = parseInt(entireData[i].confirmed )-parseInt( entireData[i].recovered) -parseInt(entireData[i].deaths);
 
+                 var z = 16787941;
+                 var stateName = entireData[i].state;
+                 var name = 'DL';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArrUt.push(stateObj);
 
+            }
+
+            if(entireData[i].state == 'Chandigarh')
+            {
+                 var x= 9252;
+               var y = parseInt(entireData[i].confirmed )-parseInt( entireData[i].recovered) -parseInt(entireData[i].deaths);
+
+                 var z = 1055450;
+                 var stateName = entireData[i].state;
+                 var name = 'CD';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArrUt.push(stateObj);
+
+            }
+            if(entireData[i].state == 'Puducherry')
+            {
+                 var x= 2598;
+               var y = parseInt(entireData[i].confirmed )-parseInt( entireData[i].recovered) -parseInt(entireData[i].deaths);
+
+                 var z = 1247953;
+                 var stateName = entireData[i].state;
+                 var name = 'PD';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArrUt.push(stateObj);
+
+            }
+            if(entireData[i].state == 'Dadra and Nagar Haveli and Daman and Diu')
+            {
+                 var x= 2169;
+               var y = parseInt(entireData[i].confirmed )-parseInt( entireData[i].recovered) -parseInt(entireData[i].deaths);
+                 var z = 243247;
+                 var stateName = 'DND';
+                 var state = entireData[i].state;
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArrUt.push(stateObj);
+
+            }
+            if(entireData[i].state == 'Jammu and Kashmir')
+            {
+                 var x= 56;
+               var y = parseInt(entireData[i].confirmed )-parseInt( entireData[i].recovered) -parseInt(entireData[i].deaths);
+
+                 var z = 12541302;
+                 var stateName = entireData[i].state;
+                 var name = 'JK';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArrUt.push(stateObj);
+
+            }
+             if(entireData[i].state == 'Andaman and Nicobar Islands')
+            {
+                 var x= 46;
+               var y = parseInt(entireData[i].confirmed )-parseInt( entireData[i].recovered) -parseInt(entireData[i].deaths);
+
+                 var z = 380581;
+                 var stateName = entireData[i].state;
+                 var name = 'ANI';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArrUt.push(stateObj);
+
+            }
+             if(entireData[i].state == 'Ladakh')
+            {
+                 var x= 5;
+               var y = parseInt(entireData[i].confirmed )-parseInt( entireData[i].recovered) -parseInt(entireData[i].deaths);
+
+                 var z = 274289;
+                 var stateName = entireData[i].state;
+                 var name = 'LDKH';
+                 var stateObj= {x,y,z,name,stateName};
+                 tempArrUt.push(stateObj);
+
+            }
 
         }
+
+
            //console.log(tempArr);
                             Highcharts.chart('containerDensity1', {
 
