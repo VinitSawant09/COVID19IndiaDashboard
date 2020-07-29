@@ -5,6 +5,9 @@ var responseF= null;
 var states = null;
 var nationalSeries = null;
 var statewise = null;
+var finalConfirmedStates = [];
+var finalDeathStates = [];
+var finalRecoveredStates = [];
 function myFunction()
 {
  var confirmedCasesCountTill2Day = null;
@@ -113,7 +116,7 @@ function myFunction()
 
         }
        });*/
-
+/*
    $.ajax(
        {
         url  : "https://api.rootnet.in/covid19-in/stats/history",
@@ -251,6 +254,7 @@ function myFunction()
                     }
              }
          }
+         console.log(historyCases);
 
          //deaths multi line chart
         for (var i=0; i < totalDailyCount.length;i++)
@@ -306,7 +310,7 @@ function myFunction()
              }
          }
 
-
+/*
         var chart = new CanvasJS.Chart("allStatesConfirmed", {
 	title: {
 		text: "Confirmed Cases Growth"
@@ -375,8 +379,8 @@ function toogleDataSeries(e){
 	chart.render();
 
 }
-
-
+*/
+/*
  //Recoveries multi line chart
         for (var i=0; i < totalDailyCount.length;i++)
         {
@@ -466,7 +470,7 @@ function toogleDataSeries(e){
 	chart.render();
 	}
 
-
+/*
 for (var i=0; i < totalDailyCount.length;i++)
         {
              //console.log(historyCases);
@@ -556,7 +560,7 @@ function toogleDataSeries(e){
 
 }
 
-       });
+       });*/
 
        //redundant
 /*
@@ -753,8 +757,12 @@ function toogleDataSeries(e){
                     cache: false,
                     processData: false,
                     success: function(response){
-                       //console.log(response);
+                       console.log(response);
                        statewise =response.states_daily;
+                       growthConfirmed(statewise);
+                       growthDeaths(statewise);
+                       growthRecovered(statewise)
+
                     }});
 
 
@@ -3265,6 +3273,11 @@ else if (stateName == 'Arunachal Pradesh')
  statecode = 'ar'
 
 }
+else if (stateName == 'Assam')
+{
+ statecode = 'as'
+
+}
 else if (stateName == 'Bihar')
 {
  statecode = 'br'
@@ -3509,5 +3522,496 @@ function getTimeSeries(statecode, type)
           }
     return arr;
 
+
+}
+
+function growthConfirmed(statewise)
+{
+//console.log(statewise);
+for (var i =0; i<statewise.length; i++)
+{
+    var object = statewise[i];
+    var date = statewise[i].date ;
+    var status = statewise[i].status ;
+    Object.keys(object).forEach(function(key)
+    {
+
+                        var statecode = null;
+                        if(status == "Confirmed")
+                        {
+
+
+                        if (key != 'tt' && key != 'date' && key !='Status' && key !='un' && key !='ld' && key!= null)
+                        {
+                            var stateName = getStateName(key);
+                            //statecode = 'Andaman and Nicobar Islands';
+                            if(stateName!=null)
+                            {
+                            index =isFound(stateName, finalConfirmedStates);
+                            if (index==-1)
+                            {
+
+                            var type = "line";
+                            var axisYType= "secondary";
+                            var name= stateName;
+                            var showInLegend= true;
+                            var markerSize= 0;
+                            var yValueFormatString= "#,###";
+                            var x = new Date(date);
+                            var y = parseInt(object[key]);
+                            var xyobj= {x,y};
+                            var dataPoints =[];
+                            dataPoints.push(xyobj);
+                            var finalObjects = {type,axisYType,name,showInLegend,markerSize,yValueFormatString,dataPoints};
+                            finalConfirmedStates.push(finalObjects);
+                            }
+                            else
+                            {
+
+                               var datapoints = finalConfirmedStates[index].dataPoints;
+                               var length = datapoints.length;
+                               var x = new Date(date);
+                               var y = parseInt(object[key])+datapoints[length-1].y;
+                               var xyobj= {x,y};
+                               datapoints.push(xyobj);
+                               finalConfirmedStates[index].dataPoints=datapoints;
+
+                            }
+                        }
+                        }
+                        }
+
+    });
+     }
+
+//console.log(finalConfirmedStates);
+
+     var chart = new CanvasJS.Chart("allStatesConfirmed", {
+	title: {
+		text: "Confirmed Cases Growth"
+	},
+	axisX: {
+		valueFormatString: "DD MM YYYY"
+	},
+	axisY2: {
+		title: "Confirmed Cases",
+	},
+	toolTip: {
+		shared: true
+	},
+	legend: {
+		cursor: "pointer",
+		verticalAlign: "top",
+		horizontalAlign: "center",
+		dockInsidePlotArea: true,
+		itemclick: toogleDataSeries
+	},
+	data:  finalConfirmedStates
+
+});
+function toogleDataSeries(e){
+	if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+		e.dataSeries.visible = false;
+	} else{
+		e.dataSeries.visible = true;
+	}
+	chart.render();
+
+}
+chart.render();
+}
+
+function growthDeaths(statewise)
+{
+//console.log(statewise);
+for (var i =0; i<statewise.length; i++)
+{
+    var object = statewise[i];
+    var date = statewise[i].date ;
+    var status = statewise[i].status ;
+    Object.keys(object).forEach(function(key)
+    {
+
+                        var statecode = null;
+                        if(status == "Deceased")
+                        {
+
+
+                        if (key != 'tt' && key != 'date' && key !='Status' && key !='un' && key !='ld' && key!= null)
+                        {
+                            var stateName = getStateName(key);
+                            //statecode = 'Andaman and Nicobar Islands';
+                            if(stateName!=null)
+                            {
+                            index =isFound(stateName, finalDeathStates);
+                            if (index==-1)
+                            {
+
+                            var type = "line";
+                            var axisYType= "secondary";
+                            var name= stateName;
+                            var showInLegend= true;
+                            var markerSize= 0;
+                            var yValueFormatString= "#,###";
+                            var x = new Date(date);
+                            var y = parseInt(object[key]);
+                            var xyobj= {x,y};
+                            var dataPoints =[];
+                            dataPoints.push(xyobj);
+                            var finalObjects = {type,axisYType,name,showInLegend,markerSize,yValueFormatString,dataPoints};
+                            finalDeathStates.push(finalObjects);
+                            }
+                            else
+                            {
+
+                               var datapoints = finalDeathStates[index].dataPoints;
+                               var length = datapoints.length;
+                               var x = new Date(date);
+                               var y = parseInt(object[key])+datapoints[length-1].y;
+                               var xyobj= {x,y};
+                               datapoints.push(xyobj);
+                               finalDeathStates[index].dataPoints=datapoints;
+
+                            }
+                        }
+                        }
+                        }
+
+    });
+     }
+
+//console.log(finalDeathStates);
+
+     var chart = new CanvasJS.Chart("allStatesDeaths", {
+	title: {
+		text: "Deaths Growth"
+	},
+	axisX: {
+		valueFormatString: "DD MM YYYY"
+	},
+	axisY2: {
+		title: "Deaths",
+	},
+	toolTip: {
+		shared: true
+	},
+	legend: {
+		cursor: "pointer",
+		verticalAlign: "top",
+		horizontalAlign: "center",
+		dockInsidePlotArea: true,
+		itemclick: toogleDataSeries
+	},
+	data:  finalDeathStates
+
+});
+function toogleDataSeries(e){
+	if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+		e.dataSeries.visible = false;
+	} else{
+		e.dataSeries.visible = true;
+	}
+	chart.render();
+
+}
+chart.render();
+}
+
+
+
+function growthRecovered(statewise)
+{
+//console.log(statewise);
+for (var i =0; i<statewise.length; i++)
+{
+    var object = statewise[i];
+    var date = statewise[i].date ;
+    var status = statewise[i].status ;
+    Object.keys(object).forEach(function(key)
+    {
+
+                        var statecode = null;
+                        if(status == "Recovered")
+                        {
+
+
+                        if (key != 'tt' && key != 'date' && key !='Status' && key !='un' && key !='ld' && key!= null)
+                        {
+                            var stateName = getStateName(key);
+
+                            if(stateName!=null)
+                            {
+                            index =isFound(stateName, finalRecoveredStates);
+                            if (index==-1)
+                            {
+
+                            var type = "line";
+                            var axisYType= "secondary";
+                            var name= stateName;
+                            var showInLegend= true;
+                            var markerSize= 0;
+                            var yValueFormatString= "#,###";
+                            var x = new Date(date);
+                            var y = parseInt(object[key]);
+                            var xyobj= {x,y};
+                            var dataPoints =[];
+                            dataPoints.push(xyobj);
+                            var finalObjects = {type,axisYType,name,showInLegend,markerSize,yValueFormatString,dataPoints};
+                            finalRecoveredStates.push(finalObjects);
+                            }
+                            else
+                            {
+
+                               var datapoints = finalRecoveredStates[index].dataPoints;
+                               var length = datapoints.length;
+                               var x = new Date(date);
+                               var y = parseInt(object[key])+datapoints[length-1].y;
+                               var xyobj= {x,y};
+                               datapoints.push(xyobj);
+                               finalRecoveredStates[index].dataPoints=datapoints;
+
+                            }
+                        }
+                        }
+                        }
+
+    });
+     }
+
+//console.log(finalRecoveredStates);
+ var chart = new CanvasJS.Chart("allStatesRecoveries", {
+	title: {
+		text: "Recoveries Growth"
+	},
+	axisX: {
+		valueFormatString: "DD MM YYYY"
+	},
+	axisY2: {
+		title: " Cases",
+	},
+	toolTip: {
+		shared: true
+	},
+	legend: {
+		cursor: "pointer",
+		verticalAlign: "top",
+		horizontalAlign: "center",
+		dockInsidePlotArea: true,
+		itemclick: toogleDataSeries
+	},
+	data:  finalRecoveredStates
+
+});
+
+function toogleDataSeries(e){
+	if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+		e.dataSeries.visible = false;
+	} else{
+		e.dataSeries.visible = true;
+	}
+	chart.render();
+
+}
+chart.render();
+}
+
+
+function isFound(statecode,finalConfirmedStates)
+{
+ var found = -1;
+ for (var i=0;i<finalConfirmedStates.length;i++)
+ {
+
+     if(statecode == finalConfirmedStates[i].name)
+
+    {
+
+    found =i;
+    break;
+
+    }
+ }
+//console.log(found);
+return found;
+}
+
+function  getStateName(statecode)
+{
+var stateName = null;
+if (statecode == 'an')
+{
+   stateName = 'Andaman and Nicobar Islands'
+}
+else if (statecode == 'ap')
+{
+ stateName = 'Andhra Pradesh'
+
+}
+else if (statecode == 'ar')
+{
+ stateName = 'Arunachal Pradesh'
+
+}
+else if (statecode == 'as')
+{
+ stateName = 'Assam'
+
+}
+else if (statecode == 'br')
+{
+ stateName = 'Bihar'
+
+}else if (statecode ==  'ch')
+{
+ stateName ='Chandigarh'
+
+}
+else if (statecode =='ct')
+{
+ stateName =  'Chattisgarh'
+
+}
+
+else if (statecode =='dl' )
+{
+ stateName = 'Delhi'
+
+}
+else if (statecode == 'dn' || statecode == 'dd')
+{
+ stateName = 'Dadra and Nagar Haveli and Daman and Diu'
+
+}
+else if (statecode == 'ga')
+{
+ stateName = 'Goa'
+
+}
+else if (statecode == 'gj')
+{
+ stateName = 'Gujarat'
+
+}
+else if (statecode =='hp')
+{
+ stateName =  'Himachal Pradesh'
+
+}
+else if (statecode == 'hr')
+{
+ stateName = 'Haryana'
+
+}
+else if (statecode ==  'jh')
+{
+ stateName ='Jharkhand'
+
+}
+else if (statecode == 'jk')
+{
+ stateName = 'Jammu and Kashmir'
+
+}
+else if (statecode == 'ka')
+{
+ stateName = 'Karnataka'
+
+}
+else if (statecode == 'kl')
+{
+ stateName = 'Kerala'
+
+}else if (statecode == 'la')
+{
+ stateName = 'Ladakh'
+
+}
+
+else if (statecode =='mh' )
+{
+ stateName = 'Maharashtra'
+
+}
+else if (statecode == 'ml')
+{
+ stateName = 'Meghalaya'
+
+}
+else if (statecode == 'mn')
+{
+ stateName = 'Manipur'
+
+}
+else if (statecode == 'mp')
+{
+ stateName = 'Madhya Pradesh'
+
+}
+else if (statecode == 'mz')
+{
+ stateName = 'Mizoram'
+
+}
+else if (statecode == 'nl')
+{
+ stateName = 'Nagaland'
+
+}
+else if (statecode == 'or')
+{
+ stateName = 'Odisha'
+
+}
+else if (statecode == 'pb')
+{
+ stateName = 'Punjab'
+
+}
+else if (statecode == 'py')
+{
+ stateName = 'Puducherry'
+
+}else if (statecode =='rj' )
+{
+ stateName = 'Rajasthan'
+
+}
+else if (statecode == 'sk')
+{
+ stateName = 'Sikkim'
+
+}
+else if (statecode =='tg' )
+{
+ stateName = 'Telangana'
+
+}
+else if (statecode =='tn' )
+{
+ stateName = 'Tamil Nadu'
+
+}
+else if (statecode == 'tr')
+{
+ stateName = 'Tripura'
+
+}
+else if (statecode =='up' )
+{
+ stateName = 'Uttar Pradesh'
+
+}
+else if (statecode =='ut' )
+{
+ stateName = 'Uttarakhand'
+
+}
+else if (statecode =='wb' )
+{
+ stateName = 'West Bengal'
+
+}
+
+return stateName;
 
 }
