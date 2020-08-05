@@ -159,12 +159,12 @@ class predictionDAO:
         #print(listC)
         df = pd.DataFrame(listC, columns=['ds', 'y'])
         #print(df);
-        df['cap'] = 2000000
+        df['cap'] = 10000000
         m = Prophet(growth='logistic')
         m.fit(df)
         future = m.make_future_dataframe(periods=int(predDays))
         future.tail()
-        future['cap'] = 2000000
+        future['cap'] = 10000000
         forecast = m.predict(future)
         metric_df = forecast.set_index('ds')[['yhat']].join(df.set_index('ds').y).reset_index()
         metric_df.dropna(inplace=True)
@@ -192,13 +192,13 @@ class predictionDAO:
         #print(listC)
         df = pd.DataFrame(listC, columns=['ds', 'y'])
         #print(df);
-        df['cap'] = 2000000
+        df['cap'] = 10000000
         m = Prophet(growth='logistic')
 
         m.fit(df)
         future = m.make_future_dataframe(periods=int(predDays))
         future.tail()
-        future['cap'] = 2000000
+        future['cap'] = 10000000
         forecast = m.predict(future)
         metric_df = forecast.set_index('ds')[['yhat']].join(df.set_index('ds').y).reset_index()
         metric_df.dropna(inplace=True)
