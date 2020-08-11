@@ -675,6 +675,7 @@ function toogleDataSeries(e){
                       .append($("<td>").html(states[i].deaths))
                       .append($("<td>").html(states[i].recovered))
                       .append($("<td>").html(states[i].active))
+                      .append($("<td>").html(((states[i].deaths*100)/states[i].confirmed).toFixed(2)))
                      );
               }
          }
@@ -703,6 +704,10 @@ function toogleDataSeries(e){
                                     },
                                     {
                               "targets": 4,
+                              "className": 'dt-body-right',
+                                    },
+                                    {
+                              "targets": 5,
                               "className": 'dt-body-right',
                                     }
 
