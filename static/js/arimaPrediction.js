@@ -143,19 +143,19 @@ x.style.display = "block";
                                             {
                                                 var arr = [];
 
-                                                arr.push(new Date(nationalSeries[i].date+ " 2020").getTime());
+                                                arr.push(new Date(nationalSeries[i].date+ " 2020").getTime() + (5.5*60*60*1000));
                                                 arr.push(parseInt(nationalSeries[i].totaldeceased));
                                                 actualDeaths.push(arr);
 
                                                  var arr = [];
 
-                                                arr.push(new Date(nationalSeries[i].date+ " 2020").getTime());
+                                                arr.push(new Date(nationalSeries[i].date+ " 2020").getTime() + (5.5*60*60*1000));
                                                 arr.push(parseInt(nationalSeries[i].totalconfirmed));
                                                 actualConfirmed.push(arr);
 
                                                  var arr = [];
 
-                                                arr.push(new Date(nationalSeries[i].date+ " 2020").getTime());
+                                                arr.push(new Date(nationalSeries[i].date+ " 2020").getTime() + (5.5*60*60*1000));
                                                 arr.push(parseInt(nationalSeries[i].totalrecovered));
                                                 actualRecovered.push(arr);
 
@@ -215,8 +215,8 @@ x.style.display = "block";
                                                var myDate = listData[i][0];
 
                                                dateObj = new Date(myDate);
-                                               dateObj = dateObj.getTime() + (5.5*60*60*1000)
-
+                                             //  dateObj = dateObj.getTime() + (5.5*60*60*1000)
+                                               dateObj = dateObj.getTime() - (5.5*60*60*1000)
                                                arr.push(dateObj);
                                                arr.push(Math.round((listData[i][1] + Number.EPSILON) * 100) / 100);
                                                predictedDeaths.push(arr);
@@ -311,8 +311,8 @@ x.style.display = "block";
                                                var myDate = listConfirmed[i][0];
 
                                                dateObj = new Date(myDate);
-                                               dateObj = dateObj.getTime() + (5.5*60*60*1000)
-
+                                              // dateObj = dateObj.getTime() + (5.5*60*60*1000)
+                                               dateObj = dateObj.getTime() - (5.5*60*60*1000)
                                                arr.push(dateObj);
                                                arr.push(Math.round((listConfirmed[i][1] + Number.EPSILON) * 100) / 100);
                                                predictedConfirmed.push(arr);
@@ -389,8 +389,8 @@ x.style.display = "block";
                                                var myDate = listRecovered[i][0];
 
                                                dateObj = new Date(myDate);
-                                               dateObj = dateObj.getTime() + (5.5*60*60*1000)
-
+                                             //  dateObj = dateObj.getTime() + (5.5*60*60*1000)
+                                               dateObj = dateObj.getTime() - (5.5*60*60*1000)
                                                arr.push(dateObj);
                                                arr.push(Math.round((listRecovered[i][1] + Number.EPSILON) * 100) / 100);
                                                predictedRecovered.push(arr);

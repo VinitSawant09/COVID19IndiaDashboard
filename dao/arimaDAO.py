@@ -12,7 +12,7 @@ from pmdarima.arima import auto_arima
 class arimaDAO:
 
     def predictArimaDeaths(listC, predDays):
-
+        print(listC)
         base = datetime.datetime.today() #- datetime.timedelta(days=1)
         for x in range(1, 6):
             arrObj = []
@@ -73,7 +73,7 @@ class arimaDAO:
 
 
     def predictArimaConfirmed(listC, predDays):
-
+        #predDays = predDays * 6
         base = datetime.datetime.today() #- datetime.timedelta(days=1)
         for x in range(1, 6):
             arrObj = []
@@ -87,8 +87,8 @@ class arimaDAO:
         df.index = pd.to_datetime(df.index)
         df.columns = ['Confirmed']
 
-        train = df.iloc[0:length - predDays * 2]
-        test = df.iloc[length - predDays * 2:length - predDays]
+        train = df.iloc[0:length - predDays*2]
+        test = df.iloc[length - predDays *2:length - predDays]
         Arima_model = auto_arima(train, start_p=1, start_q=2, max_p=8, max_q=8,
                                  start_P=0, m=4, max_Q=8, seasonal=True,
                                  D=1, trace=True,

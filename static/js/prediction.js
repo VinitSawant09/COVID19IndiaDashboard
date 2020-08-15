@@ -147,19 +147,19 @@ selectedPredDays = predDays;
                                             {
                                                 var arr = [];
 
-                                                arr.push(new Date(nationalSeries[i].date+ " 2020").getTime());
+                                                arr.push(new Date(nationalSeries[i].date+ " 2020").getTime() + (5.5*60*60*1000));
                                                 arr.push(parseInt(nationalSeries[i].totaldeceased));
                                                 actualDeaths.push(arr);
 
                                                  var arr = [];
 
-                                                arr.push(new Date(nationalSeries[i].date+ " 2020").getTime());
+                                                arr.push(new Date(nationalSeries[i].date+ " 2020").getTime() + (5.5*60*60*1000));
                                                 arr.push(parseInt(nationalSeries[i].totalconfirmed));
                                                 actualConfirmed.push(arr);
 
                                                  var arr = [];
 
-                                                arr.push(new Date(nationalSeries[i].date+ " 2020").getTime());
+                                                arr.push(new Date(nationalSeries[i].date+ " 2020").getTime() + (5.5*60*60*1000));
                                                 arr.push(parseInt(nationalSeries[i].totalrecovered));
                                                 actualRecovered.push(arr);
 
