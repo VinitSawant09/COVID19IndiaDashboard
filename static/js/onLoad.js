@@ -620,19 +620,22 @@ function toogleDataSeries(e){
            var newlyTested = testStats.samplereportedtoday;
            var totalTested = testStats.totalsamplestested;
            var testpermillion = testStats.testspermillion;
+           console.log(totalTested);
+           console.log(newlyTested);
+           console.log(testpermillion);
            document.getElementById("totalTestsDone").innerHTML=numberWithCommas(totalTested);
            document.getElementById("testDoneToday").innerHTML=numberWithCommas(newlyTested);
-           document.getElementById("testspermillion").innerHTML=numberWithCommas(testpermillion);
+          // document.getElementById("testspermillion").innerHTML=numberWithCommas(testpermillion);
            document.getElementById("lastUpdated").innerHTML="Last Updated : "+testStats.updatetimestamp;
            document.getElementById("lastUpdatedLive1").innerHTML="Last Updated : "+testStats.updatetimestamp;
            document.getElementById("lastUpdatedLive2").innerHTML="Last Updated : "+testStats.updatetimestamp;
            document.getElementById("lastUpdatedLive3").innerHTML="Last Updated : "+testStats.updatetimestamp;
 
-           var activeCases = totalStats.active;
+
+            var activeCases = totalStats.active;
            var confirmedCases = totalStats.confirmed;
            var recoveredCases = totalStats.recovered;
            var deaths = totalStats.deaths;
-
            var newConfirmed = totalStats.deltaconfirmed;
            var newDeaths = totalStats.deltadeaths;
            var newRecovered = totalStats.deltarecovered;

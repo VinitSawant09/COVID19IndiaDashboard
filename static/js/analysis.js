@@ -26,6 +26,7 @@ function myFunction()
         cache: false,
         processData: false,
         success: function(response){
+             console.log("1");
              var totalRecords = response.raw_data;
              for(var i=0;i<totalRecords.length;i++)
              {
@@ -206,6 +207,7 @@ function myFunction()
         cache: false,
         processData: false,
         success: function(response){
+              console.log("2");
              var totalRecords = response.raw_data;
              for(var i=0;i<totalRecords.length;i++)
              {
@@ -382,6 +384,7 @@ function myFunction()
         cache: false,
         processData: false,
         success: function(response){
+             console.log("3");
              var totalRecords = response.raw_data;
              for(var i=0;i<totalRecords.length;i++)
              {
@@ -558,6 +561,7 @@ function myFunction()
         cache: false,
         processData: false,
         success: function(response){
+             console.log("4");
              var totalRecords = response.raw_data;
              for(var i=0;i<totalRecords.length;i++)
              {
@@ -735,6 +739,7 @@ function myFunction()
         cache: false,
         processData: false,
         success: function(response){
+              console.log("5");
              var totalRecords = response.raw_data;
              for(var i=0;i<totalRecords.length;i++)
              {
@@ -910,6 +915,7 @@ function myFunction()
         cache: false,
         processData: false,
         success: function(response){
+              console.log("6");
              var totalRecords = response.raw_data;
              for(var i=0;i<totalRecords.length;i++)
              {
@@ -1085,6 +1091,7 @@ function myFunction()
         cache: false,
         processData: false,
         success: function(response){
+             console.log("7");
              var totalRecords = response.raw_data;
              for(var i=0;i<totalRecords.length;i++)
              {
