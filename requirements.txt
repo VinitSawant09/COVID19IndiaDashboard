@@ -4,7 +4,7 @@ fbprophet
 scikit-learn
 numpy
 pandas
-Flask==1.1.2
+Flask==3.1.3
 gunicorn==19.9.0
 itsdangerous==1.1.0
 Jinja2==2.11.3
